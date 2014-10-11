@@ -1,28 +1,28 @@
-var app = angular.module('myApp', ['ngRoute']);
+var app = angular.module('myApp', ['ngRoute', 'mgcrea.ngStrap']);
 app.factory("services", ['$http', function($http) {
   var serviceBase = 'services/'
     var obj = {};
-    obj.getCustomers = function(){
-        return $http.get(serviceBase + 'customers');
+    obj.getClients = function(){
+        return $http.get(serviceBase + 'clients');
     }
-    obj.getCustomer = function(customerID){
-        return $http.get(serviceBase + 'customer?id=' + customerID);
+    obj.getClient = function(clientID){
+        return $http.get(serviceBase + 'client?id=' + clientID);
     }
 
-    obj.insertCustomer = function (customer) {
-    return $http.post(serviceBase + 'insertCustomer', customer).then(function (results) {
+    obj.insertClient = function (client) {
+    return $http.post(serviceBase + 'insertClient', client).then(function (results) {
         return results;
     });
 	};
 
-	obj.updateCustomer = function (id,customer) {
-	    return $http.post(serviceBase + 'updateCustomer', {id:id, customer:customer}).then(function (status) {
+	obj.updateClient = function (id,client) {
+	    return $http.post(serviceBase + 'updateClient', {id:id, client:client}).then(function (status) {
 	        return status.data;
 	    });
 	};
 
-	obj.deleteCustomer = function (id) {
-	    return $http.delete(serviceBase + 'deleteCustomer?id=' + id).then(function (status) {
+	obj.deleteClient = function (id) {
+	    return $http.delete(serviceBase + 'deleteClient?id=' + id).then(function (status) {
 	        return status.data;
 	    });
 	};
@@ -31,37 +31,37 @@ app.factory("services", ['$http', function($http) {
 }]);
 
 app.controller('listCtrl', function ($scope, services) {
-    services.getCustomers().then(function(data){
-        $scope.customers = data.data;
+    services.getClients().then(function(data){
+        $scope.clients = data.data;
     });
 });
 
-app.controller('editCtrl', function ($scope, $rootScope, $location, $routeParams, services, customer) {
-    var customerID = ($routeParams.customerID) ? parseInt($routeParams.customerID) : 0;
-    $rootScope.title = (customerID > 0) ? 'Edit Customer' : 'Add Customer';
-    $scope.buttonText = (customerID > 0) ? 'Update Customer' : 'Add New Customer';
-      var original = customer.data;
-      original._id = customerID;
-      $scope.customer = angular.copy(original);
-      $scope.customer._id = customerID;
+app.controller('editCtrl', function ($scope, $rootScope, $location, $routeParams, services, client) {
+    var clientID = ($routeParams.clientID) ? parseInt($routeParams.clientID) : 0;
+    $rootScope.title = (clientID > 0) ? 'Edit Client' : 'Add Client';
+    $scope.buttonText = (clientID > 0) ? 'Update Client' : 'Add New Client';
+      var original = client.data;
+      original._id = clientID;
+      $scope.client = angular.copy(original);
+      $scope.client._id = clientID;
 
       $scope.isClean = function() {
-        return angular.equals(original, $scope.customer);
+        return angular.equals(original, $scope.client);
       }
 
-      $scope.deleteCustomer = function(customer) {
+      $scope.deleteClient = function(client) {
         $location.path('/');
-        if(confirm("Are you sure to delete customer number: "+$scope.customer._id)==true)
-        services.deleteCustomer(customer.customerNumber);
+        if(confirm("Are you sure to delete client number: "+$scope.client._id)==true)
+        services.deleteClient(client.clientNumber);
       };
 
-      $scope.saveCustomer = function(customer) {
+      $scope.saveClient = function(client) {
         $location.path('/');
-        if (customerID <= 0) {
-            services.insertCustomer(customer);
+        if (clientID <= 0) {
+            services.insertClient(client);
         }
         else {
-            services.updateCustomer(customerID, customer);
+            services.updateClient(clientID, client);
         }
     };
 });
@@ -70,18 +70,18 @@ app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {
-        title: 'Customers',
-        templateUrl: 'partials/customers.html',
+        title: 'Clients',
+        templateUrl: 'partials/clients.html',
         controller: 'listCtrl'
       })
-      .when('/edit-customer/:customerID', {
-        title: 'Edit Customers',
-        templateUrl: 'partials/edit-customer.html',
+      .when('/edit-client/:clientID', {
+        title: 'Edit Clients',
+        templateUrl: 'partials/edit-client.html',
         controller: 'editCtrl',
         resolve: {
-          customer: function(services, $route){
-            var customerID = $route.current.params.customerID;
-            return services.getCustomer(customerID);
+          client: function(services, $route){
+            var clientID = $route.current.params.clientID;
+            return services.getClient(clientID);
           }
         }
       })

@@ -8,7 +8,7 @@
 		const DB_SERVER = "127.0.0.1";
 		const DB_USER = "root";
 		const DB_PASSWORD = "";
-		const DB = "angularcode_customer";
+		const DB = "azdigital";
 
 		private $db = NULL;
 		private $mysqli = NULL;
@@ -59,11 +59,11 @@
 			$this->response($this->json($error), 400);
 		}
 		
-		private function customers(){	
+		private function clients(){	
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
-			$query="SELECT distinct c.customerNumber, c.customerName, c.email, c.address, c.city, c.state, c.postalCode, c.country FROM angularcode_customers c order by c.customerNumber desc";
+			$query="SELECT distinct clientNumber, firstName, lastName, phone, address, cell, city, postalCode, email, province, dateOfBirth, gender, homeType, notes, referalType, referalText FROM clients order by clientNumber";
 			$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
 
 			if($r->num_rows > 0){
@@ -75,13 +75,13 @@
 			}
 			$this->response('',204);	// If no records "No Content" status
 		}
-		private function customer(){	
+		private function client(){	
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
 			$id = (int)$this->_request['id'];
 			if($id > 0){	
-				$query="SELECT distinct c.customerNumber, c.customerName, c.email, c.address, c.city, c.state, c.postalCode, c.country FROM angularcode_customers c where c.customerNumber=$id";
+				$query="SELECT distinct clientNumber, firstName, lastName, phone, address, cell, city, postalCode, email, province, dateOfBirth, gender, homeType, notes, referalType, referalText FROM clients where clientNumber=$id";
 				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
 				if($r->num_rows > 0) {
 					$result = $r->fetch_assoc();	
@@ -91,67 +91,69 @@
 			$this->response('',204);	// If no records "No Content" status
 		}
 		
-		private function insertCustomer(){
+		private function insertClient(){
 			if($this->get_request_method() != "POST"){
 				$this->response('',406);
 			}
 
-			$customer = json_decode(file_get_contents("php://input"),true);
-			$column_names = array('customerName', 'email', 'city', 'address', 'country');
-			$keys = array_keys($customer);
+			$client = json_decode(file_get_contents("php://input"),true);
+			$column_names = array('firstName', 'lastName', 'phone', 'address', 'cell', 'city',
+									'postalCode', 'email', 'province', 'dateOfBirth', 'gender', 'homeType', 'notes', 'referalType', 'referalText');
+			$keys = array_keys($client);
 			$columns = '';
 			$values = '';
-			foreach($column_names as $desired_key){ // Check the customer received. If blank insert blank into the array.
+			foreach($column_names as $desired_key){ // Check the client received. If blank insert blank into the array.
 			   if(!in_array($desired_key, $keys)) {
 			   		$$desired_key = '';
 				}else{
-					$$desired_key = $customer[$desired_key];
+					$$desired_key = $client[$desired_key];
 				}
 				$columns = $columns.$desired_key.',';
 				$values = $values."'".$$desired_key."',";
 			}
-			$query = "INSERT INTO angularcode_customers(".trim($columns,',').") VALUES(".trim($values,',').")";
-			if(!empty($customer)){
+			$query = "INSERT INTO clients (".trim($columns,',').") VALUES(".trim($values,',').")";
+			if(!empty($client)){
 				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
-				$success = array('status' => "Success", "msg" => "Customer Created Successfully.", "data" => $customer);
+				$success = array('status' => "Success", "msg" => "Client Created Successfully.", "data" => $client);
 				$this->response($this->json($success),200);
 			}else
 				$this->response('',204);	//"No Content" status
 		}
-		private function updateCustomer(){
+		private function updateClient(){
 			if($this->get_request_method() != "POST"){
 				$this->response('',406);
 			}
-			$customer = json_decode(file_get_contents("php://input"),true);
-			$id = (int)$customer['id'];
-			$column_names = array('customerName', 'email', 'city', 'address', 'country');
-			$keys = array_keys($customer['customer']);
+			$client = json_decode(file_get_contents("php://input"),true);
+			$id = (int)$client['id'];
+			$column_names = array('firstName', 'lastName', 'phone', 'address', 'cell', 'city',
+									'postalCode', 'email', 'province', 'dateOfBirth', 'gender', 'homeType', 'notes', 'referalType', 'referalText');
+			$keys = array_keys($client['client']);
 			$columns = '';
 			$values = '';
-			foreach($column_names as $desired_key){ // Check the customer received. If key does not exist, insert blank into the array.
+			foreach($column_names as $desired_key){ // Check the client received. If key does not exist, insert blank into the array.
 			   if(!in_array($desired_key, $keys)) {
 			   		$$desired_key = '';
 				}else{
-					$$desired_key = $customer['customer'][$desired_key];
+					$$desired_key = $client['client'][$desired_key];
 				}
 				$columns = $columns.$desired_key."='".$$desired_key."',";
 			}
-			$query = "UPDATE angularcode_customers SET ".trim($columns,',')." WHERE customerNumber=$id";
-			if(!empty($customer)){
+			$query = "UPDATE clients SET ".trim($columns,',')." WHERE clientNumber=$id";
+			if(!empty($client)){
 				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
-				$success = array('status' => "Success", "msg" => "Customer ".$id." Updated Successfully.", "data" => $customer);
+				$success = array('status' => "Success", "msg" => "Client ".$id." Updated Successfully.", "data" => $client);
 				$this->response($this->json($success),200);
 			}else
 				$this->response('',204);	// "No Content" status
 		}
 		
-		private function deleteCustomer(){
+		private function deleteClient(){
 			if($this->get_request_method() != "DELETE"){
 				$this->response('',406);
 			}
 			$id = (int)$this->_request['id'];
 			if($id > 0){				
-				$query="DELETE FROM angularcode_customers WHERE customerNumber = $id";
+				$query="DELETE FROM clients WHERE clientNumber = $id";
 				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
 				$success = array('status' => "Success", "msg" => "Successfully deleted one record.");
 				$this->response($this->json($success),200);

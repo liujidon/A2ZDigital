@@ -1,29 +1,29 @@
-CREATE DATABASE IF NOT EXISTS angularcode_customer;
+CREATE DATABASE IF NOT EXISTS angularcode_client;
  
-USE angularcode_customer;
+USE angularcode_client;
 
 --
--- Table structure for table `customers`
+-- Table structure for table `clients`
 --
 
 
-CREATE TABLE IF NOT EXISTS `angularcode_customers` (
-  `customerNumber` int(11) NOT NULL AUTO_INCREMENT,
-  `customerName` varchar(50) NOT NULL,
+CREATE TABLE IF NOT EXISTS `angularcode_clients` (
+  `clientNumber` int(11) NOT NULL AUTO_INCREMENT,
+  `clientName` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `address` varchar(50) NOT NULL,
   `city` varchar(50) NOT NULL,
   `state` varchar(50) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
   `country` varchar(50) NOT NULL,
-  PRIMARY KEY (`customerNumber`)
+  PRIMARY KEY (`clientNumber`)
 );
 
 --
--- Dumping data for table `customers`
+-- Dumping data for table `clients`
 --
 
-INSERT INTO `angularcode_customers` (`customerNumber`, `customerName`, `email`, `address`, `city`, `state`, `postalCode`, `country`) VALUES
+INSERT INTO `angularcode_clients` (`clientNumber`, `clientName`, `email`, `address`, `city`, `state`, `postalCode`, `country`) VALUES
 (103, 'Atelier graphique', 'Nantes@gmail.com', '54, rue Royale', 'Nantes', NULL, '44000', 'France'),
 (112, 'Signal Gift Stores', 'LasVegas@gmail.com', '8489 Strong St.', 'Las Vegas', 'NV', '83030', 'USA'),
 (114, 'Australian Collectors, Co.', 'Melbourne@gmail.com', '636 St Kilda Road', 'Melbourne', 'Victoria', '3004', 'Australia'),
