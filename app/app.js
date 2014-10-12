@@ -66,6 +66,19 @@ app.controller('editCtrl', function ($scope, $rootScope, $location, $routeParams
     };
 });
 
+app.controller('addServiceCtrl', function ($scope, services) {
+  this.tab = 1;
+    
+  this.selectTab = function (setTab){
+      console.print(setTab);
+      this.tab = setTab;
+  };
+  this.isSelected = function(checkTab) {
+      return this.tab === checkTab;
+  };
+});
+
+
 app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
@@ -84,6 +97,11 @@ app.config(['$routeProvider',
             return services.getClient(clientID);
           }
         }
+      })
+      .when('/add-services/:clientID', {
+        title: 'Add Services',
+        templateUrl: 'partials/add-services.html',
+        controller: 'addServiceCtrl',
       })
       .otherwise({
         redirectTo: '/'

@@ -9,24 +9,21 @@
 </style>
 <div class="view">
     <div class="container">
-        <div class="row">
-        <nav class= "navbar navbar-default" role= "navigation" >
-        <div class= "navbar-header" >
-        <a class= "navbar-brand" href= "#/clients"><i class="glyphicon glyphicon-th-large"></i> Clients List </a>
-        <a ng-show="client._id" class= "navbar-brand" href= "#/edit-client/0"><i class="glyphicon glyphicon-plus"></i> Create A New Client </a>
-        <a ng-show="client._id" class= "navbar-brand pull-right"><i class="glyphicon glyphicon-edit"></i> Currently Editing Client Number: {{client._id}}</a>
+        <div class="col-md-9">
+            <nav class= "navbar navbar-default" role= "navigation" >
+                <div class= "navbar-header" >
+                    <a class= "navbar-brand" href= "#/clients"><i class="glyphicon glyphicon-th-large"></i> Client Accounts </a>
+                    <a ng-show="client._id" class= "navbar-brand" href= "#/edit-client/0"><i class="glyphicon glyphicon-plus"></i> Create A New Client </a>
+                    <a ng-show="client._id" class= "navbar-brand pull-right"><i class="glyphicon glyphicon-edit"></i> Currently Editing Client: {{client.firstName}} {{client.lastName}}</a>
+                </div>
+            </nav>
         </div>
-        </nav>
-        <header>
-            <h3>{{title}}</h3>
-        </header>
-        <div class="col-md-12">
 
 <form role="form" name="myForm" class="form-horizontal">
 <div class="row">
 <div class= "form-group" ng-class="{error: myForm.firstname.$invalid}">
     <label class= "col-md-6"> Full Name* </label>
-    <label class= "col-md-6"> Phone Number* </label>
+    <label class= "col-md-3"> Phone Number* </label>
     <div class="row"></div>
     <div class="col-md-3">
         <input name="firstName" ng-model="client.firstName" type= "text" class= "form-control" placeholder="First name" required/>
@@ -37,7 +34,7 @@
         <span ng-show="myForm.lastName.$dirty && myForm.lastName.$invalid" class="help-inline">Last Name Required</span>
     </div>
     <div class="col-md-3">
-        <input name="phone" ng-model="client.phone" type= "text" class= "form-control" placeholder= "905-333-3333"/>
+        <input name="phone" ng-model="client.phone" type= "text" class= "form-control" placeholder= "905-333-3333" required/>
         <span ng-show="myForm.phone.$dirty && myForm.phone.$invalid" class="help-inline">Phone Number Required</span>
     </div>
 </div>
@@ -46,7 +43,7 @@
     <label class= "col-md-3">Cell </label>
     <div class="row"></div>
     <div class="col-md-6">
-        <input ng-model="client.address" type= "text" class= "form-control" placeholder= "22 Candy Street"/>
+        <input ng-model="client.address" type= "text" class= "form-control" placeholder= "22 Candy Street" required/>
     </div>
     <div class="col-md-3">
         <input ng-model="client.cell" type= "text" class= "form-control" placeholder= "905-333-3333"/>
@@ -55,30 +52,36 @@
 <div class= "form-group">
     <label class= "col-md-3">City* </label>
     <label class= "col-md-3">Potsal Code* </label>
-    <label class= "col-md-4"> Email </label>
+    <label class= "col-md-3"> Email </label>
     <div class="row"></div>
     <div class="col-md-3">
-        <input ng-model="client.city" type= "text" class= "form-control" placeholder= "Current City"/>
+        <input ng-model="client.city" type= "text" class= "form-control" placeholder= "Current City" required/>
     </div>
     <div class="col-md-3">
         <input ng-model="client.postalCode" type= "text" class= "form-control" placeholder= "L6T4L2"/>
     </div>
-    <div class="col-md-4">
-        <input name="email" ng-model="client.email" type= "email" class= "form-control" placeholder="Enter email" required/>
-        <span ng-show="myForm.email.$dirty && myForm.email.$invalid && !myForm.email.$error.email" class="help-inline">Email Required</span>
+    <div class="col-md-3">
+        <input name="email" ng-model="client.email" type= "email" class= "form-control" placeholder="Enter email"/>
         <span ng-show="myForm.email.$error.email" class="help-inline">Email is not valid</span>
     </div>
 </div>
 <div class= "form-group">
-    <label class= "col-md-6">Province* </label>
+    <label class= "col-md-3">Province* </label>
     <label class= "col-md-3">Date of Birth</label>
     <label class= "col-md-3">Gender*</label>
     <div class="row"></div>
-    <div class="col-md-6">
-        <select ng-model="client.province">
+    <div class="col-md-3">
+        <select ng-model="client.province" required>
             <option>Ontario</option>
-            <option>Quebec</option>
+            <option>Alberta</option>
             <option>British Columbia</option>
+            <option>Manitoba</option>
+            <option>New Brunswick</option>
+            <option>Newfoundland and Labrador</option>
+            <option>Nova Scotia</option>
+            <option>Prince Edward Island</option>
+            <option>Quebec</option>
+            <option>Saskatchewan</option>
         </select>
     </div>
     <div class="col-md-3">
@@ -100,10 +103,10 @@
     <h4>Additiona Informations</h4>
 </div>
 <div class= "form-group">
-    <label class= "col-md-6">Home Type </label>
+    <label class= "col-md-3">Home Type </label>
     <label class= "col-md-6">Special Notes</label>
     <div class="row"></div>
-    <div class="col-md-6">
+    <div class="col-md-3">
         <select ng-model="client.homeType">
             <option>Townhouse</option>
             <option>Detached</option>
@@ -112,13 +115,51 @@
             <option>Basement</option>
         </select>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <textarea ng-model="client.notes" type= "text" class= "form-control"/></textarea>
     </div>
 </div>
-<div class = "row">
-    <h4>How did you find out about us?</h4>
+<div class= "form-group">
+    <label class= "col-md-6">How did you find out about us?</label>
+    <div class="row"></div>
+    <div class="col-md-2">
+        <input type="radio" ng-model="client.referenceText" value="Radio"> Radio
+    </div>
+    <div class="col-md-2">
+        <input type="radio" ng-model="client.referenceText" value="Facebook"> Facebook
+    </div>
+    <div class="col-md-2">
+        <input type="radio" ng-model="client.referenceText" value="Other"> Other
+    </div>
+    <div class="row"></div>
+    <div class="col-md-2">
+        <input type="radio" ng-model="client.referenceText" value="Television"> Television
+    </div>
+    <div class="col-md-2">
+        <input type="radio" ng-model="client.referenceText" value="Twitter"> Twitter
+    </div>
+    <div class="col-md-2">
+        <input type="radio" ng-model="client.referenceText" value="Newspaper"> Newspaper
+    </div>
+    <div class="row"></div>
+    <div class="col-md-2">
+        <input type="radio" ng-model="client.referenceText" value="Website"> Website
+    </div>
+    <div class="col-md-2">
+        <input type="radio" ng-model="client.referenceText" value="Email Newsletter"> Email Newsletter
+    </div>
+    <div class="col-md-2">
+        <input type="radio" ng-model="client.referenceText" value="Friends/Family"> Friends/Family
+    </div>
+    <div class="row"></div>
+    <div class="col-md-3" ng-show="client.referenceText == 'Other'">
+        <input type="text" ng-model="client.reason" class= "form-control" placeholder= "Please Sepcify Reason">
+    </div>
+        <div class="col-md-3" ng-show="client.referenceText == 'Friends/Family'">
+        <input type="text" ng-model="client.reason" class= "form-control" placeholder= "Name of Friends/Family">
+    </div>
 </div>
+
 
 <div class= "form-group">
     <label class= "col-md-2"></label>
