@@ -161,6 +161,38 @@
 				$this->response('',204);	// If no records "No Content" status
 		}
 		
+
+
+		/*****************************Services*******************************/
+		private function insertService(){
+			if($this->get_request_method() != "POST"){
+				$this->response('',406);
+			}
+
+			$service = json_decode(file_get_contents("php://input"),true);	
+			$column_names = array('clientNumber', 'name', 'type', 'status', 'provider',
+									'deviceType', 'deviceSubtype', 'monthlyCharge', 'activationCost', 'numUnits', 
+									'unitCost','totalCost', 'phone', 'deactivationDate', 'notes');
+			$keys = array_keys($service);
+			$columns = '';
+			$values = '';
+			foreach($column_names as $desired_key){ // Check the service received. If blank insert blank into the array.
+			   if(in_array($desired_key, $keys)) {
+					$$desired_key = $service[$desired_key];
+					$columns = $columns.$desired_key.',';
+					$values = $values."'".$$desired_key."',";
+				}
+			}
+			$query = "INSERT INTO services (".trim($columns,',').") VALUES(".trim($values,',').")";
+			if(!empty($service)){
+				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+				$success = array('status' => "Success", "msg" => "Service Created Successfully.", "data" => $query);
+				$this->response($this->json($success),200);
+			}else
+				$this->response('',204);	//"No Content" status
+		}
+
+
 		/*
 		 *	Encode array into JSON
 		*/

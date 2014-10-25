@@ -1,4 +1,14 @@
-var app = angular.module('myApp', ['ngRoute', 'mgcrea.ngStrap']);
+var app = angular.module('myApp', 
+                        ['ngRoute',
+                         'mgcrea.ngStrap',
+                         'myApp.serviceController',
+                         'myApp.clientListController',
+                         'myApp.clientEditController']);
+
+var clientListController = angular.module('myApp.clientListController', []);
+var clientEditController = angular.module('myApp.clientEditController', []);
+var serviceController = angular.module('myApp.serviceController', []);
+
 app.factory("services", ['$http', function($http) {
   var serviceBase = 'services/'
     var obj = {};
@@ -27,57 +37,14 @@ app.factory("services", ['$http', function($http) {
 	    });
 	};
 
+  obj.insertService = function (service) {
+      return $http.post(serviceBase + 'insertService', service).then(function (results) {
+      return results;
+    });
+  };
+
     return obj;   
 }]);
-
-app.controller('listCtrl', function ($scope, services) {
-    services.getClients().then(function(data){
-        $scope.clients = data.data;
-    });
-});
-
-app.controller('editCtrl', function ($scope, $rootScope, $location, $routeParams, services, client) {
-    var clientID = ($routeParams.clientID) ? parseInt($routeParams.clientID) : 0;
-    $rootScope.title = (clientID > 0) ? 'Edit Client' : 'Add Client';
-    $scope.buttonText = (clientID > 0) ? 'Update Client' : 'Add New Client';
-      var original = client.data;
-      original._id = clientID;
-      $scope.client = angular.copy(original);
-      $scope.client._id = clientID;
-
-      $scope.isClean = function() {
-        return angular.equals(original, $scope.client);
-      }
-
-      $scope.deleteClient = function(client) {
-        $location.path('/');
-        if(confirm("Are you sure to delete client number: "+$scope.client._id)==true)
-        services.deleteClient(client.clientNumber);
-      };
-
-      $scope.saveClient = function(client) {
-        $location.path('/');
-        if (clientID <= 0) {
-            services.insertClient(client);
-        }
-        else {
-            services.updateClient(clientID, client);
-        }
-    };
-});
-
-app.controller('addServiceCtrl', function ($scope, services) {
-  this.tab = 1;
-    
-  this.selectTab = function (setTab){
-      console.print(setTab);
-      this.tab = setTab;
-  };
-  this.isSelected = function(checkTab) {
-      return this.tab === checkTab;
-  };
-});
-
 
 app.config(['$routeProvider',
   function($routeProvider) {
@@ -85,12 +52,12 @@ app.config(['$routeProvider',
       when('/', {
         title: 'Clients',
         templateUrl: 'partials/clients.html',
-        controller: 'listCtrl'
+        controller: 'clientListController'
       })
       .when('/edit-client/:clientID', {
         title: 'Edit Clients',
         templateUrl: 'partials/edit-client.html',
-        controller: 'editCtrl',
+        controller: 'clientEditController',
         resolve: {
           client: function(services, $route){
             var clientID = $route.current.params.clientID;
@@ -101,7 +68,7 @@ app.config(['$routeProvider',
       .when('/add-services/:clientID', {
         title: 'Add Services',
         templateUrl: 'partials/add-services.html',
-        controller: 'addServiceCtrl',
+        controller: 'serviceController',
       })
       .otherwise({
         redirectTo: '/'

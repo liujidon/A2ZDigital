@@ -22,9 +22,34 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `homeType` varchar(50) DEFAULT NULL,
   `notes` varchar(1028) DEFAULT NULL,
   `referalType` varchar(128) DEFAULT NULL,
-  `referalText` varchar(1028) DEFAULT NULL,
+  `referalText` varchar(2028) DEFAULT NULL,
   PRIMARY KEY (`clientNumber`)
 );
+
+--
+-- Table structure for table `services`
+--
+
+CREATE TABLE IF NOT EXISTS `services` (
+  `serviceNumber` int(11) NOT NULL AUTO_INCREMENT,
+  `clientNumber` int(11) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `type` varchar(50) DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  `provider` varchar(256) DEFAULT NULL,
+  `deviceType` varchar(50) DEFAULT NULL,
+  `deviceSubtype` varchar(50) DEFAULT NULL,
+  `monthlyCharge` decimal(10,2) DEFAULT NULL,
+  `activationCost` decimal(10,2) DEFAULT NULL,
+  `numUnits` int(11) DEFAULT NULL,
+  `unitCost` decimal(10,2) DEFAULT NULL,
+  `totalCost` decimal(10,2) DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `deactivationDate` date DEFAULT NULL,
+  `notes` varchar(2028) DEFAULT NULL,
+  PRIMARY KEY (`serviceNumber`)
+);
+
 
 --
 -- Dumping data for table `clients`
@@ -34,4 +59,10 @@ INSERT INTO `clients` (`clientNumber`, `firstName`, `lastName`, `phone`, `addres
 						`homeType`, `notes`, `referalType`, `referalText`) VALUES
 (1, 'Bill', 'Liu', '416-123-4567', '123 Test Street', '905-123-4567', 'Toronto', 'A1B 2C3', 'test@gmail.com', 'Ontario', '1990-11-23', 'Male', 'Apartment', 'special stuff here', 'Facebook', null),
 (2, 'Bill2', 'Liu2', '416-123-4567', '123 Test Street', '905-123-4567', 'Toronto', 'A1B 2C3', 'test@gmail.com', 'Ontario', '1990-10-24', 'Male', 'Apartment', 'special stuff here', 'Facebook', null);
+
+
+--
+-- Dumping data for table `services`
+--
+INSERT INTO `services` VALUES (1, 1, 'Cable TV', 'old', 'Active', 'Rogers', 'Roku', 'Roku Stick', 59.99, 100.00, 2, 4.99, 9.98, '416-123-4567', '2014-11-23', 'what what');
 
