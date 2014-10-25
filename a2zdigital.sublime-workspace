@@ -1,0 +1,264 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "",
+			"file": "/Users/Bill/Downloads/sb-admin/index.html",
+			"file_size": -1,
+			"file_write_time": -1,
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/Bill/git/A2ZDigital/css/simple-sidebar.css",
+		"/Users/Bill/git/A2ZDigital/app/app.js",
+		"/Users/Bill/git/A2ZDigital/js/toaster.js",
+		"/Users/Bill/git/A2ZDigital/js/ui-bootstrap-tpls-0.10.0.min.js",
+		"/Users/Bill/git/A2ZDigital/bower_components/bootstrap/README.md",
+		"/Users/Bill/git/A2ZDigital/bower_components/bootstrap/package.json",
+		"/Users/Bill/Library/Application Support/Sublime Text 2/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/Bill/git/A2ZDigital/css/bootstrap-datepicker.css",
+		"/Users/Bill/git/A2ZDigital/js/bootstrap-datepicker.js",
+		"/Users/Bill/git/A2ZDigital/js/ui-bootstrap-modal-0.10.0.min.js",
+		"/Users/Bill/git/A2ZDigital/css/bootstrap.min.css",
+		"/Users/Bill/git/A2ZDigital/index.html",
+		"/Users/Bill/git/A2ZDigital/angularcode_customer.sql",
+		"/Users/Bill/git/A2ZDigital/partials/edit-client.html",
+		"/Users/Bill/git/A2ZDigital/partials/customers.html",
+		"/Users/Bill/git/A2ZDigital/services/Rest.inc.php",
+		"/Users/Bill/git/A2ZDigital/partials/edit-customer.html",
+		"/Users/Bill/git/angular-seed/app/index.html",
+		"/Users/Bill/git/A2ZDigital/services/.htaccess",
+		"/Users/Bill/git/A2ZDigital/services/api.php",
+		"/Users/Bill/git/angular-enterprise-seed/app/js/app.js",
+		"/Users/Bill/git/angular-enterprise-seed/ui/partials/navbar-top.html",
+		"/Users/Bill/git/angular-enterprise-seed/ui/js/app.js",
+		"/Users/Bill/git/angular-enterprise-seed/ui/index.html",
+		"/Users/Bill/git/angular-enterprise-seed/app/index.html",
+		"/Users/Bill/git/angular-enterprise-seed/ui/playground/playground.js",
+		"/Users/Bill/git/angular-enterprise-seed/ui/partials/home.html",
+		"/Users/Bill/git/angular-enterprise-seed/ui/playground/playground.html",
+		"/Users/Bill/git/angular-enterprise-seed/ui/js/notificationManager.js",
+		"/Users/Bill/git/angular-enterprise-seed/ui/js/directives/fadeInDirective.js",
+		"/Users/Bill/git/angular-enterprise-seed/ui/js/directives/stopEventDirective.js",
+		"/Users/Bill/git/angular-enterprise-seed/ui/js/services/services.js",
+		"/Users/Bill/git/angular-enterprise-seed/ui/playground/datagrid.html",
+		"/Users/Bill/git/angular-enterprise-seed/ui/playground/emp.json",
+		"/Users/Bill/git/angular-enterprise-seed/ui/css/app.css",
+		"/Users/Bill/git/angular-enterprise-seed/ui/js/directives/notifications/notyDirective.js",
+		"/Users/Bill/git/angular-enterprise-seed/ui/js/filters/filters.js",
+		"/Users/Bill/git/angular-enterprise-seed/ui/data/constants.json",
+		"/Users/Bill/git/angular-enterprise-seed/ui/data/generic-list.json",
+		"/Users/Bill/git/angular-enterprise-seed/ui/partials/navbar-bottom.html",
+		"/Users/Bill/git/angular-enterprise-seed/README.md",
+		"/Users/Bill/git/angular-enterprise-seed/ui/app.iml",
+		"/private/var/db/systemstats/snapshots.db",
+		"/Users/Bill/Dropbox/Fourth Year/Y4S2/Natural Language Computing CSC401/A1/all_twtt.py"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"<open folders>,<open files>",
+			"<open folders>",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"search",
+			"add",
+			"addclient",
+			"new",
+			"add",
+			"data",
+			"name",
+			"customer",
+			"Customer",
+			"Customers",
+			"Customer",
+			"customer",
+			"customers",
+			"Customers",
+			"angular",
+			"ang",
+			"AngularCodeCustomerManagerApp",
+			"customers",
+			"loginModal",
+			"AuthService",
+			"stream",
+			"filterText",
+			"filterOptions",
+			"filter",
+			"ng-grid",
+			"useExternalFilter",
+			"createDataGrid",
+			"servicesData",
+			"filtertext",
+			"filterOptions"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"client",
+			"Client",
+			"Clients",
+			"Client",
+			"client",
+			"clients",
+			"Clients"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/Users/Bill/Downloads/sb-admin/index.html",
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 6686.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"playgroun",
+				"ui/playground/playground.js"
+			],
+			[
+				"c",
+				"/Users/Bill/Dropbox/Fourth Year/Y4S2/Natural Language Computing CSC401/A1/all_twtt.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 223.0,
+	"status_bar_visible": true
+}
