@@ -441,11 +441,14 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.helpers.dimensions'])
         });
 
         // Observe scope attributes for change
-        attr.$observe('title', function(newValue, oldValue) {
-          scope.title = $sce.trustAsHtml(newValue);
-          angular.isDefined(oldValue) && $$rAF(function() {
-            tooltip && tooltip.$applyPlacement();
-          });
+        attr.$observe('title', function(newValue) {
+          if (angular.isDefined(newValue) || !scope.hasOwnProperty('title')) {
+            var oldValue = scope.title;
+            scope.title = $sce.trustAsHtml(newValue);
+            angular.isDefined(oldValue) && $$rAF(function() {
+              tooltip && tooltip.$applyPlacement();
+            });
+          }
         });
 
         // Support scope as an object
@@ -463,7 +466,7 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.helpers.dimensions'])
         // Visibility binding support
         attr.bsShow && scope.$watch(attr.bsShow, function(newValue, oldValue) {
           if(!tooltip || !angular.isDefined(newValue)) return;
-          if(angular.isString(newValue)) newValue = !!newValue.match(',?(tooltip),?');
+          if(angular.isString(newValue)) newValue = !!newValue.match(/true|,?(tooltip),?/i);
           newValue === true ? tooltip.show() : tooltip.hide();
         });
 
