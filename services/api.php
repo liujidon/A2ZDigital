@@ -5,15 +5,15 @@
 	
 		public $data = "";
 		
-		const DB_SERVER = "127.0.0.1";
+		const DB_SERVER = "localhost";
 		const DB_USER = "root";
-		const DB_PASSWORD = "";
+		const DB_PASSWORD = "n2vd33p";
 		const DB = "azdigital";
 
 		private $db = NULL;
 		private $mysqli = NULL;
 		public function __construct(){
-			parent::__construct();				// Init parent contructor
+			parent::__construct();			// Init parent contructor
 			$this->dbConnect();					// Initiate Database connection
 		}
 		
