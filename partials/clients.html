@@ -1,12 +1,12 @@
  <div class="row">
     <div class="col-md-12" ng-show="clients.length > 0">
     
-    <nav class= "navbar navbar-default" role= "navigation" >
+    <nav class= "navbar" role= "navigation" >
         <div class= "navbar-header" >
-            <a class="btn btn-lg btn-success" href="#/edit-client/0"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add new client</a>
+            <a class="btn btn-md btn-success" href="#/edit-client/0"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add new client</a>
         </div>
         <div class="col-md-3">
-            <div class="input-group input-group-lg">
+            <div class="input-group input-group-md">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
                 <input type="text" class="form-control" ng-model="searchName" placeholder="Search">
             </div>
@@ -21,9 +21,7 @@
         <th>Phone&nbsp;</th>
         <th>Address&nbsp;</th>
         <th>Email&nbsp;</th>
-        <th>City&nbsp;</th>
-        <th>Potsal Code&nbsp;</th>
-        <th>Gender&nbsp;</th>
+         <th>View Client &nbsp;</th>
         <th>Edit Client &nbsp;</th>
         <th>Add Services &nbsp;</th>
         </thead>
@@ -34,11 +32,9 @@
                 <td>{{data.phone}}</td>
                 <td>{{data.address}}</td>
                 <td>{{data.email}}</td>
-                <td>{{data.city}}</td>
-                <td>{{data.postalCode}}</td>
-                <td>{{data.gender}}</td>
-                <td><a href="#/edit-client/{{data.clientNumber}}" class="btn">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp; Edit Client</a></td>
-                <td><a href="#/add-services/{{data.clientNumber}}" class="btn">&nbsp;<i class="glyphicon glyphicon-plus"></i>&nbsp; Add Service</a></td>
+              	<td><a href="">&nbsp;<i class="glyphicon glyphicon-open-eye"></i>&nbsp; View Client</a></td>
+                <td><a href="#/edit-client/{{data.clientNumber}}">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp; Edit Client</a></td>
+                <td><a href="#/add-services/{{data.clientNumber}}">&nbsp;<i class="glyphicon glyphicon-plus"></i>&nbsp; Add Service</a></td>
             </tr>
         </tbody>
         </table>
