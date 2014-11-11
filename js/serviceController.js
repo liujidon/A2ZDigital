@@ -3,6 +3,8 @@
 serviceController.controller('serviceController', function ($scope, services, $routeParams) {
 	this.tab = 1;
 	$scope.selected = 'Cable TV';
+	$scope.orderList = [];
+
 	var clientID = ($routeParams.clientID) ? parseInt($routeParams.clientID) : 0;
 
 	this.selectTab = function (setTab){
@@ -20,8 +22,14 @@ serviceController.controller('serviceController', function ($scope, services, $r
 			if(service.numUnits != null && service.unitCost != null)
 				service.totalCost = service.numUnits * service.unitCost;
 			services.insertService(service);
+			$scope.orderList.push(service);
 		}
 		$scope.service = null;
 	};
+
+	$scope.removeService = function(index) {
+		console.log(index);
+        $scope.orderList.splice(index, 1);
+    };
 });
 

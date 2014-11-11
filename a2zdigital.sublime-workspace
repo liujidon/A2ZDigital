@@ -7,17 +7,6 @@
 	},
 	"buffers":
 	[
-		{
-			"contents": "",
-			"file": "/Users/Bill/Downloads/sb-admin/index.html",
-			"file_size": -1,
-			"file_write_time": -1,
-			"settings":
-			{
-				"buffer_size": 0,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -43,6 +32,7 @@
 	},
 	"file_history":
 	[
+		"/Users/Bill/Downloads/sb-admin/index.html",
 		"/Users/Bill/git/A2ZDigital/css/simple-sidebar.css",
 		"/Users/Bill/git/A2ZDigital/app/app.js",
 		"/Users/Bill/git/A2ZDigital/js/toaster.js",
@@ -161,37 +151,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "/Users/Bill/Downloads/sb-admin/index.html",
-					"settings":
-					{
-						"buffer_size": 0,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 6686.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],

@@ -18,290 +18,321 @@
 	<h2> {{selected}} </h2>
 </div>
 
-<div ng-show="selected == 'Cable TV'">
-	<form role="form" name="serviceForm" class="form-horizontal">
-		<div class="row">
-			<div class="col-md-2">
-				<input type="radio" ng-model="service.type" value="old"> Old <br/>
-			</div>
-			<div class="col-md-2">
-				<input type="radio" ng-model="service.type" value="new"> New Service <br/>
-			</div>
-			<div class="col-md-1">
-				<select ng-model="service.status">
-            		<option>Active</option>
-            		<option>Deactivated</option>
-            		<option>Suspended</option>
-        		</select>
-			</div>
+<div class="row">
+	<div class="col-md-6">
+		<div ng-show="selected == 'Cable TV'">
+			<form role="form" name="serviceForm" class="form-horizontal">
+				<div class="row">
+					<div class="col-md-4">
+						<input type="radio" ng-model="service.type" value="old"> Old <br/>
+					</div>
+					<div class="col-md-4">
+						<input type="radio" ng-model="service.type" value="new"> New Service <br/>
+					</div>
+					<div class="col-md-1">
+						<select ng-model="service.status">
+		            		<option>Active</option>
+		            		<option>Deactivated</option>
+		            		<option>Suspended</option>
+		        		</select>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row">
+			    	<label class= "col-md-5"> Current Service Provider </label>
+			    	<div class="row"></div>
+					<div class="col-md-5">
+			    		<input name="provider" ng-model="service.provider" type= "text" class= "form-control" placeholder="Enter Provider Name"/>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row">
+			    	<label class= "col-md-3"> Device Type </label>
+			    	<div class="row"></div>
+					<div class="col-md-3">
+						<select ng-model="service.deviceType">
+		            		<option>Roku</option>
+		            		<option>IP TV</option>
+		        		</select>
+					</div>
+					<div class="col-md-5" ng-show="service.deviceType == 'Roku'">
+						<select ng-model="service.deviceSubtype">
+		            		<option>Roku Stick</option>
+		            		<option>Roku 1</option>
+		            		<option>Roku 2</option>
+		            		<option>Roku 3</option>
+		        		</select>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row">
+			    	<label class= "col-md-5"> Monthly Service Charge </label>
+			    	<label class= "col-md-5"> Activation Cost </label>
+			    	<div class="row"></div>
+					<div class="col-md-5">
+			    		<input name="monthlyCharge" ng-model="service.monthlyCharge" type= "number" min = "0.0" step="0.01" class= "form-control" placeholder="Enter Charges"/>
+					</div>
+					<div class="col-md-5">
+			    		<input name="activationCost" ng-model="service.activationCost" type= "number" min = "0.0" step="0.01" class= "form-control" placeholder="Activation cost"/>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row">
+			    	<label class= "col-md-4"> Device Cost </label>
+			    	<div class="row"></div>
+					<div class="col-md-4">
+			    		<input name="units" ng-model="service.numUnits" type= "number" class= "form-control" min = "0" placeholder="Number of Units"/></input>
+					</div>
+					<div class="col-md-1"> <label>x</lable> </div>
+					<div class="col-md-4">
+			    		<input name="unitCost" ng-model="service.unitCost" type= "number" class= "form-control" min = "0.0" step="0.01" placeholder="Unit Cost"/>
+					</div>
+					<div class"col-md-1"> Total Device Cost: {{service.numUnits * service.unitCost | currency}} </div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row">
+			    	<label class= "col-md-9"> Special Notes </label>
+			    	<div class="row"></div>
+					<div class="col-md-9">
+			    		<textarea ng-model="service.notes" type= "text" class= "form-control"/></textarea>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row" ng-show="service != null">
+					<div class="col-md-1">
+		    			<button ng-click="saveService(service)" class="btn btn-primary">Save</button>
+					</div>
+				</div>
+			</form>
 		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row">
-	    	<label class= "col-md-3"> Current Service Provider </label>
-	    	<div class="row"></div>
-			<div class="col-md-3">
-	    		<input name="provider" ng-model="service.provider" type= "text" class= "form-control" placeholder="Enter Provider Name"/>
-			</div>
+		<div ng-show="selected == 'Phone'">
+			<form role="form" name="serviceForm" class="form-horizontal">
+				<div class="row">
+					<div class="col-md-4">
+						<input type="radio" ng-model="service.type" value="port in"> Port In <br/>
+					</div>
+					<div class="col-md-4">
+						<input type="radio" ng-model="service.type" value="new"> New Service <br/>
+					</div>
+					<div class="col-md-1">
+						<select ng-model="service.status">
+		            		<option>Active</option>
+		            		<option>Deactivated</option>
+		            		<option>Suspended</option>
+		        		</select>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row">
+			    	<label class= "col-md-5"> Current Service Provider </label>
+			    	<div class="row"></div>
+					<div class="col-md-5">
+			    		<input name="provider" ng-model="service.provider" type= "text" class= "form-control" placeholder="Enter Provider Name"/>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row">
+			    	<label class= "col-md-5"> Port In Phone No. </label>
+			    	<div class="row"></div>
+					<div class="col-md-5">
+			    		<input name="phone" ng-model="service.phone" type= "text" class= "form-control" placeholder="905-333-3333"/>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row">
+			    	<label class= "col-md-5"> Home Phone Type </label>
+			    	<div class="row"></div>
+					<div class="col-md-5">
+						<select ng-model="service.deviceType">
+		            		<option>Local</option>
+		            		<option>Long Disance</option>
+		            		<option>Calling Card</option>
+		        		</select>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row">
+			    	<label class= "col-md-5"> Monthly Service Charge </label>
+			    	<label class= "col-md-5"> Install Cost </label>
+			    	<div class="row"></div>
+					<div class="col-md-5">
+			    		<input name="monthlyCharge" ng-model="service.monthlyCharge" type= "number" min = "0.0" step="0.01" class= "form-control" placeholder="Enter Charges"/>
+					</div>
+					<div class="col-md-5">
+			    		<input name="activationCost" ng-model="service.activationCost" type= "number" min = "0.0" step="0.01" class= "form-control" placeholder="Install cost"/>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row">
+			    	<label class= "col-md-9"> Special Notes </label>
+			    	<div class="row"></div>
+					<div class="col-md-9">
+			    		<textarea ng-model="service.notes" type= "text" class= "form-control"/></textarea>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row" ng-show="service != null">
+					<div class="col-md-1">
+		    			<button ng-click="saveService(service)" class="btn btn-primary">Save</button>
+					</div>
+				</div>
+			</form>
 		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row">
-	    	<label class= "col-md-3"> Device Type </label>
-	    	<div class="row"></div>
-			<div class="col-md-1">
-				<select ng-model="service.deviceType">
-            		<option>Roku</option>
-            		<option>IP TV</option>
-        		</select>
-			</div>
-			<div class="col-md-1" ng-show="service.deviceType == 'Roku'">
-				<select ng-model="service.deviceSubtype">
-            		<option>Roku Stick</option>
-            		<option>Roku 1</option>
-            		<option>Roku 2</option>
-            		<option>Roku 3</option>
-        		</select>
-			</div>
+		<div ng-show="selected == 'Internet'">
+			<form role="form" name="serviceForm" class="form-horizontal">
+				<div class="row">
+					<div class="col-md-4">
+						<input type="radio" ng-model="service.type" value="old"> Old <br/>
+					</div>
+					<div class="col-md-4">
+						<input type="radio" ng-model="service.type" value="new"> New Service <br/>
+					</div>
+					<div class="col-md-1">
+						<select ng-model="service.status">
+		            		<option>Active</option>
+		            		<option>Deactivated</option>
+		            		<option>Suspended</option>
+		        		</select>
+					</div>
+				</div>
+		    	<div style="padding-top: 1em;"></div>
+				<div class="row">
+			    	<label class= "col-md-6"> Current Service Provider </label>
+			    	<div class="row"></div>
+					<div class="col-md-6">
+			    		<input name="provider" ng-model="service.provider" type= "text" class= "form-control" placeholder="Enter Provider Name"/>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row">
+					<label class= "col-md-9"> Deactivation Date</label>
+					<div class="row"></div>
+					<div class="col-md-9">
+			        	<div class="input-group">
+			            	<span class="input-group-addon">
+			                	<span class="glyphicon glyphicon-calendar"></span>
+			            	</span>
+			            	<input type="text" class="form-control" ng-model="service.deactivationDate" placeholder="yyyy-mm-dd" data-date-format="yyyy-MM-dd" date-type="string" bs-datepicker>
+			        	</div>
+			    	</div>
+		    	</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row">
+			    	<label class= "col-md-3"> Internet Type </label>
+			    	<div class="row"></div>
+					<div class="col-md-3">
+						<select ng-model="service.deviceType">
+		            		<option>DSL</option>
+		            		<option>Cable</option>
+		            		<option>Other</option>
+		        		</select>
+					</div>
+					<div class="col-md-3" ng-show="service.deviceType == 'DSL'">
+						<select ng-model="service.deviceSubtype">
+		            		<option>7 Mbps</option>
+		            		<option>15 Mbps</option>
+		            		<option>25 Mbps</option>
+		            		<option>50 Mbps</option>
+		        		</select>
+					</div>
+					<div class="col-md-3" ng-show="service.deviceType == 'Cable'">
+						<select ng-model="service.deviceSubtype">
+		            		<option>30 Mbps</option>
+		            		<option>60 Mbps</option>
+		        		</select>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row">
+			    	<label class= "col-md-5"> Monthly Service Charge </label>
+			    	<label class= "col-md-5"> Install Cost </label>
+			    	<div class="row"></div>
+					<div class="col-md-5">
+			    		<input name="monthlyCharge" ng-model="service.monthlyCharge" type= "number" min = "0.0" step="0.01" class= "form-control" placeholder="Enter Charges"/>
+					</div>
+					<div class="col-md-5">
+			    		<input name="activationCost" ng-model="service.activationCost" type= "number" min = "0.0" step="0.01" class= "form-control" placeholder="Install cost"/>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row">
+			    	<label class= "col-md-9"> Special Notes </label>
+			    	<div class="row"></div>
+					<div class="col-md-9">
+			    		<textarea ng-model="service.notes" type= "text" class= "form-control"/></textarea>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row" ng-show="service != null">
+					<div class="col-md-1">
+		    			<button ng-click="saveService(service)" class="btn btn-primary">Save</button>
+					</div>
+				</div>
+			</form>
 		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row">
-	    	<label class= "col-md-3"> Monthly Service Charge </label>
-	    	<label class= "col-md-3"> Activation Cost </label>
-	    	<div class="row"></div>
-			<div class="col-md-2">
-	    		<input name="monthlyCharge" ng-model="service.monthlyCharge" type= "number" min = "0.0" step="0.01" class= "form-control" placeholder="Enter Charges"/>
-			</div>
-			<div class="col-md-1"></div>
-			<div class="col-md-2">
-	    		<input name="activationCost" ng-model="service.activationCost" type= "number" min = "0.0" step="0.01" class= "form-control" placeholder="Activation cost"/>
-			</div>
+		<div ng-show="selected == 'Miscellaneous'">
+			<form role="form" name="serviceForm" class="form-horizontal">
+				<div class="row">
+			    	<label class= "col-md-5"> Enter Service Name </label>
+			    	<div class="row"></div>
+					<div class="col-md-5">
+			    		<input ng-model="service.name" type= "text" class= "form-control" placeholder="Enter Service Name"/>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row">
+			    	<label class= "col-md-5"> Device Cost</label>
+			    	<div class="row"></div>
+					<div class="col-md-5">
+			    		<input name="monthlyCharge" ng-model="service.totalCost" type= "number" min = "0.0" step="0.01" class= "form-control" placeholder="Enter Total Cost"/>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row">
+			    	<label class= "col-md-9"> Special Notes </label>
+			    	<div class="row"></div>
+					<div class="col-md-9">
+			    		<textarea ng-model="service.notes" type= "text" class= "form-control"/></textarea>
+					</div>
+				</div>
+				<div style="padding-top: 1em;"></div>
+				<div class="row" ng-show="service != null">
+					<div class="col-md-1">
+		    			<button ng-click="saveService(service)" class="btn btn-primary">Save</button>
+					</div>
+				</div>
+			</form>
 		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row">
-	    	<label class= "col-md-3"> Device Cost </label>
-	    	<div class="row"></div>
-			<div class="col-md-2">
-	    		<input name="units" ng-model="service.numUnits" type= "number" class= "form-control" min = "0" placeholder="Number of Units"/></input>
-			</div>
-			<div class="col-md-1"> <label> x </lable> </div>
-			<div class="col-md-2">
-	    		<input name="unitCost" ng-model="service.unitCost" type= "number" class= "form-control" min = "0.0" step="0.01" placeholder="Unit Cost"/>
-			</div>
-			<div class"col-md-1"> Total Device Cost: {{service.numUnits * service.unitCost | currency}} </div>
-		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row">
-	    	<label class= "col-md-3"> Special Notes </label>
-	    	<div class="row"></div>
-			<div class="col-md-3">
-	    		<textarea ng-model="service.notes" type= "text" class= "form-control"/></textarea>
-			</div>
-		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row" ng-show="service != null">
-			<div class="col-md-1">
-    			<button ng-click="saveService(service)" class="btn btn-primary">Save</button>
-			</div>
-		</div>
-	</form>
-</div>
-<div ng-show="selected == 'Phone'">
-	<form role="form" name="serviceForm" class="form-horizontal">
-		<div class="row">
-			<div class="col-md-2">
-				<input type="radio" ng-model="service.type" value="port in"> Port In <br/>
-			</div>
-			<div class="col-md-2">
-				<input type="radio" ng-model="service.type" value="new"> New Service <br/>
-			</div>
-			<div class="col-md-1">
-				<select ng-model="service.status">
-            		<option>Active</option>
-            		<option>Deactivated</option>
-            		<option>Suspended</option>
-        		</select>
-			</div>
-		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row">
-	    	<label class= "col-md-3"> Current Service Provider </label>
-	    	<div class="row"></div>
-			<div class="col-md-3">
-	    		<input name="provider" ng-model="service.provider" type= "text" class= "form-control" placeholder="Enter Provider Name"/>
-			</div>
-		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row">
-	    	<label class= "col-md-3"> Port In Phone No. </label>
-	    	<div class="row"></div>
-			<div class="col-md-3">
-	    		<input name="phone" ng-model="service.phone" type= "text" class= "form-control" placeholder="905-333-3333"/>
-			</div>
-		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row">
-	    	<label class= "col-md-3"> Home Phone Type </label>
-	    	<div class="row"></div>
-			<div class="col-md-1">
-				<select ng-model="service.deviceType">
-            		<option>Local</option>
-            		<option>Long Disance</option>
-            		<option>Calling Card</option>
-        		</select>
-			</div>
-		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row">
-	    	<label class= "col-md-3"> Monthly Service Charge </label>
-	    	<label class= "col-md-3"> Install Cost </label>
-	    	<div class="row"></div>
-			<div class="col-md-2">
-	    		<input name="monthlyCharge" ng-model="service.monthlyCharge" type= "number" min = "0.0" step="0.01" class= "form-control" placeholder="Enter Charges"/>
-			</div>
-			<div class="col-md-1"></div>
-			<div class="col-md-2">
-	    		<input name="activationCost" ng-model="service.activationCost" type= "number" min = "0.0" step="0.01" class= "form-control" placeholder="Install cost"/>
-			</div>
-		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row">
-	    	<label class= "col-md-3"> Special Notes </label>
-	    	<div class="row"></div>
-			<div class="col-md-3">
-	    		<textarea ng-model="service.notes" type= "text" class= "form-control"/></textarea>
-			</div>
-		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row" ng-show="service != null">
-			<div class="col-md-1">
-    			<button ng-click="saveService(service)" class="btn btn-primary">Save</button>
-			</div>
-		</div>
-	</form>
-</div>
-<div ng-show="selected == 'Internet'">
-	<form role="form" name="serviceForm" class="form-horizontal">
-		<div class="row">
-			<div class="col-md-2">
-				<input type="radio" ng-model="service.type" value="old"> Old <br/>
-			</div>
-			<div class="col-md-2">
-				<input type="radio" ng-model="service.type" value="new"> New Service <br/>
-			</div>
-			<div class="col-md-1">
-				<select ng-model="service.status">
-            		<option>Active</option>
-            		<option>Deactivated</option>
-            		<option>Suspended</option>
-        		</select>
-			</div>
-		</div>
-    	<div style="padding-top: 1em;"></div>
-		<div class="row">
-	    	<label class= "col-md-3"> Current Service Provider </label>
-	    	<div class="row"></div>
-			<div class="col-md-3">
-	    		<input name="provider" ng-model="service.provider" type= "text" class= "form-control" placeholder="Enter Provider Name"/>
-			</div>
-		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row">
-			<label class= "col-md-3"> Deactivation Date</label>
-			<div class="row"></div>
-			<div class="col-md-3">
-	        	<div class="input-group">
-	            	<span class="input-group-addon">
-	                	<span class="glyphicon glyphicon-calendar"></span>
-	            	</span>
-	            	<input type="text" class="form-control" ng-model="service.deactivationDate" placeholder="yyyy-mm-dd" data-date-format="yyyy-MM-dd" date-type="string" bs-datepicker>
-	        	</div>
-	    	</div>
-    	</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row">
-	    	<label class= "col-md-3"> Internet Type </label>
-	    	<div class="row"></div>
-			<div class="col-md-1">
-				<select ng-model="service.deviceType">
-            		<option>DSL</option>
-            		<option>Cable</option>
-            		<option>Other</option>
-        		</select>
-			</div>
-			<div class="col-md-1" ng-show="service.deviceType == 'DSL'">
-				<select ng-model="service.deviceSubtype">
-            		<option>7 Mbps</option>
-            		<option>15 Mbps</option>
-            		<option>25 Mbps</option>
-            		<option>50 Mbps</option>
-        		</select>
-			</div>
-			<div class="col-md-1" ng-show="service.deviceType == 'Cable'">
-				<select ng-model="service.deviceSubtype">
-            		<option>30 Mbps</option>
-            		<option>60 Mbps</option>
-        		</select>
-			</div>
-		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row">
-	    	<label class= "col-md-3"> Monthly Service Charge </label>
-	    	<label class= "col-md-3"> Install Cost </label>
-	    	<div class="row"></div>
-			<div class="col-md-2">
-	    		<input name="monthlyCharge" ng-model="service.monthlyCharge" type= "number" min = "0.0" step="0.01" class= "form-control" placeholder="Enter Charges"/>
-			</div>
-			<div class="col-md-1"></div>
-			<div class="col-md-2">
-	    		<input name="activationCost" ng-model="service.activationCost" type= "number" min = "0.0" step="0.01" class= "form-control" placeholder="Install cost"/>
-			</div>
-		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row">
-	    	<label class= "col-md-3"> Special Notes </label>
-	    	<div class="row"></div>
-			<div class="col-md-3">
-	    		<textarea ng-model="service.notes" type= "text" class= "form-control"/></textarea>
-			</div>
-		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row" ng-show="service != null">
-			<div class="col-md-1">
-    			<button ng-click="saveService(service)" class="btn btn-primary">Save</button>
-			</div>
-		</div>
-	</form>
-</div>
-<div ng-show="selected == 'Miscellaneous'">
-	<form role="form" name="serviceForm" class="form-horizontal">
-		<div class="row">
-	    	<label class= "col-md-3"> Enter Service Name </label>
-	    	<div class="row"></div>
-			<div class="col-md-3">
-	    		<input ng-model="service.name" type= "text" class= "form-control" placeholder="Enter Service Name"/>
-			</div>
-		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row">
-	    	<label class= "col-md-3"> Device Cost</label>
-	    	<div class="row"></div>
-			<div class="col-md-2">
-	    		<input name="monthlyCharge" ng-model="service.totalCost" type= "number" min = "0.0" step="0.01" class= "form-control" placeholder="Enter Total Cost"/>
-			</div>
-		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row">
-	    	<label class= "col-md-3"> Special Notes </label>
-	    	<div class="row"></div>
-			<div class="col-md-3">
-	    		<textarea ng-model="service.notes" type= "text" class= "form-control"/></textarea>
-			</div>
-		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row" ng-show="service != null">
-			<div class="col-md-1">
-    			<button ng-click="saveService(service)" class="btn btn-primary">Save</button>
-			</div>
-		</div>
-	</form>
+	</div>
+	<div class="col-md-5" ng-hide="orderList == null">
+		<div class="well well-lg">
+			<h4>Order Summary</h4>
+			<ul class="list-group" ng-repeat="service in orderList">
+  				<li class="list-group-item"> 
+					<span class="badge" ng-click="removeService($index)">X</span>
+  					<h5 ng-show="service.deviceType != null">{{service.name}} - {{service.deviceType}}</h5>
+  					<h5 ng-show="service.deviceType == null">{{service.name}}</h5>
+  					<div class="row">
+  						<div class="col-md-9">
+  							<p>Installation Cost</p>
+  						</div>
+  						<div class="col-md-3">
+  							<p ng-show="service.activationCost != null">{{service.activationCost | currency}}</p>
+  							<p ng-show="service.activationCost == null">$0.00</p>
+  						</div>
+  					</div>
+  					<div class="row">
+  						<div class="col-md-9">
+  							<p>Monthly Service Charge</p>
+  						</div>
+  						<div class="col-md-3">
+							<p ng-show="service.monthlyCharge != null">{{service.monthlyCharge | currency}}</p>
+  							<p ng-show="service.monthlyCharge == null">$0.00</p>
+  						</div>
+  					</div>
+  				</li>
+			</ul>
+		</div> 
+	</div>
 </div>
 
