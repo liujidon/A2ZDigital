@@ -309,7 +309,9 @@
 			<h4>Order Summary</h4>
 			<ul class="list-group" ng-repeat="service in orderList">
   				<li class="list-group-item"> 
-					<span class="badge" ng-click="removeService($index)">X</span>
+					<span class="badge" ng-click="removeService($index)">
+						<i class="glyphicon glyphicon-remove"></i>
+					</span>
   					<h5 ng-show="service.deviceType != null">{{service.name}} - {{service.deviceType}}</h5>
   					<h5 ng-show="service.deviceType == null">{{service.name}}</h5>
   					<div class="row">
@@ -319,6 +321,14 @@
   						<div class="col-md-3">
   							<p ng-show="service.activationCost != null">{{service.activationCost | currency}}</p>
   							<p ng-show="service.activationCost == null">$0.00</p>
+  						</div>
+  					</div>
+  					<div class="row" ng-show="service.totalCost > 0">
+  						<div class="col-md-9">
+  							<p>Device Cost</p>
+  						</div>
+  						<div class="col-md-3">
+  							<p>{{service.totalCost | currency}}</p>
   						</div>
   					</div>
   					<div class="row">
@@ -332,6 +342,9 @@
   					</div>
   				</li>
 			</ul>
+			<div class="row" ng-show="orderList.length > 0">
+				<a class="btn btn-md btn-success" href="#/checkout/"><i class="glyphicon glyphicon-shopping-cart"></i>&nbsp;Check Out</a>
+			</div>
 		</div> 
 	</div>
 </div>

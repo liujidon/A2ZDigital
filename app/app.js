@@ -3,11 +3,39 @@ var app = angular.module('myApp',
                          'mgcrea.ngStrap',
                          'myApp.serviceController',
                          'myApp.clientListController',
-                         'myApp.clientEditController']);
+                         'myApp.clientEditController',
+                         'myApp.checkoutController']);
 
 var clientListController = angular.module('myApp.clientListController', []);
 var clientEditController = angular.module('myApp.clientEditController', []);
 var serviceController = angular.module('myApp.serviceController', []);
+var checkoutController = angular.module('myApp.checkoutController', []);
+
+app.service("orderService", function() {
+    var orderList = [];
+
+    var addOrder = function(newOrder) {
+          orderList.push(newOrder);
+    }
+    var getOrders = function(){
+      return orderList;
+    }
+    var getClientID = function(){
+      return clientID;
+    }
+    var removeOrder = function(index) {
+      orderList.splice(index, 1);
+    }
+    var clear = function() {
+      orderList = [];
+    }
+    return {
+      addOrder: addOrder,
+      getOrders: getOrders,
+      removeOrder: removeOrder,
+      clear: clear
+  };
+});
 
 app.factory("services", ['$http', function($http) {
   var serviceBase = 'services/'
@@ -69,6 +97,11 @@ app.config(['$routeProvider',
         title: 'Add Services',
         templateUrl: 'partials/add-services.html',
         controller: 'serviceController',
+      })
+      .when('/checkout', {
+        title: 'Checkout',
+        templateUrl: 'partials/checkout.html',
+        controller: 'checkoutController',
       })
       .otherwise({
         redirectTo: '/'

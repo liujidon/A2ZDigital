@@ -1,6 +1,6 @@
 'use strict';
 
-serviceController.controller('serviceController', function ($scope, services, $routeParams) {
+serviceController.controller('serviceController', function ($scope, orderService, $routeParams) {
 	this.tab = 1;
 	$scope.selected = 'Cable TV';
 	$scope.orderList = [];
@@ -21,15 +21,15 @@ serviceController.controller('serviceController', function ($scope, services, $r
 				service.name = $scope.selected;
 			if(service.numUnits != null && service.unitCost != null)
 				service.totalCost = service.numUnits * service.unitCost;
-			services.insertService(service);
-			$scope.orderList.push(service);
+			orderService.addOrder(service);
+			$scope.orderList = orderService.getOrders();
 		}
 		$scope.service = null;
 	};
 
 	$scope.removeService = function(index) {
-		console.log(index);
-        $scope.orderList.splice(index, 1);
+		orderService.removeOrder(index);
+		$scope.orderList = orderService.getOrders();
     };
 });
 
