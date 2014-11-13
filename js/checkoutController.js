@@ -1,6 +1,6 @@
 'use strict';
 
-checkoutController.controller('checkoutController', function ($scope, orderService) {
+checkoutController.controller('checkoutController', function ($scope, $location, orderService, services) {
 	$scope.orderList = orderService.getOrders();
 	$scope.payment = {billingCycle: "Monthly", method: "Credit Card"};
 	$scope.HST = 13;
@@ -78,6 +78,27 @@ checkoutController.controller('checkoutController', function ($scope, orderServi
     	var currentDate = new Date();
 		currentDate.setMonth(currentDate.getMonth() + zeroNull($scope.convertCycle($scope.payment.billingCycle)));
 		return currentDate;
+    };
+
+    $scope.checkout = function() {
+		$location.path('/');
+		if($scope.orderList != null) {
+			for (var i = 0; i < $scope.orderList.length; i++) {
+				var service = $scope.orderList[i];
+				services.insertService(service);
+			}
+		}
+		console.log("checkout completed.");
+		orderService.clear();
+    };
+
+    $scope.cancelCheckout = function() {
+    	orderService.clear();
+    	$location.path('/');
+    };
+
+    $scope.isValid = function() {
+    	return Math.round($scope.payment.validate*100)/100 == Math.round($scope.calcTotal()*100)/100;
     };
 });
 

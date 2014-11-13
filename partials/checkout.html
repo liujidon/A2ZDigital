@@ -103,14 +103,14 @@
 	<div class="row">
 		<label class= "col-md-12"> CONFIRM PAYMENT</label>
 		<div class="col-md-12">
-				<input ng-model="payment.validate" type="number" class="form-control" placeholder="Must match Total"/>
+				<input ng-model="payment.validate" type="text" class="form-control" placeholder="Must match Total"/>
 		</div>
 	</div>
 	<div style="padding-bottom: 3em;"></div>
 </div>
 <div class="col-md-3">
-		<a ng-show="orderList.length > 0" class="btn btn-md btn-success" href="#/checkout/"><i class="glyphicon glyphicon-ok"></i>&nbsp;Confirm</a>
-		<a ng-show="orderList.length > 0" class="btn btn-cancel" href="#"><i class="glyphicon glyphicon-remove"></i>&nbsp;Cancel</a>
+		<a ng-show="orderList.length > 0" class="btn btn-md btn-success" ng-click="checkout()" ng-disabled="!isValid()"><i class="glyphicon glyphicon-ok"></i>&nbsp;Confirm</a>
+		<a ng-show="orderList.length > 0" class="btn btn-cancel" ng-click="cancelCheckout()"><i class="glyphicon glyphicon-remove"></i>&nbsp;Cancel</a>
 		<div style="padding-top: 1em;"></div>
 		<a class="btn btn-success" href="#"><i class="glyphicon glyphicon-arrow-left"></i>&nbsp;Back</a>
 </div>
