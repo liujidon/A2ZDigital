@@ -15,13 +15,20 @@ app.service("orderService", function() {
     var orderList = [];
 
     var addOrder = function(newOrder) {
-          orderList.push(newOrder);
+        orderList.push(newOrder);
     }
     var getOrders = function(){
       return orderList;
     }
-    var getClientID = function(){
-      return clientID;
+    var getClientNumber = function(){
+      var i = 0;
+      var clientNumber = 0;
+      for(i; i < orderList.length; i++) {
+          if(orderList[i].clientNumber != null && orderList[i].clientNumber != 0) {
+            clientNumber = orderList[i].clientNumber;
+          }
+      }
+      return clientNumber;
     }
     var removeOrder = function(index) {
       orderList.splice(index, 1);
@@ -33,7 +40,8 @@ app.service("orderService", function() {
       addOrder: addOrder,
       getOrders: getOrders,
       removeOrder: removeOrder,
-      clear: clear
+      clear: clear,
+      getClientNumber: getClientNumber
   };
 });
 
@@ -49,27 +57,46 @@ app.factory("services", ['$http', function($http) {
 
     obj.insertClient = function (client) {
     return $http.post(serviceBase + 'insertClient', client).then(function (results) {
+        console.log(results);
         return results;
     });
 	};
 
 	obj.updateClient = function (id,client) {
 	    return $http.post(serviceBase + 'updateClient', {id:id, client:client}).then(function (status) {
+          console.log(results);
 	        return status.data;
 	    });
 	};
 
 	obj.deleteClient = function (id) {
 	    return $http.delete(serviceBase + 'deleteClient?id=' + id).then(function (status) {
-	        return status.data;
+          console.log(results);
+          return status.data;
 	    });
 	};
 
   obj.insertService = function (service) {
       return $http.post(serviceBase + 'insertService', service).then(function (results) {
+      console.log(results);
       return results;
     });
   };
+
+  obj.insertInvoice = function (invoice) {
+      return $http.post(serviceBase + 'insertInvoice', invoice).then(function (results) {
+      console.log(results);
+      return results;
+    });
+  };
+
+  obj.insertCard = function (card) {
+      return $http.post(serviceBase + 'insertCard', card).then(function (results) {
+      console.log(results);
+      return results.statusText;
+    });
+  };
+
 
     return obj;   
 }]);

@@ -2,7 +2,7 @@
 
 checkoutController.controller('checkoutController', function ($scope, $location, orderService, services) {
 	$scope.orderList = orderService.getOrders();
-	$scope.payment = {billingCycle: "Monthly", method: "Credit Card"};
+	$scope.payment = {billingCycle: "Monthly", method: "Credit Card", credit: { month: '01', year: '2014'} };
 	$scope.HST = 13;
 
 	$scope.removeService = function(index) {
@@ -80,12 +80,34 @@ checkoutController.controller('checkoutController', function ($scope, $location,
 		return currentDate;
     };
 
+    //Store services, invoice, credit card info in database
     $scope.checkout = function() {
 		$location.path('/');
 		if($scope.orderList != null) {
+			//store services
 			for (var i = 0; i < $scope.orderList.length; i++) {
 				var service = $scope.orderList[i];
 				services.insertService(service);
+			}
+			//store invoce
+			var invoice = {	clientNumber: orderService.getClientNumber(),
+							amountDue: $scope.calcTotal(),
+							amountPaid: 0.00,
+							method: $scope.payment.method,
+							dueDate: formatDate($scope.getNextPaymentDate()),
+							billingCycle: $scope.payment.billingCycle,
+							createdBy: "admin" };
+			services.insertInvoice(invoice);
+
+			//store credit card info
+			if($scope.payment.method == "Credit Card") {
+				var card = {clientNumber: orderService.getClientNumber(),
+							name: $scope.payment.credit.name,
+							number: $scope.payment.credit.number,
+							month: $scope.payment.credit.month,
+							year: $scope.payment.credit.year,
+							security: $scope.payment.credit.security };
+				services.insertCard(card);
 			}
 		}
 		console.log("checkout completed.");
@@ -97,11 +119,27 @@ checkoutController.controller('checkoutController', function ($scope, $location,
     	$location.path('/');
     };
 
+    //confirm with user validation
     $scope.isValid = function() {
-    	return Math.round($scope.payment.validate*100)/100 == Math.round($scope.calcTotal()*100)/100;
+    	if($scope.payment.method == "Credit Card") {
+    		var credit = $scope.payment.credit;
+			return credit.name != null && credit.number != null && 
+					credit.month != null && credit.year != null && credit.security != null &&
+					credit.name.length > 0 && credit.number.length > 0 && credit.security.length > 0;
+		}
+		else
+			return Math.round($scope.payment.validate*100)/100 == Math.round($scope.calcTotal()*100)/100;
     };
 });
 
+//return 0 for Nulls
 function zeroNull(value) {
   return value == null ? 0 : value;
+}
+
+function formatDate(date) {
+	var year = date.getFullYear();
+	var month = date.getMonth()+1;
+	var day = date.getDate();
+    return year + "-" + month + "-" + day; 
 }

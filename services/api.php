@@ -198,6 +198,60 @@
 				$this->response('',204);	//"No Content" status
 		}
 
+		/*****************************Invoices*******************************/
+		private function insertInvoice(){
+			if($this->get_request_method() != "POST"){
+				$this->response('',406);
+			}
+
+			$inovice = json_decode(file_get_contents("php://input"),true);	
+			$column_names = array('clientNumber', 'amountDue', 'amountPaid', 'method', 'dueDate', 'paidDate',
+									'billingCycle', 'paidBy', 'createdBy');
+			$keys = array_keys($inovice);
+			$columns = '';
+			$values = '';
+			foreach($column_names as $desired_key){ // Check the inovice received. If blank insert blank into the array.
+			   if(in_array($desired_key, $keys)) {
+					$$desired_key = $inovice[$desired_key];
+					$columns = $columns.$desired_key.',';
+					$values = $values."'".$$desired_key."',";
+				}
+			}
+			$query = "INSERT INTO invoices (".trim($columns,',').") VALUES(".trim($values,',').")";
+			if(!empty($inovice)){
+				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+				$success = array('status' => "Success", "msg" => "Invoice Created Successfully.", "data" => $query);
+				$this->response($this->json($success),200);
+			}else
+				$this->response('',204);	//"No Content" status
+		}
+
+		/*****************************Cards*******************************/
+		private function insertCard(){
+			if($this->get_request_method() != "POST"){
+				$this->response('',406);
+			}
+
+			$card = json_decode(file_get_contents("php://input"),true);	
+			$column_names = array('clientNumber', 'name', 'number', 'month', 'year', 'security');
+			$keys = array_keys($card);
+			$columns = '';
+			$values = '';
+			foreach($column_names as $desired_key){ // Check the card received. If blank insert blank into the array.
+			   if(in_array($desired_key, $keys)) {
+					$$desired_key = $card[$desired_key];
+					$columns = $columns.$desired_key.',';
+					$values = $values."'".$$desired_key."',";
+				}
+			}
+			$query = "INSERT INTO cards (".trim($columns,',').") VALUES(".trim($values,',').")";
+			if(!empty($card)){
+				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+				$success = array('status' => "Success", "msg" => "Invoice Created Successfully.", "data" => $query);
+				$this->response($this->json($success),200);
+			}else
+				$this->response('',204);	//"No Content" status
+		}
 
 		/*
 		 *	Encode array into JSON
