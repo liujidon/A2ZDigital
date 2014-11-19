@@ -111,7 +111,7 @@
 			</div>
 			<div style="padding-bottom: .5em;"></div>
 			<div class="row" class="col-md-12">
-				<input ng-model="payment.credit.number" type="text" class="form-control" placeholder="Credit Card Number"/>
+				<input ng-model="payment.credit.number" type="text" maxlength="15" class="form-control" placeholder="Credit Card Number"/>
 			</div>
 			<div class="row">
 				<lable class="col-md-8">Expiry Date</lable>
@@ -148,7 +148,7 @@
 	        		<option>2026</option>
 	    		</select>
 	    		<div class="col-md-5">
-	    			<input ng-model="payment.credit.security" type="text" class="form-control"/>
+	    			<input ng-model="payment.credit.security" type="text" maxlength="3" class="form-control"/>
 	    		</div>
 		</div>
 	</div>
