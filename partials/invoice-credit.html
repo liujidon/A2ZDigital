@@ -1,0 +1,37 @@
+<h3>Credit Invoice</h3>
+<div class="row">
+    <div class = "row"></div>
+
+    <div class="col-md-9" ng-show="false">
+        <div class="col-md-9">
+            <h4>No invoices found</h4>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table ng-table="tableInvoice" class="table">
+            <tr ng-repeat="invoice in $data">
+                <td data-title="'Invoice Number'" class="text-left" sortable="'id'">
+                    {{invoice.id}}
+                </td>
+                <td data-title="'First Name'" class="text-left" sortable="'firstName'">
+                    {{invoice.firstName}}
+                </td>
+                <td data-title="'Last Name'" class="text-left" sortable="'lastName'">
+                    {{invoice.lastName}}
+                </td>
+                <td data-title="'Amount Due'" class="text-left" sortable="'amountDue'">
+                    {{invoice.amountDue}}
+                </td>
+                <td data-title="'Payment Method'" class="text-left" sortable="'method'">
+                    {{invoice.method}}
+                </td>
+                <td data-title="'Due Date'" class="text-left" sortable="'dueDate'">
+                    {{invoice.dueDate}}
+                </td>
+                <td data-title="'Created By'" class="text-left" sortable="'createdBy'">
+                    {{invoice.createdBy}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

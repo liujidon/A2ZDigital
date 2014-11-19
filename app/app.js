@@ -1,15 +1,18 @@
 var app = angular.module('myApp', 
                         ['ngRoute',
+                         'ngTable',
                          'mgcrea.ngStrap',
                          'myApp.serviceController',
                          'myApp.clientListController',
                          'myApp.clientEditController',
-                         'myApp.checkoutController']);
+                         'myApp.checkoutController',
+                         'myApp.invoiceController']);
 
 var clientListController = angular.module('myApp.clientListController', []);
 var clientEditController = angular.module('myApp.clientEditController', []);
 var serviceController = angular.module('myApp.serviceController', []);
 var checkoutController = angular.module('myApp.checkoutController', []);
+var invoiceController = angular.module('myApp.invoiceController', []);
 
 app.service("orderService", function() {
     var orderList = [];
@@ -54,6 +57,9 @@ app.factory("services", ['$http', function($http) {
     obj.getClient = function(clientID){
         return $http.get(serviceBase + 'client?id=' + clientID);
     }
+    obj.getAllInvoices = function(){
+      return $http.get(serviceBase + 'getAllInvoices');      
+    }
 
     obj.insertClient = function (client) {
     return $http.post(serviceBase + 'insertClient', client).then(function (results) {
@@ -97,8 +103,7 @@ app.factory("services", ['$http', function($http) {
     });
   };
 
-
-    return obj;   
+  return obj;   
 }]);
 
 app.config(['$routeProvider',
@@ -129,6 +134,11 @@ app.config(['$routeProvider',
         title: 'Checkout',
         templateUrl: 'partials/checkout.html',
         controller: 'checkoutController',
+      })
+      .when('/invoice-credit', {
+        title: 'Credit Invoice',
+        templateUrl: 'partials/invoice-credit.html',
+        controller: 'invoiceController',
       })
       .otherwise({
         redirectTo: '/'
