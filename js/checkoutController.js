@@ -130,6 +130,7 @@ checkoutController.controller('checkoutController', function ($scope, $location,
 		else
 			return Math.round($scope.payment.validate*100)/100 == Math.round($scope.calcTotal()*100)/100;
     };
+
 });
 
 //return 0 for Nulls

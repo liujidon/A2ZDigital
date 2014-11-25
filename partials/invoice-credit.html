@@ -8,8 +8,8 @@
         </div>
     </div>
     <div class="col-md-12">
-        <table ng-table="tableInvoice" class="table">
-            <tr ng-repeat="invoice in $data">
+        <table ng-table="tableInvoice" class="table table-condensed">
+            <tr ng-repeat="invoice in $data" class="animated fadeInLeft">
                 <td data-title="'Invoice Number'" class="text-left" sortable="'id'">
                     {{invoice.id}}
                 </td>
@@ -30,6 +30,15 @@
                 </td>
                 <td data-title="'Created By'" class="text-left" sortable="'createdBy'">
                     {{invoice.createdBy}}
+                </td>
+                <td data-title="'Show Invoice'">
+                    <button type="button" ng-click="showInvoice(invoice)" class="btn btn-default">
+                        <i class="glyphicon glyphicon-th-list"> Show</i>
+                    </button>
+                </td>
+                <td data-title="'Confirm Payment'">
+                    <a ng-show="invoice.paidBy == null" class="btn btn-default" ng-click="showConfirm(invoice)"><i class="glyphicon glyphicon-ok"> Confirm</i></a>
+                    <a ng-show="invoice.paidBy != null" class="btn btn-success"><i class="glyphicon glyphicon-ok"> Confirmed</i></a>
                 </td>
             </tr>
         </table>
