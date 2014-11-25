@@ -2,11 +2,14 @@
 
 invoiceController.controller('ModalController', ['$scope', 'close', 'invoice', function($scope, close, invoice) {
 	$scope.invoice = invoice;
-    $scope.input = {};
+    $scope.input = { method: invoice.method };
 
 	$scope.close = function(result) {
-        result.id = $scope.invoice.id;
-		close($scope.input, 500); // close, but give 500ms for bootstrap to animate
+        if(result != null)
+        {
+            result.id = $scope.invoice.id;
+		    close($scope.input, 500); // close, but give 500ms for bootstrap to animate
+        }
 	};
 
     $scope.sameAmount = function() {
@@ -22,7 +25,6 @@ invoiceController.controller('invoiceController', function ($scope, services, ng
 	    $scope.invoices = data.data;
 	    $scope.tableInvoice.reload();
 	    $scope.tableInvoice.page(1);
-	    console.log($scope.invoices);
 	});
 
 	$scope.showConfirm = function(invoice) {
@@ -38,6 +40,9 @@ invoiceController.controller('invoiceController', function ($scope, services, ng
                         if($scope.invoices[i].id == result.id) {
                             $scope.invoices[i].paidBy = "admin";
                             $scope.invoices[i].paidDate = new Date();
+                            $scope.invoices[i].amountPaid= result.amount;
+                            $scope.invoices[i].method = result.method;
+                            services.updateInvoice($scope.invoices[i].id, $scope.invoices[i]);
                         }
                     }
                 }

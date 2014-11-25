@@ -1,11 +1,14 @@
 <?php
+	ini_set('display_errors', 'On');
+	error_reporting(E_ALL);
+
  	require_once("Rest.inc.php");
 	
 	class API extends REST {
 	
 		public $data = "";
 		
-		const DB_SERVER = "127.0.0.1";
+		const DB_SERVER = "localhost";
 		const DB_USER = "root";
 		const DB_PASSWORD = "";
 		const DB = "azdigital";
@@ -28,6 +31,9 @@
 		*/
 		private function dbConnect(){
 			$this->mysqli = new mysqli(self::DB_SERVER, self::DB_USER, self::DB_PASSWORD, self::DB);
+			if ($this->mysqli->connect_errno) {
+			    echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+			}
 		}
 		
 		/*
@@ -70,6 +76,7 @@
 				$this->response('',406);
 			}
 			$query="SELECT distinct clientNumber, firstName, lastName, phone, address, cell, city, postalCode, email, province, dateOfBirth, gender, homeType, notes, referalType, referalText FROM clients order by clientNumber";
+			$query="SELECT * FROM clients";
 			$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
 
 			if($r->num_rows > 0){
@@ -224,6 +231,34 @@
 				$this->response($this->json($success),200);
 			}else
 				$this->response('',204);	//"No Content" status
+		}
+
+		private function updateInvoice(){
+			if($this->get_request_method() != "POST"){
+				$this->response('',406);
+			}
+			$invoice = json_decode(file_get_contents("php://input"),true);
+			$id = (int)$invoice['id'];
+			$column_names =array('clientNumber', 'amountDue', 'amountPaid', 'method', 'dueDate', 'paidDate',
+									'billingCycle', 'paidBy', 'createdBy');
+			$keys = array_keys($invoice['invoice']);
+			$columns = '';
+			$values = '';
+			foreach($column_names as $desired_key){
+			   if(!in_array($desired_key, $keys)) {
+			   		$$desired_key = '';
+				}else{
+					$$desired_key = $invoice['invoice'][$desired_key];
+				}
+				$columns = $columns.$desired_key."='".$$desired_key."',";
+			}
+			$query = "UPDATE invoices SET ".trim($columns,',')." WHERE id=$id";
+			if(!empty($invoice)){
+				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+				$success = array('status' => "Success", "msg" => "Invoice ".$id." Updated Successfully.", "data" => $invoice);
+				$this->response($this->json($success),200);
+			}else
+				$this->response('',204);	// "No Content" status
 		}
 
 		private function getAllInvoices(){	

@@ -73,7 +73,7 @@ app.factory("services", ['$http', function($http) {
 
 	obj.updateClient = function (id,client) {
 	    return $http.post(serviceBase + 'updateClient', {id:id, client:client}).then(function (status) {
-          console.log(results);
+          console.log(status);
 	        return status.data;
 	    });
 	};
@@ -105,6 +105,14 @@ app.factory("services", ['$http', function($http) {
       return results.statusText;
     });
   };
+
+  obj.updateInvoice = function (id,invoice) {
+      return $http.post(serviceBase + 'updateInvoice', {id:id, invoice:invoice}).then(function (status) {
+           console.log(status);
+           return status.data;
+       });
+  };
+
 
   return obj;   
 }]);
