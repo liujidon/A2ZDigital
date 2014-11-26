@@ -14,7 +14,7 @@
 		<img src="images/other.png" ng-click="selected = 'Miscellaneous'" height="128" width="128">
 	</div>
 </div>
-<div class="row">
+<div class="row animated fadeIn">
 	<h2> {{selected}} </h2>
 </div>
 
@@ -305,10 +305,10 @@
 		</div>
 	</div>
 	<div class="col-md-5" ng-hide="orderList == null">
-		<div class="well well-lg">
+		<div class="well well-lg animated fadeIn">
 			<h4>Order Summary</h4>
 			<ul class="list-group" ng-repeat="service in orderList">
-  				<li class="list-group-item"> 
+  				<li class="list-group-item animated fadeIn"> 
 					<span class="badge" ng-click="removeService($index)">
 						<i class="glyphicon glyphicon-remove"></i>
 					</span>
