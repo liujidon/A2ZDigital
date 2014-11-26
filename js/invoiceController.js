@@ -37,15 +37,15 @@ invoiceController.filter('invoiceFilter', function() {
         var invoiceDate = new Date(invoice.dueDate);
         switch(filterType) {
             case 'now': //due date before today
-                if( invoiceDate < today)
+                if( invoiceDate < today && invoice.amountPaid == 0)
                     filtered.push(invoice);
                 break;
             case 'over30': //due date 30 days before today
-                if( invoiceDate < d30before)
+                if( invoiceDate < d30before && invoice.amountPaid == 0)
                     filtered.push(invoice);
                 break;
             case 'over60': //due date 60 days before today
-                if( invoiceDate < d60before)
+                if( invoiceDate < d60before && invoice.amountPaid == 0)
                     filtered.push(invoice);
                 break;
             case 'paid': //paidAmount == amountDue
