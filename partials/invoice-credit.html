@@ -57,8 +57,8 @@
                     </button>
                 </td>
                 <td data-title="'Confirm Payment'">
-                    <a ng-show="invoice.paidBy == null" class="btn btn-default" ng-click="showConfirm(invoice)"><i class="glyphicon glyphicon-ok"> Confirm</i></a>
-                    <a ng-show="invoice.paidBy != null" class="btn btn-success"><i class="glyphicon glyphicon-ok"> Confirmed</i></a>
+                    <a ng-show="invoice.paidBy == null" class="btn btn-default" ng-click="showConfirm(invoice)"><i class="glyphicon glyphicon-question-sign"> Confirm</i></a>
+                    <a ng-show="invoice.paidBy != null" class="btn btn-success"><i class="glyphicon glyphicon-ok-sign"> Paid</i></a>
                 </td>
             </tr>
         </table>
