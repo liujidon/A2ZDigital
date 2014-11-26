@@ -20,18 +20,18 @@ invoiceController.controller('ModalController', ['$scope', 'close', 'invoice', f
 }]);
 
 invoiceController.filter('invoiceFilter', function() {
+    var today = new Date();
+    today.setHours(0,0,0,0);
+
+    var d30before = new Date();
+    d30before.setDate(today.getDate()-30);
+    d30before.setHours(0,0,0,0);
+
+    var d60before = new Date();
+    d60before.setDate(today.getDate()-60);
+    d60before.setHours(0,0,0,0);
     return function( invoices, filterType ) {
         var filtered = [];
-        var today = new Date();
-        today.setHours(0,0,0,0);
-
-        var d30before = new Date();
-        d30before.setDate(today.getDate()-30);
-        d30before.setHours(0,0,0,0);
-
-        var d60before = new Date();
-        d60before.setDate(today.getDate()-60);
-        d60before.setHours(0,0,0,0);
 
       angular.forEach(invoices, function(invoice) {
         var invoiceDate = new Date(invoice.dueDate);
