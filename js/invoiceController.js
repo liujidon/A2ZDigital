@@ -3,6 +3,7 @@
 invoiceController.controller('ModalController', ['$scope', 'close', 'invoice', function($scope, close, invoice) {
 	$scope.invoice = invoice;
     $scope.input = { method: invoice.method };
+    $scope.filterSelected = {};
 
 	$scope.close = function(result) {
         if(result != null)
@@ -18,14 +19,61 @@ invoiceController.controller('ModalController', ['$scope', 'close', 'invoice', f
 
 }]);
 
+invoiceController.filter('invoiceFilter', function() {
+    return function( invoices, filterType ) {
+        var filtered = [];
+        var today = new Date();
+        today.setHours(0,0,0,0);
+
+        var d30before = new Date();
+        d30before.setDate(today.getDate()-30);
+        d30before.setHours(0,0,0,0);
+
+        var d60before = new Date();
+        d60before.setDate(today.getDate()-60);
+        d60before.setHours(0,0,0,0);
+
+      angular.forEach(invoices, function(invoice) {
+        var invoiceDate = new Date(invoice.dueDate);
+        switch(filterType) {
+            case 'now': //due date before today
+                if( invoiceDate < today)
+                    filtered.push(invoice);
+                break;
+            case 'over30': //due date 30 days before today
+                if( invoiceDate < d30before)
+                    filtered.push(invoice);
+                break;
+            case 'over60': //due date 60 days before today
+                if( invoiceDate < d60before)
+                    filtered.push(invoice);
+                break;
+            case 'paid': //paidAmount == amountDue
+                if( invoice.amountDue == invoice.amountPaid)
+                    filtered.push(invoice);
+                break;
+            default:
+                filtered.push(invoice);
+                break;
+        }
+      });
+      return filtered;
+    };
+});
+
 invoiceController.controller('invoiceController', function ($scope, services, ngTableParams, $filter, ModalService) {
     $scope.invoices = [];
+    $scope.filterSelected = '*';
 
 	services.getAllInvoices().then(function(data){
 	    $scope.invoices = data.data;
 	    $scope.tableInvoice.reload();
 	    $scope.tableInvoice.page(1);
 	});
+
+    $scope.setFilter = function(option) {
+        $scope.filterSelected = option;
+    };
 
 	$scope.showConfirm = function(invoice) {
         ModalService.showModal({
@@ -62,12 +110,11 @@ invoiceController.controller('invoiceController', function ($scope, services, ng
         counts: [],
         getData: function($defer, params) {
             var orderedData = params.sorting() ?
-                                $filter('orderBy')($scope.invoices , params.orderBy()) :
+                                $filter('orderBy')($scope.invoices, params.orderBy()) :
                                 $scope.invoices;
             params.total(orderedData.length);
             $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
         }
     });
-
-
 });
+

@@ -9,21 +9,24 @@
     </div>
     <div class="btn-group btn-group-justified" role="group" aria-label="...">
         <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default">Due Now</button>
+            <button type="button" class="btn btn-default" ng-click="setFilter('now')">Due Now</button>
         </div>
         <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default">3 Month</button>
+            <button type="button" class="btn btn-default" ng-click="setFilter('over30')">Over 30 Days</button>
         </div>
         <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default">6 Month</button>
+            <button type="button" class="btn btn-default" ng-click="setFilter('over60')">Over 60 Days</button>
         </div>
         <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default">All</button>
+            <button type="button" class="btn btn-default" ng-click="setFilter('paid')">Paid In Full</button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" ng-click="setFilter('*')">All Invoices</button>
         </div>
     </div>
     <div class="col-md-12">
-        <table ng-table="tableInvoice" class="table table-condensed">
-            <tr ng-repeat="invoice in $data" class="animated fadeIn">
+        <table ng-table="tableInvoice" class="table table-condensed table-striped" show-filter="true">
+            <tr ng-repeat="invoice in $data | invoiceFilter:filterSelected" class="animated fadeIn">
                 <td data-title="'Invoice Number'" class="text-left" sortable="'id'">
                     {{invoice.id}}
                 </td>
@@ -35,6 +38,9 @@
                 </td>
                 <td data-title="'Amount Due'" class="text-left" sortable="'amountDue'">
                     {{invoice.amountDue}}
+                </td>
+                <td data-title="'Amount Paid'" class="text-left" sortable="'amountPaid'">
+                    {{invoice.amountPaid}}
                 </td>
                 <td data-title="'Payment Method'" class="text-left" sortable="'method'">
                     {{invoice.method}}
