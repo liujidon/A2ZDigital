@@ -86,8 +86,9 @@ invoiceController.controller('invoiceController', function ($scope, services, ng
                 if(result != null) {
                     for(var i = 0; i < $scope.invoices.length; i++) {
                         if($scope.invoices[i].id == result.id) {
+                            var today = new Date();
                             $scope.invoices[i].paidBy = "admin";
-                            $scope.invoices[i].paidDate = new Date();
+                            $scope.invoices[i].paidDate = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDay();
                             $scope.invoices[i].amountPaid= result.amount;
                             $scope.invoices[i].method = result.method;
                             services.updateInvoice($scope.invoices[i].id, $scope.invoices[i]);

@@ -37,10 +37,10 @@
                     {{invoice.lastName}}
                 </td>
                 <td data-title="'Amount Due'" class="text-left" sortable="'amountDue'">
-                    {{invoice.amountDue}}
+                    {{invoice.amountDue | currency}}
                 </td>
                 <td data-title="'Amount Paid'" class="text-left" sortable="'amountPaid'">
-                    {{invoice.amountPaid}}
+                    {{invoice.amountPaid | currency}}
                 </td>
                 <td data-title="'Payment Method'" class="text-left" sortable="'method'">
                     {{invoice.method}}
