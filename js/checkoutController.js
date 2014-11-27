@@ -84,20 +84,25 @@ checkoutController.controller('checkoutController', function ($scope, $location,
     $scope.checkout = function() {
 		$location.path('/');
 		if($scope.orderList != null) {
-			//store services
-			for (var i = 0; i < $scope.orderList.length; i++) {
-				var service = $scope.orderList[i];
-				services.insertService(service);
-			}
-			//store invoce
+			//store invoice
 			var invoice = {	clientNumber: orderService.getClientNumber(),
+							parentID: 0,
 							amountDue: $scope.calcTotal(),
 							amountPaid: 0.00,
 							method: $scope.payment.method,
 							dueDate: formatDate($scope.getNextPaymentDate()),
 							billingCycle: $scope.payment.billingCycle,
 							createdBy: "admin" };
-			services.insertInvoice(invoice);
+			
+			services.insertInvoice(invoice).then(function(data){
+        		var lastInvoiceID = data.data.lastInsertID;
+				//store services
+				for (var i = 0; i < $scope.orderList.length; i++) {
+					var service = $scope.orderList[i];
+					service.invoiceNumber = lastInvoiceID;
+					services.insertService(service);
+				}
+    		});
 
 			//store credit card info
 			if($scope.payment.method == "Credit Card") {

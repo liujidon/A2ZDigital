@@ -174,8 +174,6 @@
 				$this->response('',204);	// If no records "No Content" status
 		}
 		
-
-
 		/*****************************Services*******************************/
 		private function insertService(){
 			if($this->get_request_method() != "POST"){
@@ -183,7 +181,7 @@
 			}
 
 			$service = json_decode(file_get_contents("php://input"),true);	
-			$column_names = array('clientNumber', 'name', 'type', 'status', 'provider',
+			$column_names = array('clientNumber', 'invoiceNumber', 'name', 'type', 'status', 'provider',
 									'deviceType', 'deviceSubtype', 'monthlyCharge', 'activationCost', 'numUnits', 
 									'unitCost','totalCost', 'phone', 'deactivationDate', 'notes');
 			$keys = array_keys($service);
@@ -212,8 +210,8 @@
 			}
 
 			$inovice = json_decode(file_get_contents("php://input"),true);	
-			$column_names = array('clientNumber', 'amountDue', 'amountPaid', 'method', 'dueDate', 'paidDate',
-									'billingCycle', 'paidBy', 'createdBy');
+			$column_names = array('clientNumber', 'parentID', 'amountDue', 'amountPaid', 'method', 'dueDate', 'paidDate',
+									'billingCycle', 'paidBy', 'createdBy', 'notes');
 			$keys = array_keys($inovice);
 			$columns = '';
 			$values = '';
@@ -227,7 +225,8 @@
 			$query = "INSERT INTO invoices (".trim($columns,',').") VALUES(".trim($values,',').")";
 			if(!empty($inovice)){
 				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
-				$success = array('status' => "Success", "msg" => "Invoice Created Successfully.", "data" => $query);
+				$success = array('status' => "Success", "msg" => "Invoice Created Successfully.", "data" => $query,
+								 "lastInsertID" => $this->mysqli->insert_id );
 				$this->response($this->json($success),200);
 			}else
 				$this->response('',204);	//"No Content" status
@@ -239,8 +238,8 @@
 			}
 			$invoice = json_decode(file_get_contents("php://input"),true);
 			$id = (int)$invoice['id'];
-			$column_names =array('clientNumber', 'amountDue', 'amountPaid', 'method', 'dueDate', 'paidDate',
-									'billingCycle', 'paidBy', 'createdBy');
+			$column_names =array('clientNumber', 'parentID', 'amountDue', 'amountPaid', 'method', 'dueDate', 'paidDate',
+									'billingCycle', 'paidBy', 'createdBy', 'notes');
 			$keys = array_keys($invoice['invoice']);
 			$columns = '';
 			$values = '';
@@ -274,6 +273,22 @@
 					$result[] = $row;
 				}
 				$this->response($this->json($result), 200); // send user details
+			}
+			$this->response('',204);	// If no records "No Content" status
+		}
+
+		private function getInvoice(){	
+			if($this->get_request_method() != "GET"){
+				$this->response('',406);
+			}
+			$id = (int)$this->_request['id'];
+			if($id > 0){	
+				$query="SELECT DISTINCT * FROM invoices JOIN clients ON invoices.clientNumber = clients.clientNumber WHERE id = $id ORDER BY id ";
+				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+				if($r->num_rows > 0) {
+					$result = $r->fetch_assoc();	
+					$this->response($this->json($result), 200);
+				}
 			}
 			$this->response('',204);	// If no records "No Content" status
 		}

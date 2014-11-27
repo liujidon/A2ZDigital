@@ -1,0 +1,38 @@
+<div class="col-md-9">
+	<div class="well well-lg animated fadeIn">
+		<h3>A2Z DIGITAL INC.</h3>
+		<div class="row">
+  			<div class="col-md-8">
+  				<b><lable>8 Melanie Drive Suit 201</lable>
+  				<br>
+				<lable>Brampton, ON, L6T 4L2</lable>
+				<br>
+				<lable>Phone: +1 (905) 451 6900</lable>
+				<br>
+				<lable>Email: sales@a2zdigital.co</lable></b>
+  			</div>
+  			<div class="col-md-4">
+  				<b><lable>Date: {{today | date: 'dd/MM/yyyy'}}<lable>
+  				<br>
+  				<lable>Invoice #: {{invoice.id}}</lable></b>
+  			</div>
+		</div>
+		<div style="padding-top: 1em;"></div>
+		<div class="row">
+  			<div class="col-md-8">
+  				<h3>Bill To:</h3>
+  				<lable>{{invoice.firstName}} {{invoice.lastName}}</lable>
+  				<br>
+  				<lable>{{invoice.address}}</lable>
+  				<br>
+  				<lable>{{invoice.city}}, {{invoice.province}}, {{invoice.postalCode}}</lable>
+  				<br>
+  				<lable>{{invoice.phone}}</lable>
+  				<br>
+  				<lable>{{invoice.email}}</lable>
+  			</div>
+  		</div>
+  		<div style="padding-top: 1em;"></div>
+
+	</div>
+</div>

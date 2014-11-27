@@ -2,7 +2,7 @@
 <div class="row">
     <div class = "row"></div>
 
-    <div class="col-md-9" ng-show="false">
+    <div class="col-md-9" ng-show="invoices == null">
         <div class="col-md-9">
             <h4>No invoices found</h4>
         </div>
@@ -25,7 +25,7 @@
         </div>
     </div>
     <div class="col-md-12">
-        <table ng-table="tableInvoice" class="table table-condensed table-striped" show-filter="true">
+        <table ng-table="tableInvoice" class="table table-condensed table-hover" show-filter="true">
             <tr ng-repeat="invoice in invoices | invoiceFilter:filterSelected track by invoice.id" class="animated fadeIn">
                 <td data-title="'Invoice Number'" class="text-left" sortable="'id'">
                     {{invoice.id}}

@@ -9,14 +9,17 @@ var app = angular.module('myApp',
                          'myApp.clientListController',
                          'myApp.clientEditController',
                          'myApp.checkoutController',
-                         'myApp.invoiceController']);
+                         'myApp.invoiceController',
+                         'myApp.invoiceViewController']);
 
 var clientListController = angular.module('myApp.clientListController', []);
 var clientEditController = angular.module('myApp.clientEditController', []);
 var serviceController = angular.module('myApp.serviceController', []);
 var checkoutController = angular.module('myApp.checkoutController', []);
 var invoiceController = angular.module('myApp.invoiceController', []);
+var invoiceViewController = angular.module('myApp.invoiceViewController', []);
 
+//pass orders between serviceController and checkoutController
 app.service("orderService", function() {
     var orderList = [];
 
@@ -51,20 +54,21 @@ app.service("orderService", function() {
   };
 });
 
+
+//factory to interface with php server
 app.factory("services", ['$http', function($http) {
   var serviceBase = 'services/'
-    var obj = {};
-    obj.getClients = function(){
-        return $http.get(serviceBase + 'clients');
-    }
-    obj.getClient = function(clientID){
-        return $http.get(serviceBase + 'client?id=' + clientID);
-    }
-    obj.getAllInvoices = function(){
-      return $http.get(serviceBase + 'getAllInvoices');      
-    }
+  var obj = {};
 
-    obj.insertClient = function (client) {
+  //****************clients*****************
+  obj.getClients = function(){
+        return $http.get(serviceBase + 'clients');
+  }
+  obj.getClient = function(clientID){
+        return $http.get(serviceBase + 'client?id=' + clientID);
+  }
+
+  obj.insertClient = function (client) {
     return $http.post(serviceBase + 'insertClient', client).then(function (results) {
         console.log(results);
         return results;
@@ -85,6 +89,7 @@ app.factory("services", ['$http', function($http) {
 	    });
 	};
 
+//****************services**********************
   obj.insertService = function (service) {
       return $http.post(serviceBase + 'insertService', service).then(function (results) {
       console.log(results);
@@ -99,6 +104,7 @@ app.factory("services", ['$http', function($http) {
     });
   };
 
+//*******************credit card*****************
   obj.insertCard = function (card) {
       return $http.post(serviceBase + 'insertCard', card).then(function (results) {
       console.log(results);
@@ -106,13 +112,21 @@ app.factory("services", ['$http', function($http) {
     });
   };
 
-  obj.updateInvoice = function (id,invoice) {
+//********************invoice***********************
+  obj.updateInvoice = function (id, invoice) {
       return $http.post(serviceBase + 'updateInvoice', {id:id, invoice:invoice}).then(function (status) {
            console.log(status);
            return status.data;
        });
   };
 
+  obj.getAllInvoices = function(){
+      return $http.get(serviceBase + 'getAllInvoices');      
+  }
+
+  obj.getInvoice = function(id){
+      return $http.get(serviceBase + 'getInvoice?id=' + id);      
+  }
 
   return obj;   
 }]);
@@ -150,6 +164,10 @@ app.config(['$routeProvider',
         title: 'Credit Invoice',
         templateUrl: 'partials/invoice-credit.html',
         controller: 'invoiceController',
+      })
+      .when('/invoice/:invoiceID', {
+        templateUrl: 'partials/invoice.html',
+        controller: 'invoiceViewController',
       })
       .otherwise({
         redirectTo: '/'
