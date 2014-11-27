@@ -202,6 +202,25 @@
 			}else
 				$this->response('',204);	//"No Content" status
 		}
+		
+		private function getServices(){	
+			if($this->get_request_method() != "GET"){
+				$this->response('',406);
+			}
+			$id = (int)$this->_request['invoiceID'];
+			if($id > 0){
+				$query="SELECT * FROM services WHERE invoiceNumber = $id ORDER BY serviceNumber";
+				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+				if($r->num_rows > 0){
+					$result = array();
+					while($row = $r->fetch_assoc()){
+						$result[] = $row;
+					}
+					$this->response($this->json($result), 200); // send user details
+				}
+			}
+			$this->response('',204);	// If no records "No Content" status
+		}
 
 		/*****************************Invoices*******************************/
 		private function insertInvoice(){

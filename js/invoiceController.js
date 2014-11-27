@@ -127,9 +127,17 @@ invoiceController.controller('invoiceController', function ($scope, services, ng
 invoiceViewController.controller('invoiceViewController', function($scope, $routeParams, services) {
     var id = ($routeParams.invoiceID) ? parseInt($routeParams.invoiceID) : 0;
     $scope.today = new Date();
+    
     //load invoice from server
     services.getInvoice(id).then(function(data){
         $scope.invoice = data.data;
+        var invoiceParentID = $scope.invoice.parentID == 0 ? $scope.invoice.id : $scope.invoice.parentID;
+
+        //load services from server
+        services.getServices(invoiceParentID).then(function(serviceData){
+            $scope.orderList = serviceData.data;
+            console.log($scope.orderList.length);
+        });
     });
 });
 

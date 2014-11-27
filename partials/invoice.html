@@ -34,5 +34,52 @@
   		</div>
   		<div style="padding-top: 1em;"></div>
 
+		<ul class="list-group" ng-repeat="service in orderList">
+			<li class="list-group-item animated fadeIn"> 
+				<h5 ng-show="service.deviceType != null">{{service.name}} - {{service.deviceType}}</h5>
+				<h5 ng-show="service.deviceType == null">{{service.name}}</h5>
+				<div class="row">
+					<div class="col-md-9">
+						<p>Installation Cost</p>
+					</div>
+					<div class="col-md-3">
+						<p ng-show="service.activationCost != null">{{service.activationCost | currency}}</p>
+						<p ng-show="service.activationCost == null">$0.00</p>
+					</div>
+				</div>
+				<div class="row" ng-show="service.totalCost > 0">
+					<div class="col-md-9">
+						<p>Device Cost</p>
+					</div>
+					<div class="col-md-3">
+						<p>{{service.totalCost | currency}}</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-9">
+						<p>Monthly Service Charge</p>
+					</div>
+					<div class="col-md-3">
+					<p ng-show="service.monthlyCharge != null">{{service.monthlyCharge | currency}}</p>
+						<p ng-show="service.monthlyCharge == null">$0.00</p>
+					</div>
+				</div>
+			</li>
+		</ul>
+		<div class="row">
+			<div class="col-md-6"></div>
+			<h4 class="col-md-3">Pre-Tax Total</h4>
+			<h4 class="col-md-3">{{invoice.amountDue * 0.87 | currency}}</h4>
+		</div>
+		<div class="row" ng-show="payment.method != 'Cash'">
+			<div class="col-md-6"></div>
+			<h4 class="col-md-3">HST ({{HST}}%)</h4>
+			<h4 class="col-md-3">{{invoice.amountDue * 0.13 | currency}}</h4>
+		</div>
+		<div class="row">
+			<div class="col-md-6"></div>
+			<h4 class="col-md-3">Total</h4>
+			<h4 class="col-md-3">{{invoice.amountDue | currency}}</h4>
+		</div>
 	</div>
 </div>

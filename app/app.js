@@ -104,6 +104,10 @@ app.factory("services", ['$http', function($http) {
     });
   };
 
+  obj.getServices = function(invoiceParentID){
+      return $http.get(serviceBase + 'getServices?invoiceID=' + invoiceParentID);      
+  }
+
 //*******************credit card*****************
   obj.insertCard = function (card) {
       return $http.post(serviceBase + 'insertCard', card).then(function (results) {
