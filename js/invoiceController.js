@@ -61,7 +61,7 @@ invoiceController.filter('invoiceFilter', function() {
     };
 });
 
-invoiceController.controller('invoiceController', function ($scope, services, ngTableParams, $filter, ModalService) {
+invoiceController.controller('invoiceController', function ($scope, services, ngTableParams, $filter, ModalService, $location) {
     $scope.invoices = [];
     $scope.filterSelected = '*';
 
@@ -73,6 +73,10 @@ invoiceController.controller('invoiceController', function ($scope, services, ng
 
     $scope.setFilter = function(option) {
         $scope.filterSelected = option;
+    };
+
+    $scope.showInvoice = function(invoice) {
+        $location.path('/invoice/' + invoice.id);
     };
 
 	$scope.showConfirm = function(invoice) {
@@ -91,6 +95,7 @@ invoiceController.controller('invoiceController', function ($scope, services, ng
                             $scope.invoices[i].paidDate = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDay();
                             $scope.invoices[i].amountPaid= result.amount;
                             $scope.invoices[i].method = result.method;
+                            $scope.invoices[i].notes = result.reason;
                             services.updateInvoice($scope.invoices[i].id, $scope.invoices[i]);
                         }
                     }
@@ -116,6 +121,23 @@ invoiceController.controller('invoiceController', function ($scope, services, ng
             params.total(orderedData.length);
             $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
         }
+    });
+});
+
+invoiceViewController.controller('invoiceViewController', function($scope, $routeParams, services) {
+    var id = ($routeParams.invoiceID) ? parseInt($routeParams.invoiceID) : 0;
+    $scope.today = new Date();
+    
+    //load invoice from server
+    services.getInvoice(id).then(function(data){
+        $scope.invoice = data.data;
+        var invoiceParentID = $scope.invoice.parentID == 0 ? $scope.invoice.id : $scope.invoice.parentID;
+
+        //load services from server
+        services.getServices(invoiceParentID).then(function(serviceData){
+            $scope.orderList = serviceData.data;
+            console.log($scope.orderList.length);
+        });
     });
 });
 

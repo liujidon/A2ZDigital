@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
 CREATE TABLE IF NOT EXISTS `services` (
   `serviceNumber` int(11) NOT NULL AUTO_INCREMENT,
   `clientNumber` int(11) NOT NULL,
+  `invoiceNumber` int(11) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `type` varchar(50) DEFAULT NULL,
   `status` varchar(50) DEFAULT NULL,
@@ -71,6 +72,7 @@ CREATE TABLE IF NOT EXISTS `cards` (
 
 CREATE TABLE IF NOT EXISTS `invoices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parentID` int(11) DEFAULT NULL,
   `clientNumber` int(11) NOT NULL,
   `amountDue` decimal(10,2) NOT NULL,
   `amountPaid` decimal(10,2) NOT NULL DEFAULT 0,
@@ -81,6 +83,7 @@ CREATE TABLE IF NOT EXISTS `invoices` (
   `createdTime` timestamp default current_timestamp,
   `paidBy` varchar(128) DEFAULT NULL,
   `createdBy` varchar(128) NOT NULL,
+  `notes` varchar(2028) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -98,7 +101,7 @@ INSERT INTO `clients` (`clientNumber`, `firstName`, `lastName`, `phone`, `addres
 --
 -- Dumping data for table `services`
 --
-INSERT INTO `services` VALUES (1, 1, 'Cable TV', 'old', 'Active', 'Rogers', 'Roku', 'Roku Stick', 59.99, 100.00, 2, 4.99, 9.98, '416-123-4567', '2014-11-23', 'what what');
+INSERT INTO `services` VALUES (1, 1, 1, 'Cable TV', 'old', 'Active', 'Rogers', 'Roku', 'Roku Stick', 59.99, 100.00, 2, 4.99, 9.98, '416-123-4567', '2014-11-23', 'what what');
 
 --
 -- Dumping data for table `cards`
@@ -108,5 +111,5 @@ INSERT INTO `cards` VALUES (1, 1, 'Mr. TESTER', '1234123023123', 4, 2018, '205')
 --
 -- Dumping data for table `invoices`
 --
-INSERT INTO `invoices` VALUES (1, 1, 100.23, 50.99, 'Credit Card', '2014-11-23', '2014-11-22', 'Monthly', now(), 'admin', 'Bill');
+INSERT INTO `invoices` VALUES (1, 0, 1, 100.23, 50.99, 'Credit Card', '2014-11-23', '2014-11-22', 'Monthly', now(), 'admin', 'Bill', 'Random stuff yo');
 
