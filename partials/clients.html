@@ -1,4 +1,4 @@
-<h3>Client Accounts</h3>
+<h3><i class="glyphicon glyphicon-th"></i> Client Accounts</h3>
  <div class="row">
     <div class="col-md-12" ng-show="clients.length > 0">
     <nav class= "navbar" role= "navigation" >
@@ -32,9 +32,9 @@
                 <td>{{data.phone}}</td>
                 <td>{{data.address}}</td>
                 <td>{{data.email}}</td>
-              	<td><a href="">&nbsp;<i class="glyphicon glyphicon-open-eye"></i>&nbsp; View Client</a></td>
-                <td><a href="#/edit-client/{{data.clientNumber}}">&nbsp;<i class="glyphicon glyphicon-edit"></i> Edit Client</a></td>
-                <td><a href="#/add-services/{{data.clientNumber}}">&nbsp;<i class="glyphicon glyphicon-plus"></i>&nbsp; Add Service</a></td>
+              	<td><a href="">View Client</a></td>
+                <td><a href="#/edit-client/{{data.clientNumber}}" class="yellow">&nbsp;<i class="glyphicon glyphicon-edit"></i> Edit Client</a></td>
+                <td><a href="#/add-services/{{data.clientNumber}}" class="pink">&nbsp;+ Add Service</a></td>
             </tr>
         </tbody>
         </table>
