@@ -110,7 +110,10 @@ invoiceController.controller('invoiceController', function ($scope, services, ng
 
 	$scope.tableInvoice = new ngTableParams({
         page: 1,            // show first page
-        count: 10           // count per page
+        count: 10,           // count per page
+        sorting: {
+            id: 'asc'     // initial sorting
+        }
     }, {
         total: 0,
         counts: [],
