@@ -37,3 +37,56 @@ clientEditController.controller('clientEditController', function ($scope, $rootS
         }
     };
 });
+
+clientViewController.controller('clientViewController', function ($scope, $location, $routeParams, services, client) {
+    var clientID = ($routeParams.clientID) ? parseInt($routeParams.clientID) : 0;
+    if(client.data != "") {
+      var original = client.data;
+      original._id = clientID;
+      $scope.client = angular.copy(original);
+      $scope.client._id = clientID;
+      $scope.panelContext = "panel panel-success";
+
+      $scope.convertStatus = function(status) {
+        switch(status) {
+          case "Active":
+              return "panel panel-info";
+          case "Suspended":
+              return "panel panel-warning";
+          case "Deactivated":
+              return "panel panel-danger";
+          default:
+              return "panel panel-danger";
+          }
+      };
+
+      services.getClientServices(clientID).then(function(data){
+        $scope.services = data.data;
+        var i = 0;
+        for(i; i < $scope.services.length; i++) {
+          $scope.services[i].panelStatus = convertStatus($scope.services[i].status);
+        }
+
+      });
+      services.getClientInvoices(clientID).then(function(data){
+        $scope.invoices = data.data;
+      });
+      services.getClientCards(clientID).then(function(data){
+        $scope.cards = data.data;
+      });
+
+    }
+});
+
+function convertStatus(status) {
+    switch(status) {
+      case "Active":
+          return "panel panel-info";
+      case "Suspended":
+          return "panel panel-warning";
+      case "Deactivated":
+          return "panel panel-danger";
+      default:
+          return "panel panel-danger";
+      }
+}

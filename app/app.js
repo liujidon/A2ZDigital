@@ -8,12 +8,14 @@ var app = angular.module('myApp',
                          'myApp.serviceController',
                          'myApp.clientListController',
                          'myApp.clientEditController',
+                         'myApp.clientViewController',
                          'myApp.checkoutController',
                          'myApp.invoiceController',
                          'myApp.invoiceViewController']);
 
 var clientListController = angular.module('myApp.clientListController', []);
 var clientEditController = angular.module('myApp.clientEditController', []);
+var clientViewController = angular.module('myApp.clientViewController', []);
 var serviceController = angular.module('myApp.serviceController', []);
 var checkoutController = angular.module('myApp.checkoutController', []);
 var invoiceController = angular.module('myApp.invoiceController', []);
@@ -65,7 +67,16 @@ app.factory("services", ['$http', function($http) {
         return $http.get(serviceBase + 'clients');
   }
   obj.getClient = function(clientID){
-        return $http.get(serviceBase + 'client?id=' + clientID);
+        return $http.get(serviceBase + 'client?clientNumber=' + clientID);
+  }
+  obj.getClientServices = function(clientID){
+        return $http.get(serviceBase + 'client?clientNumber=' + clientID + '&table=services');
+  }
+  obj.getClientInvoices = function(clientID){
+        return $http.get(serviceBase + 'client?clientNumber=' + clientID + '&table=invoices');
+  }
+  obj.getClientCards = function(clientID){
+        return $http.get(serviceBase + 'client?clientNumber=' + clientID + '&table=cards');
   }
 
   obj.insertClient = function (client) {
@@ -154,6 +165,17 @@ app.config(['$routeProvider',
           }
         }
       })
+      .when('/view-client/:clientID', {
+        title: 'View Client',
+        templateUrl: 'partials/view-client.html',
+        controller: 'clientViewController',
+        resolve: {
+          client: function(services, $route){
+            var clientID = $route.current.params.clientID;
+            return services.getClient(clientID);
+          }
+        }
+      })
       .when('/add-services/:clientID', {
         title: 'Add Services',
         templateUrl: 'partials/add-services.html',
@@ -179,6 +201,6 @@ app.config(['$routeProvider',
 }]);
 app.run(['$location', '$rootScope', function($location, $rootScope) {
     $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-        $rootScope.title = current.$$route.title;
+        //$rootScope.title = current.$$route.title;
     });
 }]);

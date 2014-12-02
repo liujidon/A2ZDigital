@@ -10,7 +10,7 @@
 				<br>
 				<lable>Phone: +1 (905) 451 6900</lable>
 				<br>
-				<lable>Email: sales@a2zdigital.co</lable></b>
+				<lable>Email: sales@a2zdigital.com</lable></b>
   			</div>
   			<div class="col-md-4">
   				<b><lable>Date: {{today | date: 'dd/MM/yyyy'}}<lable>
@@ -33,6 +33,7 @@
   				<lable>{{invoice.email}}</lable>
   			</div>
   		</div>
+
   		<div style="padding-top: 1em;"></div>
 
 		<ul class="list-group" ng-repeat="service in orderList">
@@ -81,6 +82,12 @@
 			<div class="col-md-6"></div>
 			<h4 class="col-md-3">Total</h4>
 			<h4 class="col-md-3">{{invoice.amountDue | currency}}</h4>
+		</div>
+		
+		<div style="padding-top: 1em;"></div>
+
+		<div class="row" style="font-style: italic">
+			<p>You have 14 days to return or exchange a device. A $40 non-refundable fee will apply. All physical goods must be in good condition and have no damages.</p>
 		</div>
 	</div>
 </div>

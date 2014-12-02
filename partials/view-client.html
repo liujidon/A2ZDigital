@@ -1,0 +1,85 @@
+<div style="padding-top: 2em;"></div>
+
+<div class="row">
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading"><h4>{{client.firstName}} {{client.lastName}}</h4></div>
+			<div class="panel-body">
+  				<lable>{{client.address}}</lable><br>
+  				<lable>{{client.city}}, {{client.province}}, {{client.postalCode}}</lable><br>
+  				<lable>{{client.phone}}</lable><br>
+  				<lable>{{client.email}}</lable><br>
+  				<div style="padding-top: 1em;"></div>
+  				<b><lable>Other Information</lable></b><br>
+  				<lable>DOB: {{client.dateOfBirth | date:'MMM/dd/yyyy'}}</lable><br>
+  				<lable>Gender: {{client.gender}}</lable><br>
+  				<lable>Home Type: {{client.homeType}}</lable><br>
+  				<lable>Referal: {{client.referalType}} {{client.referalText}}</lable><br>
+  				<lable>Special Notes:</lable><br>
+  				<lable>{{client.notes}}</lable><br>
+  				<div style="padding-top: 2em;"></div>
+  				<b><lable>Credit Card Infomation</lable></b><br>
+  				<div class="panel panel-default" ng-repeat="card in cards">
+					<div class="panel-body">
+						<b><lable>Name: {{card.name}}</lable></b><br>
+						<lable>Number: {{card.number}}</lable><br>
+						<lable>Exp: {{card.month}}/{{card.year}} &nbsp;Cvc:{{card.security}}</lable>
+					</div>
+				</div>
+  			</div>		
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div class="well well-lg animated fadeIn">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+				    <h4 class="panel-title">Services</h4>
+				</div>
+				<div class="panel-body">
+					<div ng-class="service.panelStatus" ng-repeat="service in services">
+						<div class="panel-heading">
+							<h4 class="panel-title">{{service.name}} {{service.deviceType}}</h4>
+						</div>
+						<div class="panel-body">
+							<lable>Monthly Service Charge: {{service.monthlyCharge | currency}}/month</lable><br>
+							<lable>Install Cost: {{service.activationCost | currency}}</lable><br>
+							<lable>Total Cost: {{service.totalCost | currency}}</lable>
+							<div style="padding-top: 1em;"></div>
+							<lable>Status: {{service.status}}</lable><br>
+							<lable>Device: {{service.deviceType}} {{service.deviceSubtype}}</lable><br>
+							<lable>Provider: {{service.provider}}</lable><br>
+							<lable>Type: {{service.type}}</lable><br>
+							<lable>Notes: {{service.notes}}</lable><br>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="padding-top: 1em;"></div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+				    <h4 class="panel-title">Invoices</h4>
+				</div>
+				<div class="panel-body">
+					<div class="panel panel-info" ng-repeat="invoice in invoices">
+						<div class="panel-heading">
+							<h4 class="panel-title">Invoice #: {{invoice.id}}</h4>
+						</div>
+						<div class="panel-body">
+							<lable>Billing Cycle: {{invoice.billingCycle}}</lable><br>
+							<lable>Amount Due: {{invoice.amountDue | currency}}</lable><br>
+							<lable>Due Date: {{invoice.dueDate | date:'MMM/dd/yyyy'}}</lable><br>
+							<div ng-show="invoice.paidBy != null">
+								<lable>Amount Paid: {{invoice.amountPaid | currency}}</lable><br>
+								<lable>Confirmed Date: {{invoice.paidDate | date:'MMM/dd/yyyy'}}</lable><br>
+								<lable>Confirmed By: {{invoice.paidBy}}</lable><br>
+							</div>
+							<lable>Payment Method: {{invoice.method}}</lable><br>
+							<lable>Notes: {{invoice.notes}}</lable><br>
+							<lable>Time Created: {{invoice.createdTime}}</lable>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

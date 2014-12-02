@@ -56,7 +56,7 @@
                         <i class="glyphicon glyphicon-th-list"> Show</i>
                     </button>
                 </td>
-                <td data-title="'Confirm Payment'">
+                <td data-title="'Confirm Payment'" sortable="'paidBy'">
                     <a ng-show="invoice.paidBy == null" class="btn btn-default" ng-click="showConfirm(invoice)"><i class="glyphicon glyphicon-question-sign"> Confirm</i></a>
                     <a ng-show="invoice.paidBy != null" class="btn btn-success"><i class="glyphicon glyphicon-ok-sign"> Paid</i></a>
                 </td>

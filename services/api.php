@@ -8,9 +8,9 @@
 	
 		public $data = "";
 		
-		const DB_SERVER = "localhost";
+		const DB_SERVER = "127.0.0.1";
 		const DB_USER = "root";
-		const DB_PASSWORD = "n2vd33p";
+		const DB_PASSWORD = "";
 		const DB = "azdigital";
 
 		// const DB_SERVER = "localhost";
@@ -92,13 +92,26 @@
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
-			$id = (int)$this->_request['id'];
-			if($id > 0){	
-				$query="SELECT distinct clientNumber, firstName, lastName, phone, address, cell, city, postalCode, email, province, dateOfBirth, gender, homeType, notes, referalType, referalText FROM clients where clientNumber=$id";
+			//$id = (int)$this->_request['id'];
+			$clientNumber = (int)$this->_request['clientNumber'];
+			if(isset($this->_request['table'])) {
+				$table = $this->_request['table'];
+				$query="SELECT * FROM $table WHERE clientNumber = $clientNumber";
 				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
-				if($r->num_rows > 0) {
-					$result = $r->fetch_assoc();	
-					$this->response($this->json($result), 200); // send user details
+				if($r->num_rows > 0){
+					$result = array();
+					while($row = $r->fetch_assoc()){
+						$result[] = $row;
+					}
+					$this->response($this->json($result), 200);
+				}
+			}
+			else {
+				$query="SELECT distinct * from clients WHERE clientNumber = $clientNumber";
+					$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+					if($r->num_rows > 0) {
+						$result = $r->fetch_assoc();	
+						$this->response($this->json($result), 200); // send user details
 				}
 			}
 			$this->response('',204);	// If no records "No Content" status
@@ -173,7 +186,7 @@
 			}else
 				$this->response('',204);	// If no records "No Content" status
 		}
-		
+
 		/*****************************Services*******************************/
 		private function insertService(){
 			if($this->get_request_method() != "POST"){
