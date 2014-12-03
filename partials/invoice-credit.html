@@ -46,7 +46,7 @@
                     {{invoice.method}}
                 </td>
                 <td data-title="'Due Date'" class="text-left" sortable="'dueDate'">
-                    {{invoice.dueDate}}
+                    {{invoice.dueDate | date:'dd/MM/yyyy'}}
                 </td>
                 <td data-title="'Created By'" class="text-left" sortable="'createdBy'">
                     {{invoice.createdBy}}

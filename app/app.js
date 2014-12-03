@@ -5,7 +5,8 @@ var app = angular.module('myApp',
                          'ngSanitize',
                          'angularModalService',
                          'mgcrea.ngStrap',
-                         'myApp.serviceController',
+                         'myApp.serviceAddController',
+                         'myApp.serviceEditController',
                          'myApp.clientListController',
                          'myApp.clientEditController',
                          'myApp.clientViewController',
@@ -16,12 +17,13 @@ var app = angular.module('myApp',
 var clientListController = angular.module('myApp.clientListController', []);
 var clientEditController = angular.module('myApp.clientEditController', []);
 var clientViewController = angular.module('myApp.clientViewController', []);
-var serviceController = angular.module('myApp.serviceController', []);
+var serviceAddController = angular.module('myApp.serviceAddController', []);
+var serviceEditController = angular.module('myApp.serviceEditController', []);
 var checkoutController = angular.module('myApp.checkoutController', []);
 var invoiceController = angular.module('myApp.invoiceController', []);
 var invoiceViewController = angular.module('myApp.invoiceViewController', []);
 
-//pass orders between serviceController and checkoutController
+//pass orders between serviceAddController and checkoutController
 app.service("orderService", function() {
     var orderList = [];
 
@@ -108,13 +110,6 @@ app.factory("services", ['$http', function($http) {
     });
   };
 
-  obj.insertInvoice = function (invoice) {
-      return $http.post(serviceBase + 'insertInvoice', invoice).then(function (results) {
-      console.log(results);
-      return results;
-    });
-  };
-
   obj.getServices = function(invoiceParentID){
       return $http.get(serviceBase + 'getServices?invoiceID=' + invoiceParentID);      
   }
@@ -133,6 +128,13 @@ app.factory("services", ['$http', function($http) {
            console.log(status);
            return status.data;
        });
+  };
+
+  obj.insertInvoice = function (invoice) {
+      return $http.post(serviceBase + 'insertInvoice', invoice).then(function (results) {
+      console.log(results);
+      return results;
+    });
   };
 
   obj.getAllInvoices = function(){
@@ -179,7 +181,7 @@ app.config(['$routeProvider',
       .when('/add-services/:clientID', {
         title: 'Add Services',
         templateUrl: 'partials/add-services.html',
-        controller: 'serviceController',
+        controller: 'serviceAddController',
       })
       .when('/checkout', {
         title: 'Checkout',
@@ -194,6 +196,10 @@ app.config(['$routeProvider',
       .when('/invoice/:invoiceID', {
         templateUrl: 'partials/invoice.html',
         controller: 'invoiceViewController',
+      })
+      .when('/edit-services/:serviceNumber', {
+        templateUrl: 'partials/edit-services.html',
+        controller: 'serviceEditController',
       })
       .otherwise({
         redirectTo: '/'

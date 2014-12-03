@@ -41,9 +41,9 @@
 						<br>
 						<lable>Payment Method: {{invoice.method}}</lable>
 						<br>
-						<lable>Billing Cycle: {{invoice.billingCylce}}</lable>
+						<lable>Billing Cycle: {{invoice.billingCycle}}</lable>
 						<br>
-						<lable>Due Date: {{invoice.dueDate}}</lable>
+						<lable>Due Date: {{invoice.dueDate | date:'MMM/dd/yyyy'}}</lable>
 					</div>
 					<div class="col-md-6">
 						<h4>Confirm Amount</h4>

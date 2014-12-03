@@ -97,6 +97,9 @@
 			if(isset($this->_request['table'])) {
 				$table = $this->_request['table'];
 				$query="SELECT * FROM $table WHERE clientNumber = $clientNumber";
+				if($table == "services") {
+					$query=$query ." AND invoiceNumber = (SELECT MAX(invoiceNumber) FROM services)";
+				}
 				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
 				if($r->num_rows > 0){
 					$result = array();

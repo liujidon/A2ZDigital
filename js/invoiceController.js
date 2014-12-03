@@ -97,6 +97,7 @@ invoiceController.controller('invoiceController', function ($scope, services, ng
                             $scope.invoices[i].method = result.method;
                             $scope.invoices[i].notes = result.reason;
                             services.updateInvoice($scope.invoices[i].id, $scope.invoices[i]);
+                            $scope.createChildInvoice($scope.invoices[i]);
                         }
                     }
                 }
@@ -106,6 +107,46 @@ invoiceController.controller('invoiceController', function ($scope, services, ng
                 }
             });
         });
+    };
+
+    $scope.getNextPaymentDate = function(billingCycle, dueDate) {
+        var currentDate = new Date(dueDate);
+        currentDate.setMonth(currentDate.getMonth() + zeroNull(convertCycle(billingCycle)));
+        return currentDate;
+    };
+
+    $scope.createChildInvoice = function(invoice) {
+        if(invoice != null) {
+            //load services from server
+            services.getServices(invoice.id).then(function(serviceData){
+                var serviceList = serviceData.data;
+                var childInvoice = { parentID: invoice.id, amountPaid: 0.00,  notes: "",
+                                 dueDate: formatDate($scope.getNextPaymentDate(invoice.billingCycle, invoice.dueDate)),
+                                 clientNumber: invoice.clientNumber,
+                                 amountDue: calculateRecurringTotal(serviceList, invoice.billingCycle),
+                                 method: invoice.method,
+                                 billingCycle: invoice.billingCycle,
+                                 createdBy: invoice.createdBy };
+
+                //TODO recalculate child invoice to account for canceled invoice
+                services.insertInvoice(childInvoice).then(function(data){
+                    var lastInvoiceID = data.data.lastInsertID;
+                    console.log(serviceList);
+                    //copy services
+                    for (var i = 0; i < serviceList.length; i++) {
+                        var childService = serviceList[i];
+                        for (var j in childService) {
+                            if (childService[j] === null || childService[j] === undefined) {
+                                delete childService[j];
+                            }
+                        }
+                        childService.invoiceNumber = lastInvoiceID;
+                        console.log(childService);
+                        services.insertService(childService);
+                    }
+                });
+            });
+        }
     };
 
 	$scope.tableInvoice = new ngTableParams({
@@ -144,3 +185,43 @@ invoiceViewController.controller('invoiceViewController', function($scope, $rout
     });
 });
 
+
+//return 0 for Nulls
+function zeroNull(value) {
+  return value == null ? 0 : value;
+}
+
+function formatDate(date) {
+    var year = date.getFullYear();
+    var month = date.getMonth()+1;
+    var day = date.getDate();
+    return year + "-" + month + "-" + day; 
+}
+
+//calculate the recurring total on child invoice
+function calculateRecurringTotal(serviceList, billingCycle) {
+    var total = 0.00;
+    var cycleMultiplier = convertCycle(billingCycle);
+    for (var i = 0; i < serviceList.length; i++) {
+        var s = serviceList[i];
+        total = total + zeroNull(s.monthlyCharge) * cycleMultiplier + zeroNull(s.totalCost);
+    }
+    total = total * 1.13;
+    return total;
+}
+
+function convertCycle(billingCycle) {
+    switch(billingCycle) {
+        case "Monthly":
+            return 1;
+        case "Quarterly":
+            return 3;
+        case "Semi-Annually":
+            return 6;
+        case "Annually":
+            return 12;
+        default:
+            return 0;
+    }    
+
+}
