@@ -299,7 +299,14 @@
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
-			$query="SELECT DISTINCT * FROM invoices JOIN clients ON invoices.clientNumber = clients.clientNumber ORDER BY id ";
+			$whereStr = "";
+			if(isset($this->_request['type'])) {
+				$invoiceType = $this->_request['type'];
+				if($invoiceType == "cash") $whereStr = "WHERE method = 'Cash'";
+				else if($invoiceType == "credit") $whereStr = "WHERE method != 'Cash'";
+			}
+			
+			$query="SELECT DISTINCT * FROM invoices JOIN clients ON invoices.clientNumber = clients.clientNumber ". $whereStr." ORDER BY id ";
 			$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
 
 			if($r->num_rows > 0){

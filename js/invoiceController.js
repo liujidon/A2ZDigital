@@ -61,15 +61,10 @@ invoiceController.filter('invoiceFilter', function() {
     };
 });
 
-invoiceController.controller('invoiceController', function ($scope, services, ngTableParams, $filter, ModalService, $location) {
-    $scope.invoices = [];
+invoiceController.controller('invoiceController', function ($scope, services, ngTableParams, $filter, ModalService, $location, invoices, title) {
+    $scope.invoices = invoices.data;
+    $scope.title = title;
     $scope.filterSelected = '*';
-
-	services.getAllInvoices().then(function(data){
-	    $scope.invoices = data.data;
-	    $scope.tableInvoice.reload();
-	    $scope.tableInvoice.page(1);
-	});
 
     $scope.setFilter = function(option) {
         $scope.filterSelected = option;
@@ -151,7 +146,7 @@ invoiceController.controller('invoiceController', function ($scope, services, ng
 
 	$scope.tableInvoice = new ngTableParams({
         page: 1,            // show first page
-        count: 10,           // count per page
+        count: 25,           // count per page
         sorting: {
             id: 'asc'     // initial sorting
         }
@@ -175,10 +170,9 @@ invoiceViewController.controller('invoiceViewController', function($scope, $rout
     //load invoice from server
     services.getInvoice(id).then(function(data){
         $scope.invoice = data.data;
-        var invoiceParentID = $scope.invoice.parentID == 0 ? $scope.invoice.id : $scope.invoice.parentID;
-
+        //var invoiceParentID = $scope.invoice.parentID == 0 ? $scope.invoice.id : $scope.invoice.parentID;
         //load services from server
-        services.getServices(invoiceParentID).then(function(serviceData){
+        services.getServices($scope.invoice.id).then(function(serviceData){
             $scope.orderList = serviceData.data;
             console.log($scope.orderList.length);
         });

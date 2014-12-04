@@ -137,8 +137,8 @@ app.factory("services", ['$http', function($http) {
     });
   };
 
-  obj.getAllInvoices = function(){
-      return $http.get(serviceBase + 'getAllInvoices');      
+  obj.getAllInvoices = function(type){
+      return $http.get(serviceBase + 'getAllInvoices?type=' + type);      
   }
 
   obj.getInvoice = function(id){
@@ -188,10 +188,26 @@ app.config(['$routeProvider',
         templateUrl: 'partials/checkout.html',
         controller: 'checkoutController',
       })
-      .when('/invoice-credit', {
-        title: 'Credit Invoice',
-        templateUrl: 'partials/invoice-credit.html',
+      .when('/invoices/credit', {
+        templateUrl: 'partials/invoice-list.html',
         controller: 'invoiceController',
+        resolve: {
+          invoices: function(services){
+            return services.getAllInvoices("credit");
+          },
+          title: function(){ return 'Credit Invoices'; }
+        }
+      })
+      .when('/invoices/cash', {
+        title: 'Cash Invoice',
+        templateUrl: 'partials/invoice-list.html',
+        controller: 'invoiceController',
+        resolve: {
+          invoices: function(services){
+            return services.getAllInvoices("cash");
+          },
+          title: function(){ return 'Cash Invoices'; }
+        }
       })
       .when('/invoice/:invoiceID', {
         templateUrl: 'partials/invoice.html',

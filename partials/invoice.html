@@ -40,7 +40,7 @@
 			<li class="list-group-item animated fadeIn"> 
 				<h5 ng-show="service.deviceType != null">{{service.name}} - {{service.deviceType}}</h5>
 				<h5 ng-show="service.deviceType == null">{{service.name}}</h5>
-				<div class="row">
+				<div class="row" ng-show="invoice.parentId == '0'">
 					<div class="col-md-9">
 						<p>Installation Cost</p>
 					</div>
@@ -68,14 +68,14 @@
 				</div>
 			</li>
 		</ul>
-		<div class="row">
+		<div class="row" ng-show="invoice.method != 'Cash'">
 			<div class="col-md-6"></div>
 			<h4 class="col-md-3">Pre-Tax Total</h4>
-			<h4 class="col-md-3">{{invoice.amountDue * 0.87 | currency}}</h4>
+			<h4 class="col-md-3">{{invoice.amountDue / 1.13 | currency}}</h4>
 		</div>
-		<div class="row" ng-show="payment.method != 'Cash'">
+		<div class="row" ng-show="invoice.method != 'Cash'">
 			<div class="col-md-6"></div>
-			<h4 class="col-md-3">HST ({{HST}}%)</h4>
+			<h4 class="col-md-3">HST (13%)</h4>
 			<h4 class="col-md-3">{{invoice.amountDue * 0.13 | currency}}</h4>
 		</div>
 		<div class="row">
