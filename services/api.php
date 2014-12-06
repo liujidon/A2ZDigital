@@ -98,7 +98,8 @@
 				$table = $this->_request['table'];
 				$query="SELECT * FROM $table WHERE clientNumber = $clientNumber";
 				if($table == "services") {
-					$query=$query ." AND invoiceNumber = (SELECT MAX(invoiceNumber) FROM services)";
+					$query="SELECT services.* FROM services join invoices on invoices.id = services.invoiceNumber
+                            WHERE services.clientNumber = $clientNumber AND invoices.id NOT IN (SELECT parentID FROM invoices)";
 				}
 				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
 				if($r->num_rows > 0){
@@ -218,7 +219,34 @@
 			}else
 				$this->response('',204);	//"No Content" status
 		}
-		
+
+		private function updateService(){
+			if($this->get_request_method() != "POST"){
+				$this->response('',406);
+			}
+			$service = json_decode(file_get_contents("php://input"),true);
+			$serviceNumber = (int)$service['serviceNumber'];
+			$column_names = array('clientNumber', 'invoiceNumber', 'name', 'type', 'status', 'provider',
+            									'deviceType', 'deviceSubtype', 'monthlyCharge', 'activationCost', 'numUnits',
+            									'unitCost','totalCost', 'phone', 'deactivationDate', 'notes');
+			$keys = array_keys($service['service']);
+			$columns = '';
+			$values = '';
+			foreach($column_names as $desired_key){
+			   if(in_array($desired_key, $keys)) {
+					$$desired_key = $service['service'][$desired_key];
+					$columns = $columns.$desired_key."='".$$desired_key."',";
+				}
+			}
+			$query = "UPDATE services SET ".trim($columns,',')." WHERE serviceNumber=$serviceNumber";
+			if(!empty($service)){
+				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+				$success = array('status' => "Success", "msg" => "Service ".$serviceNumber." Updated Successfully.", "data" => $service);
+				$this->response($this->json($success),200);
+			}else
+				$this->response('',204);	// "No Content" status
+		}
+
 		private function getServices(){	
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);

@@ -24,15 +24,11 @@ serviceAddController.controller('serviceAddController', function ($scope, orderS
             orderService.addOrder(service);
             $scope.orderList = orderService.getOrders();
         }
-        $scope.service = null;
+        $scope.service = {status: "Active"};
     };
 
     $scope.removeService = function (index) {
         orderService.removeOrder(index);
         $scope.orderList = orderService.getOrders();
     };
-});
-
-serviceEditController.controller('serviceEditController', function ($scope, $routeParams) {
-
 });

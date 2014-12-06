@@ -41,13 +41,12 @@
         </div>
 
         <div style="padding-top: 1em;"></div>
-
         <ul class="list-group" ng-repeat="service in orderList">
             <li class="list-group-item animated fadeIn">
                 <h5 ng-show="service.deviceType != null">{{service.name}} - {{service.deviceType}}</h5>
                 <h5 ng-show="service.deviceType == null">{{service.name}}</h5>
 
-                <div class="row" ng-show="invoice.parentId == '0'">
+                <div class="row" ng-show="invoice.parentID == '0'">
                     <div class="col-md-9">
                         <p>Installation Cost</p>
                     </div>

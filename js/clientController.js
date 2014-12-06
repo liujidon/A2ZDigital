@@ -38,9 +38,10 @@ clientEditController.controller('clientEditController', function ($scope, $rootS
     };
 });
 
-clientViewController.controller('clientViewController', function ($scope, $location, $routeParams, services, client) {
+clientViewController.controller('clientViewController', function ($scope, $location, $routeParams, services, client, ModalService) {
     var clientID = ($routeParams.clientID) ? parseInt($routeParams.clientID) : 0;
-    if (client.data != "") {
+    if (client.data == "") {
+    } else {
         var original = client.data;
         original._id = clientID;
         $scope.client = angular.copy(original);
@@ -64,10 +65,10 @@ clientViewController.controller('clientViewController', function ($scope, $locat
             $scope.services = data.data;
             var i = 0;
             for (i; i < $scope.services.length; i++) {
-                $scope.services[i].panelStatus = convertStatus($scope.services[i].status);
+                $scope.services[i].panelStatus = $scope.convertStatus($scope.services[i].status);
             }
-
         });
+
         services.getClientInvoices(clientID).then(function (data) {
             $scope.invoices = data.data;
         });
@@ -75,18 +76,33 @@ clientViewController.controller('clientViewController', function ($scope, $locat
             $scope.cards = data.data;
         });
 
+        $scope.showConfirmCancel = function (service) {
+            ModalService.showModal({
+                templateUrl: 'partials/service-confirm-cancel.html',
+                controller: "ServiceModalController",
+                inputs: {service: service}
+            }).then(function (modal) {
+                modal.element.modal();
+                modal.close.then(function (result) {
+                    if (result != null) {
+                        services.updateService(zeroNullObj(service));
+                    }
+                });
+            });
+        };
     }
 });
 
-function convertStatus(status) {
-    switch (status) {
-        case "Active":
-            return "panel panel-info";
-        case "Suspended":
-            return "panel panel-warning";
-        case "Deactivated":
-            return "panel panel-danger";
-        default:
-            return "panel panel-danger";
-    }
-}
+clientViewController.controller('ServiceModalController', ['$scope', 'close', 'service', function ($scope, close, service) {
+    $scope.service = service;
+
+    $scope.calculateTotal = function () {
+        return zeroNull($scope.service.totalCost) + zeroNull($scope.service.monthlyCharge);
+    };
+    $scope.close = function (result) {
+        if (result != null) {
+            result.status = "Canceled";
+            close(result, 500); // close, but give 500ms for bootstrap to animate
+        }
+    };
+}]);

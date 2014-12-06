@@ -113,7 +113,13 @@ invoiceController.controller('invoiceController', function ($scope, services, ng
         if (invoice != null) {
             //load services from server
             services.getServices(invoice.id).then(function (serviceData) {
-                var serviceList = serviceData.data;
+                var serviceList = [];
+                //remove canceled services
+                for(var i = 0; i < serviceData.data.length; i++) {
+                    if(serviceData.data[i].status != "Canceled")
+                        serviceList.push(serviceData.data[i]);
+                }
+
                 var childInvoice = {
                     parentID: invoice.id, amountPaid: 0.00, notes: "",
                     dueDate: formatDate($scope.getNextPaymentDate(invoice.billingCycle, invoice.dueDate)),
@@ -124,7 +130,6 @@ invoiceController.controller('invoiceController', function ($scope, services, ng
                     createdBy: invoice.createdBy
                 };
 
-                //TODO recalculate child invoice to account for canceled invoice
                 services.insertInvoice(childInvoice).then(function (data) {
                     var lastInvoiceID = data.data.lastInsertID;
                     console.log(serviceList);
@@ -181,25 +186,13 @@ invoiceViewController.controller('invoiceViewController', function ($scope, $rou
 });
 
 
-//return 0 for Nulls
-function zeroNull(value) {
-    return value == null ? 0 : value;
-}
-
-function formatDate(date) {
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    return year + "-" + month + "-" + day;
-}
-
 //calculate the recurring total on child invoice
 function calculateRecurringTotal(serviceList, billingCycle) {
     var total = 0.00;
     var cycleMultiplier = convertCycle(billingCycle);
     for (var i = 0; i < serviceList.length; i++) {
         var s = serviceList[i];
-        total = total + zeroNull(s.monthlyCharge) * cycleMultiplier + zeroNull(s.totalCost);
+        total = total + zeroNull(Number(s.monthlyCharge)) * cycleMultiplier + zeroNull(Number(s.totalCost));
     }
     total = total * 1.13;
     return total;
@@ -218,5 +211,4 @@ function convertCycle(billingCycle) {
         default:
             return 0;
     }
-
 }

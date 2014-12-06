@@ -141,15 +141,3 @@ checkoutController.controller('checkoutController', function ($scope, $location,
     };
 
 });
-
-//return 0 for Nulls
-function zeroNull(value) {
-    return value == null ? 0 : value;
-}
-
-function formatDate(date) {
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    return year + "-" + month + "-" + day;
-}
