@@ -1,93 +1,103 @@
 <div class="col-md-9">
-	<div style="padding-top: 2em;"></div>
-	<div class="well well-lg animated fadeIn">
-		<h3>A2Z DIGITAL INC.</h3>
-		<div class="row">
-  			<div class="col-md-8">
-  				<b><lable>8 Melanie Drive Suit 201</lable>
-  				<br>
-				<lable>Brampton, ON, L6T 4L2</lable>
-				<br>
-				<lable>Phone: +1 (905) 451 6900</lable>
-				<br>
-				<lable>Email: sales@a2zdigital.com</lable></b>
-  			</div>
-  			<div class="col-md-4">
-  				<b><lable>Date: {{today | date: 'dd/MM/yyyy'}}<lable>
-  				<br>
-  				<lable>Invoice #: {{invoice.id}}</lable></b>
-  			</div>
-		</div>
-		<div style="padding-top: 1em;"></div>
-		<div class="row">
-  			<div class="col-md-8">
-  				<h3>Bill To:</h3>
-  				<lable>{{invoice.firstName}} {{invoice.lastName}}</lable>
-  				<br>
-  				<lable>{{invoice.address}}</lable>
-  				<br>
-  				<lable>{{invoice.city}}, {{invoice.province}}, {{invoice.postalCode}}</lable>
-  				<br>
-  				<lable>{{invoice.phone}}</lable>
-  				<br>
-  				<lable>{{invoice.email}}</lable>
-  			</div>
-  		</div>
+    <div style="padding-top: 2em;"></div>
+    <div class="well well-lg animated fadeIn">
+        <h2>A2Z DIGITAL INC.</h2>
 
-  		<div style="padding-top: 1em;"></div>
+        <div class="row">
+            <div class="col-md-8">
+                <b>
+                    <lable>8 Melanie Drive Suit 201</lable>
+                    <br>
+                    <lable>Brampton, ON, L6T 4L2</lable>
+                    <br>
+                    <lable>Phone: +1 (905) 451 6900</lable>
+                    <br>
+                    <lable>Email: sales@a2zdigital.com</lable>
+                </b>
+            </div>
+            <div class="col-md-4">
+                <b>
+                    <lable>Date: {{today | date: 'dd/MM/yyyy'}}
+                        <lable>
+                            <br>
+                            <lable>Invoice #: {{invoice.id}}</lable>
+                </b>
+            </div>
+        </div>
+        <div style="padding-top: 1em;"></div>
+        <div class="row">
+            <div class="col-md-8">
+                <h3>Bill To:</h3>
+                <lable>{{invoice.firstName}} {{invoice.lastName}}</lable>
+                <br>
+                <lable>{{invoice.address}}</lable>
+                <br>
+                <lable>{{invoice.city}}, {{invoice.province}}, {{invoice.postalCode}}</lable>
+                <br>
+                <lable>{{invoice.phone}}</lable>
+                <br>
+                <lable>{{invoice.email}}</lable>
+            </div>
+        </div>
 
-		<ul class="list-group" ng-repeat="service in orderList">
-			<li class="list-group-item animated fadeIn"> 
-				<h5 ng-show="service.deviceType != null">{{service.name}} - {{service.deviceType}}</h5>
-				<h5 ng-show="service.deviceType == null">{{service.name}}</h5>
-				<div class="row" ng-show="invoice.parentId == '0'">
-					<div class="col-md-9">
-						<p>Installation Cost</p>
-					</div>
-					<div class="col-md-3">
-						<p ng-show="service.activationCost != null">{{service.activationCost | currency}}</p>
-						<p ng-show="service.activationCost == null">$0.00</p>
-					</div>
-				</div>
-				<div class="row" ng-show="service.totalCost > 0">
-					<div class="col-md-9">
-						<p>Device Cost</p>
-					</div>
-					<div class="col-md-3">
-						<p>{{service.totalCost | currency}}</p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-9">
-						<p>Monthly Service Charge</p>
-					</div>
-					<div class="col-md-3">
-					<p ng-show="service.monthlyCharge != null">{{service.monthlyCharge | currency}}</p>
-						<p ng-show="service.monthlyCharge == null">$0.00</p>
-					</div>
-				</div>
-			</li>
-		</ul>
-		<div class="row" ng-show="invoice.method != 'Cash'">
-			<div class="col-md-6"></div>
-			<h4 class="col-md-3">Pre-Tax Total</h4>
-			<h4 class="col-md-3">{{invoice.amountDue / 1.13 | currency}}</h4>
-		</div>
-		<div class="row" ng-show="invoice.method != 'Cash'">
-			<div class="col-md-6"></div>
-			<h4 class="col-md-3">HST (13%)</h4>
-			<h4 class="col-md-3">{{invoice.amountDue * 0.13 | currency}}</h4>
-		</div>
-		<div class="row">
-			<div class="col-md-6"></div>
-			<h4 class="col-md-3">Total</h4>
-			<h4 class="col-md-3">{{invoice.amountDue | currency}}</h4>
-		</div>
-		
-		<div style="padding-top: 1em;"></div>
+        <div style="padding-top: 1em;"></div>
 
-		<div class="row" style="font-style: italic">
-			<p>You have 14 days to return or exchange a device. A $40 non-refundable fee will apply. All physical goods must be in good condition and have no damages.</p>
-		</div>
-	</div>
+        <ul class="list-group" ng-repeat="service in orderList">
+            <li class="list-group-item animated fadeIn">
+                <h5 ng-show="service.deviceType != null">{{service.name}} - {{service.deviceType}}</h5>
+                <h5 ng-show="service.deviceType == null">{{service.name}}</h5>
+
+                <div class="row" ng-show="invoice.parentId == '0'">
+                    <div class="col-md-9">
+                        <p>Installation Cost</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p ng-show="service.activationCost != null">{{service.activationCost | currency}}</p>
+
+                        <p ng-show="service.activationCost == null">$0.00</p>
+                    </div>
+                </div>
+                <div class="row" ng-show="service.totalCost > 0">
+                    <div class="col-md-9">
+                        <p>Device Cost</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p>{{service.totalCost | currency}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9">
+                        <p>Monthly Service Charge</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p ng-show="service.monthlyCharge != null">{{service.monthlyCharge | currency}}</p>
+
+                        <p ng-show="service.monthlyCharge == null">$0.00</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="row" ng-show="invoice.method != 'Cash'">
+            <div class="col-md-6"></div>
+            <h4 class="col-md-3">Pre-Tax Total</h4>
+            <h4 class="col-md-3">{{invoice.amountDue / 1.13 | currency}}</h4>
+        </div>
+        <div class="row" ng-show="invoice.method != 'Cash'">
+            <div class="col-md-6"></div>
+            <h4 class="col-md-3">HST (13%)</h4>
+            <h4 class="col-md-3">{{invoice.amountDue * 0.13 | currency}}</h4>
+        </div>
+        <div class="row">
+            <div class="col-md-6"></div>
+            <h4 class="col-md-3">Total</h4>
+            <h4 class="col-md-3">{{invoice.amountDue | currency}}</h4>
+        </div>
+
+        <div style="padding-top: 1em;"></div>
+
+        <div class="row" style="font-style: italic">
+            <p>You have 14 days to return or exchange a device. A $40 non-refundable fee will apply. All physical goods
+                must be in good condition and have no damages.</p>
+        </div>
+    </div>
 </div>

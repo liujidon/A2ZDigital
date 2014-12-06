@@ -213,8 +213,8 @@ app.config(['$routeProvider',
         templateUrl: 'partials/invoice.html',
         controller: 'invoiceViewController',
       })
-      .when('/edit-services/:serviceNumber', {
-        templateUrl: 'partials/edit-services.html',
+      .when('/cancel-service/:serviceNumber', {
+        templateUrl: 'partials/cancel-service.html',
         controller: 'serviceEditController',
       })
       .otherwise({

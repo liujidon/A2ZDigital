@@ -1,94 +1,99 @@
 <!DOCTYPE html>
-<html ng-app="myApp" ng-app lang="en">
+<html ng-app="myApp" lang="en">
 <head>
     <meta charset="utf-8">
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="bower_components/angular-motion/dist/angular-motion.min.css" rel="stylesheet">
     <link rel="import" href="partials/invoice-confirm-content.html">
-    <link rel="stylesheet" href="css/site-specific.css" />
-    <link rel="stylesheet" href="bower_components/ng-table/ng-table.min.css" />
+    <link rel="stylesheet" href="css/site-specific.css"/>
+    <link rel="stylesheet" href="bower_components/ng-table/ng-table.min.css"/>
     <link rel="stylesheet" href="bower_components/animate.css/animate.min.css">
 
     <link href="css/sb-admin.css" rel="stylesheet">
 
     <style type="text/css">
-    ul>li, a{cursor: pointer;}
+        ul > li, a {
+            cursor: pointer;
+        }
     </style>
     <title>A2Z Digital</title>
 </head>
 
 <body>
-    <div id="wrapper">
+<div id="wrapper">
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <h2>A2Z Digital Inc.</h2>
-            </div>
-            <!-- Top Menu Items -->
-            <ul class="nav navbar-right top-nav">
-            <li class="dropdown white"><a href=""><span class="glyphicon glyphicon-exclamation-sign"></span> Alerts</a></li>
-            <li class="dropdown white"><a href=""> +<i class="glyphicon glyphicon-user"></i>  </a></li>
-                <li class="dropdown">
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> User Name <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <h2>A2Z Digital Inc.</h2>
+        </div>
+        <!-- Top Menu Items -->
+        <ul class="nav navbar-right top-nav">
+            <li class="dropdown white"><a href=""><span class="glyphicon glyphicon-exclamation-sign"></span> Alerts</a>
+            </li>
+            <li class="dropdown white"><a href=""> +<i class="glyphicon glyphicon-user"></i> </a></li>
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> User
+                    Name <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav side-nav">
+                <li class="active">
+                    <a href="index.html"><span class="glyphicon glyphicon-inbox"></span> Client Accounts</a>
+                </li>
+                <li>
+                    <a href="javascript:" data-toggle="collapse" data-target="#demo"><span
+                            class="glyphicon glyphicon-list-alt"></span> Invoices <i class="caret"></i></a>
+                    <ul id="demo" class="collapse">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                            <a href="#/invoices/cash"><span class="glyphicon glyphicon-usd"></span> Cash </a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="#/invoices/credit"><span class="glyphicon glyphicon-credit-card"></span> Credit</a>
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="#"><span class="glyphicon glyphicon-stats"></span> Sales Reports</a>
+                </li>
+                <li>
+                    <a href="#"><span class="glyphicon glyphicon-user"></span> Users</a>
+                </li>
             </ul>
-            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                    <li class="active">
-                        <a href="index.html"><span class="glyphicon glyphicon-inbox"></span> Client Accounts</a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><span class="glyphicon glyphicon-list-alt"></span> Invoices <i class="caret"></i></a>
-                        <ul id="demo" class="collapse">
-                            <li>
-                                <a href="#/invoices/cash"><span class="glyphicon glyphicon-usd"></span> Cash </a>
-                            </li>
-                            <li>
-                                <a href="#/invoices/credit"><span class="glyphicon glyphicon-credit-card"></span> Credit</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><span class="glyphicon glyphicon-stats"></span> Sales Reports</a>
-                    </li>
-                    <li>
-                        <a href="#"><span class="glyphicon glyphicon-user"></span> Users</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </nav>
-
-        <div id="page-wrapper">
-            <div class="container-fluid">
-                <div ng-view="" id="ng-view"></div>
-            </div>
-            <!-- /.container-fluid -->
         </div>
-        <!-- /#page-wrapper -->
+        <!-- /.navbar-collapse -->
+    </nav>
+
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div ng-view="" id="ng-view"></div>
+        </div>
+        <!-- /.container-fluid -->
     </div>
-    <!-- /#wrapper -->
+    <!-- /#page-wrapper -->
+</div>
+<!-- /#wrapper -->
 
 <!--Dependencies-->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -99,7 +104,7 @@
 <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
 <script src="bower_components/angular-animate/angular-animate.min.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-<script src="bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>  
+<script src="bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
 <script src="bower_components/ng-table/ng-table.min.js"></script>
 
 <script src="app/app.js"></script>
