@@ -1,4 +1,4 @@
-angular.module('Authentication', []);
+angular.module('authenticationModule', []);
 
 var app = angular.module('myApp',
     ['ngRoute',
@@ -7,26 +7,27 @@ var app = angular.module('myApp',
         'ngSanitize',
         'angularModalService',
         'mgcrea.ngStrap',
-        'myApp.loginController',
-        'Authentication',
-        'myApp.serviceAddController',
-        'myApp.serviceEditController',
-        'myApp.clientListController',
-        'myApp.clientEditController',
-        'myApp.clientViewController',
-        'myApp.checkoutController',
-        'myApp.invoiceController',
-        'myApp.invoiceViewController']);
+        'ngCookies',
+        'authenticationModule',
+        'myApp.LoginController',
+        'myApp.ServiceAddController',
+        'myApp.ServiceEditController',
+        'myApp.ClientListController',
+        'myApp.ClientEditController',
+        'myApp.ClientViewController',
+        'myApp.CheckoutController',
+        'myApp.InvoiceController',
+        'myApp.InvoiceViewController']);
 
-var loginController = angular.module('myApp.loginController', []);
-var clientListController = angular.module('myApp.clientListController', []);
-var clientEditController = angular.module('myApp.clientEditController', []);
-var clientViewController = angular.module('myApp.clientViewController', []);
-var serviceAddController = angular.module('myApp.serviceAddController', []);
-var serviceEditController = angular.module('myApp.serviceEditController', []);
-var checkoutController = angular.module('myApp.checkoutController', []);
-var invoiceController = angular.module('myApp.invoiceController', []);
-var invoiceViewController = angular.module('myApp.invoiceViewController', []);
+var LoginController = angular.module('myApp.LoginController', []);
+var ClientListController = angular.module('myApp.ClientListController', []);
+var ClientEditController = angular.module('myApp.ClientEditController', []);
+var ClientViewController = angular.module('myApp.ClientViewController', []);
+var ServiceAddController = angular.module('myApp.ServiceAddController', []);
+var ServiceEditController = angular.module('myApp.ServiceEditController', []);
+var CheckoutController = angular.module('myApp.CheckoutController', []);
+var InvoiceController = angular.module('myApp.InvoiceController', []);
+var InvoiceViewController = angular.module('myApp.InvoiceViewController', []);
 
 //pass orders between serviceAddController and checkoutController
 app.service("orderService", function () {
@@ -66,7 +67,7 @@ app.service("orderService", function () {
 
 //factory to interface with php server
 app.factory("services", ['$http', function ($http) {
-    var serviceBase = 'services/'
+    var serviceBase = 'services/';
     var obj = {};
 
     //****************clients*****************
@@ -115,7 +116,10 @@ app.factory("services", ['$http', function ($http) {
         });
     };
     obj.updateService = function (service) {
-        return $http.post(serviceBase + 'updateService', {serviceNumber: service.serviceNumber, service: service}).then(function (status) {
+        return $http.post(serviceBase + 'updateService', {
+            serviceNumber: service.serviceNumber,
+            service: service
+        }).then(function (status) {
             console.log(status);
             return status.data;
         });
@@ -165,12 +169,12 @@ app.config(['$routeProvider',
             when('/', {
                 title: 'Clients',
                 templateUrl: 'partials/clients.html',
-                controller: 'clientListController'
+                controller: 'ClientListController'
             })
             .when('/edit-client/:clientID', {
                 title: 'Edit Clients',
                 templateUrl: 'partials/edit-client.html',
-                controller: 'clientEditController',
+                controller: 'ClientEditController',
                 resolve: {
                     client: function (services, $route) {
                         var clientID = $route.current.params.clientID;
@@ -181,7 +185,7 @@ app.config(['$routeProvider',
             .when('/view-client/:clientID', {
                 title: 'View Client',
                 templateUrl: 'partials/view-client.html',
-                controller: 'clientViewController',
+                controller: 'ClientViewController',
                 resolve: {
                     client: function (services, $route) {
                         var clientID = $route.current.params.clientID;
@@ -192,16 +196,16 @@ app.config(['$routeProvider',
             .when('/add-services/:clientID', {
                 title: 'Add Services',
                 templateUrl: 'partials/add-services.html',
-                controller: 'serviceAddController',
+                controller: 'ServiceAddController'
             })
             .when('/checkout', {
                 title: 'Checkout',
                 templateUrl: 'partials/checkout.html',
-                controller: 'checkoutController',
+                controller: 'CheckoutController'
             })
             .when('/invoices/credit', {
                 templateUrl: 'partials/invoice-list.html',
-                controller: 'invoiceController',
+                controller: 'InvoiceController',
                 resolve: {
                     invoices: function (services) {
                         return services.getAllInvoices("credit");
@@ -214,7 +218,7 @@ app.config(['$routeProvider',
             .when('/invoices/cash', {
                 title: 'Cash Invoice',
                 templateUrl: 'partials/invoice-list.html',
-                controller: 'invoiceController',
+                controller: 'InvoiceController',
                 resolve: {
                     invoices: function (services) {
                         return services.getAllInvoices("cash");
@@ -226,18 +230,22 @@ app.config(['$routeProvider',
             })
             .when('/invoice/:invoiceID', {
                 templateUrl: 'partials/invoice.html',
-                controller: 'invoiceViewController',
+                controller: 'InvoiceViewController'
             })
             .when('/login', {
-                controller: 'loginController',
                 templateUrl: 'partials/login.html',
+                controller: 'LoginController',
                 hideMenus: true
             })
             .otherwise({
-                redirectTo: '/login.html'
+                redirectTo: '/login'
             });
     }]);
-app.run(['$location', '$rootScope', '$cookieStore', '$http', function ($location, $rootScope, $cookieStore, $http) {
+
+app.run(['$location', '$rootScope', '$cookieStore', '$http', 'AuthenticationService', function ($location, $rootScope, $cookieStore, $http, AuthenticationService) {
+
+    $rootScope.authService = AuthenticationService;
+
     $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
         //$rootScope.title = current.$$route.title;
     });
@@ -250,8 +258,15 @@ app.run(['$location', '$rootScope', '$cookieStore', '$http', function ($location
 
     $rootScope.$on('$routeChangeStart', function (event, next, current) {
         // redirect to login page if not logged in
-        if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
+        if ($location.path() !== '/login' && ($rootScope.globals == null || !$rootScope.globals.currentUser)) {
             $location.path('/login');
         }
     });
+
+    $rootScope.$watch(function() { return $location.path(); }, function(newValue, oldValue){
+        if (!AuthenticationService.Authorized() && newValue != '/' && newValue != '/login'){
+            $location.path('/login');
+        }
+    });
+
 }]);

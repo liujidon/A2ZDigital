@@ -23,7 +23,7 @@
 <div id="wrapper">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-show="authService.Authorized()">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -51,7 +51,8 @@
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                        <a ng-click="authService.Logout()">
+                            <i class="glyphicon glyphicon-off glyphicon-white"></i> Sign out</a>
                     </li>
                 </ul>
             </li>
@@ -106,12 +107,13 @@
 <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 <script src="bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
 <script src="bower_components/ng-table/ng-table.min.js"></script>
-<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
 
 
 <script src="js/utils.js"></script>
 <script src="app/app.js"></script>
 <script src="js/loginController.js"></script>
+<script src="js/authenticationServices.js"></script>
 <script src="js/serviceController.js"></script>
 <script src="js/clientController.js"></script>
 <script src="js/checkoutController.js"></script>

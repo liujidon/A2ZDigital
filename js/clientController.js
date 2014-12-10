@@ -1,13 +1,13 @@
 'use strict';
 
 
-clientListController.controller('clientListController', function ($scope, services) {
+ClientListController.controller('ClientListController', function ($scope, services) {
     services.getClients().then(function (data) {
         $scope.clients = data.data;
     });
 });
 
-clientEditController.controller('clientEditController', function ($scope, $rootScope, $location, $routeParams, services, client) {
+ClientEditController.controller('ClientEditController', function ($scope, $rootScope, $location, $routeParams, services, client) {
     var clientID = ($routeParams.clientID) ? parseInt($routeParams.clientID) : 0;
     $rootScope.title = (clientID > 0) ? 'Edit Client' : 'Add Client';
     $scope.buttonText = (clientID > 0) ? 'Update Client' : 'Add New Client';
@@ -38,7 +38,7 @@ clientEditController.controller('clientEditController', function ($scope, $rootS
     };
 });
 
-clientViewController.controller('clientViewController', function ($scope, $location, $routeParams, services, client, ModalService) {
+ClientViewController.controller('ClientViewController', function ($scope, $location, $routeParams, services, client, ModalService) {
     var clientID = ($routeParams.clientID) ? parseInt($routeParams.clientID) : 0;
     if (client.data == "") {
     } else {
@@ -93,7 +93,7 @@ clientViewController.controller('clientViewController', function ($scope, $locat
     }
 });
 
-clientViewController.controller('ServiceModalController', ['$scope', 'close', 'service', function ($scope, close, service) {
+ClientViewController.controller('ServiceModalController', ['$scope', 'close', 'service', function ($scope, close, service) {
     $scope.service = service;
 
     $scope.calculateTotal = function () {

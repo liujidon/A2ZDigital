@@ -1,13 +1,13 @@
 /**
- * Created by bliu on 12/9/2014.
- */
+* Created by bliu on 12/9/2014.
+*/
 'use strict';
 
-angular.module('Authentication')
+angular.module('authenticationModule')
 
     .factory('AuthenticationService',
-    ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
-        function (Base64, $http, $cookieStore, $rootScope, $timeout) {
+    ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout', '$location',
+        function (Base64, $http, $cookieStore, $rootScope, $timeout, $location) {
             var service = {};
 
             service.Login = function (username, password, callback) {
@@ -33,7 +33,7 @@ angular.module('Authentication')
             };
 
             service.SetCredentials = function (username, password) {
-                var authdata = Base64.encode(username + ':' + password);
+                var authdata = Base64.encode(password);
 
                 $rootScope.globals = {
                     currentUser: {
@@ -50,6 +50,22 @@ angular.module('Authentication')
                 $rootScope.globals = {};
                 $cookieStore.remove('globals');
                 $http.defaults.headers.common.Authorization = 'Basic ';
+                console.log("cleared");
+            };
+
+            service.Authorized = function () {
+                $rootScope.globals = $cookieStore.get('globals');
+                if($rootScope.globals != null) {
+                    //$rootScope.globals.currentUser.authdata = Base64.decode($rootScope.globals.currentUser.authdata);
+                    console.log($rootScope.globals);
+                    return true;
+                }
+                return false;
+            };
+
+            service.Logout = function() {
+                service.ClearCredentials();
+                $location.path('/login');
             };
 
             return service;

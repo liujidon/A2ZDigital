@@ -1,6 +1,6 @@
 'use strict';
 
-serviceAddController.controller('serviceAddController', function ($scope, orderService, $routeParams) {
+ServiceAddController.controller('ServiceAddController', function ($scope, orderService, $routeParams) {
     this.tab = 1;
     $scope.selected = 'Cable TV';
     $scope.orderList = [];

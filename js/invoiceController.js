@@ -1,6 +1,6 @@
 'use strict';
 
-invoiceController.controller('ModalController', ['$scope', 'close', 'invoice', function ($scope, close, invoice) {
+InvoiceController.controller('ModalController', ['$scope', 'close', 'invoice', function ($scope, close, invoice) {
     $scope.invoice = invoice;
     $scope.input = {method: invoice.method};
     $scope.filterSelected = {};
@@ -18,7 +18,7 @@ invoiceController.controller('ModalController', ['$scope', 'close', 'invoice', f
 
 }]);
 
-invoiceController.filter('invoiceFilter', function () {
+InvoiceController.filter('InvoiceFilter', function () {
     var today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -60,7 +60,7 @@ invoiceController.filter('invoiceFilter', function () {
     };
 });
 
-invoiceController.controller('invoiceController', function ($scope, services, ngTableParams, $filter, ModalService, $location, invoices, title) {
+InvoiceController.controller('InvoiceController', function ($scope, services, ngTableParams, $filter, ModalService, $location, invoices, title) {
     $scope.invoices = invoices.data;
     $scope.title = title;
     $scope.filterSelected = '*';
@@ -169,7 +169,7 @@ invoiceController.controller('invoiceController', function ($scope, services, ng
     });
 });
 
-invoiceViewController.controller('invoiceViewController', function ($scope, $routeParams, services) {
+InvoiceViewController.controller('InvoiceViewController', function ($scope, $routeParams, services) {
     var id = ($routeParams.invoiceID) ? parseInt($routeParams.invoiceID) : 0;
     $scope.today = new Date();
 

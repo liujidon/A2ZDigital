@@ -1,6 +1,6 @@
 'use strict';
 
-checkoutController.controller('checkoutController', function ($scope, $location, orderService, services) {
+CheckoutController.controller('CheckoutController', function ($scope, $location, orderService, services) {
     $scope.orderList = orderService.getOrders();
     $scope.payment = {billingCycle: "Monthly", method: "Credit Card", credit: {month: '01', year: '2014'}};
     $scope.HST = 13;
