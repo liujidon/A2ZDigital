@@ -1,6 +1,6 @@
 'use strict';
 
-CheckoutController.controller('CheckoutController', function ($scope, $location, orderService, services) {
+CheckoutController.controller('CheckoutController', function ($scope, $location, orderService, services, $rootScope) {
     $scope.orderList = orderService.getOrders();
     $scope.payment = {billingCycle: "Monthly", method: "Credit Card", credit: {month: '01', year: '2014'}};
     $scope.HST = 13;
@@ -93,7 +93,7 @@ CheckoutController.controller('CheckoutController', function ($scope, $location,
                 method: $scope.payment.method,
                 dueDate: formatDate($scope.getNextPaymentDate()),
                 billingCycle: $scope.payment.billingCycle,
-                createdBy: "admin"
+                createdBy: $rootScope.globals.currentUser.username
             };
 
             services.insertInvoice(invoice).then(function (data) {
