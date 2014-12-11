@@ -22,13 +22,13 @@ ClientEditController.controller('ClientEditController', function ($scope, $rootS
     }
 
     $scope.deleteClient = function (client) {
-        $location.path('/');
+        $location.path('/client-accounts');
         if (confirm("Are you sure to delete client number: " + $scope.client._id) == true)
             services.deleteClient(client.clientNumber);
     };
 
     $scope.saveClient = function (client) {
-        $location.path('/');
+        $location.path('/client-accounts');
         if (clientID <= 0) {
             services.insertClient(client);
         }

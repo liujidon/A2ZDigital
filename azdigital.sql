@@ -89,6 +89,21 @@ CREATE TABLE IF NOT EXISTS `invoices` (
 
 
 --
+-- Table structure for users `users`
+--
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(256) NOT NULL,
+  `password` varchar(256) NOT NULL,
+  `firstname` varchar(256) DEFAULT NULL,
+  `lastname` varchar(256) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+
+--
 -- Dumping data for table `clients`
 --
 
@@ -113,3 +128,4 @@ INSERT INTO `cards` VALUES (1, 1, 'Mr. TESTER', '1234123023123', 4, 2018, '205')
 --
 INSERT INTO `invoices` VALUES (1, 0, 1, 100.23, 50.99, 'Credit Card', '2014-11-23', '2014-11-22', 'Monthly', now(), 'admin', 'Bill', 'Random stuff yo');
 
+INSERT INTO `users` VALUES (1, 'admin', SHA1('123'), 'Bill', 'Liu', '3');

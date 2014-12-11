@@ -166,7 +166,7 @@ app.factory("services", ['$http', function ($http) {
 app.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.
-            when('/', {
+            when('/client-accounts', {
                 title: 'Clients',
                 templateUrl: 'partials/clients.html',
                 controller: 'ClientListController'

@@ -8,7 +8,7 @@
 	
 		public $data = "";
 		
-		const DB_SERVER = "localhost";
+		const DB_SERVER = "127.0.0.1";
 		const DB_USER = "root";
 		const DB_PASSWORD = "";
 		const DB = "azdigital";
@@ -51,24 +51,26 @@
 			if($this->get_request_method() != "POST"){
 				$this->response('',406);
 			}
-			$email = $this->_request['email'];		
-			$password = $this->_request['pwd'];
-			if(!empty($email) and !empty($password)){
-				if(filter_var($email, FILTER_VALIDATE_EMAIL)){
-					$query="SELECT uid, name, email FROM users WHERE email = '$email' AND password = '".md5($password)."' LIMIT 1";
-					$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+			$data = json_decode(file_get_contents("php://input"),true);
+			$username = $data["username"];
+			$password = $data["password"];
 
-					if($r->num_rows > 0) {
-						$result = $r->fetch_assoc();	
-						// If success everythig is good send header as "OK" and user details
-						$this->response($this->json($result), 200);
-					}
-					$this->response('', 204);	// If no records "No Content" status
+			if(!empty($username) and !empty($password)){
+				$query="SELECT * FROM users WHERE username = '$username' AND password = '".sha1($password)."' LIMIT 1";
+				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+
+				if($r->num_rows > 0) {
+					$result = $r->fetch_assoc();
+					// If success everything is good send header as "OK" and user details
+					$this->response($this->json($result), 200);
 				}
+				$error = array('status' => "Failed", "msg" => "Incorrect Username: $username or Password");
+				$this->response($this->json($error), 204);	// If no records "No Content" status
 			}
-			
-			$error = array('status' => "Failed", "msg" => "Invalid Email address or Password");
+
+			$error = array('status' => "Failed", "msg" => "Invalid Username: $username or Password");
 			$this->response($this->json($error), 400);
+
 		}
 		
 		private function clients(){	

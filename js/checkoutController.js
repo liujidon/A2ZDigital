@@ -82,7 +82,7 @@ CheckoutController.controller('CheckoutController', function ($scope, $location,
 
     //Store services, invoice, credit card info in database
     $scope.checkout = function () {
-        $location.path('/');
+        $location.path('/client-accounts');
         if ($scope.orderList != null) {
             //store invoice
             var invoice = {

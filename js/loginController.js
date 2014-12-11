@@ -12,8 +12,7 @@ LoginController.controller('LoginController', function ($scope, $rootScope, $loc
         $scope.dataLoading = true;
         AuthenticationService.Login($scope.username, $scope.password, function (response) {
             if (response.success) {
-                AuthenticationService.SetCredentials($scope.username, $scope.password);
-                $location.path('/');
+                $location.path('/client-accounts');
             } else {
                 $scope.error = response.message;
                 $scope.dataLoading = false;

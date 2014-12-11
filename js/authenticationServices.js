@@ -14,31 +14,40 @@ angular.module('authenticationModule')
 
                 /* Dummy authentication for testing, uses $timeout to simulate api call
                  ----------------------------------------------*/
-                $timeout(function () {
-                    var response = {success: username === 'test' && password === 'test'};
-                    if (!response.success) {
-                        response.message = 'Username or password is incorrect';
-                    }
-                    callback(response);
-                }, 1000);
+                //$timeout(function () {
+                //    var response = {success: username === 'test' && password === 'test'};
+                //    if (!response.success) {
+                //        response.message = 'Username or password is incorrect';
+                //    }
+                //    callback(response);
+                //}, 1000);
 
 
                 /* Use this for real authentication
                  ----------------------------------------------*/
-                //$http.post('/api/authenticate', { username: username, password: password })
-                //    .success(function (response) {
-                //        callback(response);
-                //    });
+                $http.post('services/login', {username: username, password: password})
+                    .success(function (response) {
+                        if (response == null || response == "")
+                            response = {message: "Username or password is incorrect", success: false};
+                        else {
+                            service.SetCredentials(response.username, response.password, response.firstname, response.lastname, response.level);
+                            response = {success: true };
+                        }
+                        callback(response);
+                    });
 
             };
 
-            service.SetCredentials = function (username, password) {
+            service.SetCredentials = function (username, password, firstname, lastname, level) {
                 var authdata = Base64.encode(password);
 
                 $rootScope.globals = {
                     currentUser: {
                         username: username,
-                        authdata: authdata
+                        authdata: authdata,
+                        firstname: firstname,
+                        lastname: lastname,
+                        level: level
                     }
                 };
 
@@ -50,14 +59,13 @@ angular.module('authenticationModule')
                 $rootScope.globals = {};
                 $cookieStore.remove('globals');
                 $http.defaults.headers.common.Authorization = 'Basic ';
-                console.log("cleared");
             };
 
             service.Authorized = function () {
                 $rootScope.globals = $cookieStore.get('globals');
                 if($rootScope.globals != null) {
                     //$rootScope.globals.currentUser.authdata = Base64.decode($rootScope.globals.currentUser.authdata);
-                    console.log($rootScope.globals);
+                    //console.log($rootScope.globals);
                     return true;
                 }
                 return false;
