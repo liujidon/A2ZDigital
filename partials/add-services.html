@@ -1,16 +1,16 @@
 <h2>Add a new service</h2>
 
 <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-2 cableicon">
         <img src="images/cable.png" ng-click="selected = 'Cable TV'" height="128" width="128">
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 phoneicon">
         <img src="images/phone.png" ng-click="selected = 'Phone'" height="128" width="128">
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 interneticon">
         <img src="images/internet.png" ng-click="selected = 'Internet'" height="128" width="128">
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 misicon">
         <img src="images/other.png" ng-click="selected = 'Miscellaneous'" height="128" width="128">
     </div>
 </div>
@@ -19,7 +19,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-7 area">
         <div ng-show="selected == 'Cable TV'">
             <form role="form" name="serviceForm" class="form-horizontal">
                 <div class="row">
@@ -91,7 +91,7 @@
                         <input name="units" ng-model="service.numUnits" type="number" class="form-control" min="0"
                                placeholder="Number of Units"/></input>
                     </div>
-                    <div class="col-md-1"><label>x</lable></div>
+                    <div class="col-md-1"><label>x</label></div>
                     <div class="col-md-4">
                         <input name="unitCost" ng-model="service.unitCost" type="number" class="form-control" min="0.0"
                                step="0.01" placeholder="Unit Cost"/>
