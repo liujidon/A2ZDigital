@@ -60,7 +60,7 @@ InvoiceController.filter('InvoiceFilter', function () {
     };
 });
 
-InvoiceController.controller('InvoiceController', function ($scope, services, ngTableParams, $filter, ModalService, $location, invoices, title) {
+InvoiceController.controller('InvoiceController', function ($scope, services, ngTableParams, $filter, ModalService, $location, invoices, title, $rootScope) {
     $scope.invoices = invoices.data;
     $scope.title = title;
     $scope.filterSelected = '*';
@@ -85,7 +85,7 @@ InvoiceController.controller('InvoiceController', function ($scope, services, ng
                     for (var i = 0; i < $scope.invoices.length; i++) {
                         if ($scope.invoices[i].id == result.id) {
                             var today = new Date();
-                            $scope.invoices[i].paidBy = "admin";
+                            $scope.invoices[i].paidBy = $rootScope.globals.currentUser.username;
                             $scope.invoices[i].paidDate = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDay();
                             $scope.invoices[i].amountPaid = result.amount;
                             $scope.invoices[i].method = result.method;
