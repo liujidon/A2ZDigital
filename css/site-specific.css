@@ -102,8 +102,8 @@ a.btn-cancel:hover {
 	background:#fff;
 }
 .container-fluid{
-	padding-left:10px;
-	padding-right:10px;
+	padding-left:20px;
+	padding-right:20px;
 }
 table{
 	-webkit-border-radius: 2px;
@@ -261,4 +261,40 @@ a.btn.btn-default{
 	border-radius:0px;
 	background: #ffce55;
 
+}
+.col-md-2.cableicon{
+	background: #a0d468;
+	padding:10px;
+}
+.col-md-2.phoneicon{
+	background: #ffce55;
+	margin-left:10%;
+	padding:10px;
+}
+.col-md-2.interneticon{
+	background:#fb6e52;
+	padding:10px;
+		margin-left:10%;
+}
+.col-md-2.misicon{
+	padding:10px;
+		margin-left:10%;
+	background-color: #2dc3e8;
+}
+.col-md-7.area{
+	padding-left:0px;
+	padding-top:20px;
+	padding-right:0px;
+	background-clip: padding-box;
+	-webkit-box-shadow: 0 0 3px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 0 3px rgba(0,0,0,.2);
+	box-shadow: 0 0 3px rgba(0,0,0,.2);
+	background-color: #fbfbfb;
+}
+.well{
+	background:#fff;
+	border-radius:0px;
+	-webkit-box-shadow: 0 0 3px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 0 3px rgba(0,0,0,.2);
+	box-shadow: 0 0 3px rgba(0,0,0,.2);
 }
