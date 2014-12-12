@@ -8,9 +8,9 @@
 	
 		public $data = "";
 		
-		const DB_SERVER = "127.0.0.1";
+		const DB_SERVER = "localhost";
 		const DB_USER = "root";
-		const DB_PASSWORD = "";
+		const DB_PASSWORD = "n2vd33p";
 		const DB = "azdigital";
 
 		// const DB_SERVER = "localhost";
