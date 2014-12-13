@@ -66,6 +66,10 @@ ClientViewController.controller('ClientViewController', function ($scope, $locat
             invoiceTabOpen: true
         };
 
+        $scope.addService = function (clientNumber) {
+            $location.path("/add-services/" + clientNumber);
+        };
+
         services.getClientServices(clientID).then(function (data) {
             $scope.services = data.data;
             var i = 0;
