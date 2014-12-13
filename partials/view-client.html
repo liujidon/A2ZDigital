@@ -50,27 +50,30 @@
         </div>
     </div>
     <div class="col-md-9">
-        <div class="well well-lg animated fadeIn">
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <h4 class="panel-title">Services</h4>
-                </div>
-                <div class="panel-body">
-                    <div ng-class="service.panelStatus" ng-repeat="service in services">
-                        <div class="panel-heading">
+        <accordion class="animated fadeIn" close-others="false">
+            <accordion-group class="panel panel-success" is-open="accordionStatus.serviceTabOpen">
+                <accordion-heading class="panel-heading">
+                    <h4 class="panel-title">Services <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordionStatus.serviceTabOpen, 'glyphicon-chevron-right': !accordionStatus.serviceTabOpen}"></i></h4>
+                </accordion-heading>
+                <accordion class="panel-body" close-others="false">
+                    <accordion-group ng-class="service.panelStatus" ng-repeat="service in services" is-open="$first">
+                        <accordion-heading class="panel-heading">
                             <div class="row">
                                 <div class="col-md-6">
                                     <h4 class="panel-title">{{service.name}} {{service.deviceType}} -
                                         {{service.status}}</h4>
                                 </div>
-                                <div class="col-md-3"></div>
+                                <div class="col-md-2"></div>
                                 <div class="col-md-3">
                                     <a ng-show="service.status != 'Canceled'" class="btn btn-danger"
                                        ng-click="showConfirmCancel(service)"><i
                                             class="glyphicon glyphicon-question-stop"> Cancel Service</i></a>
                                 </div>
+                                <div class="col-md-1">
+                                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $first, 'glyphicon-chevron-right': !$first}"></i>
+                                </div>
                             </div>
-                        </div>
+                        </accordion-heading>
                         <div class="panel-body">
                             <lable>Monthly Service Charge: {{service.monthlyCharge | currency}}/month</lable>
                             <br>
@@ -89,19 +92,21 @@
                             <lable>Notes: {{service.notes}}</lable>
                             <br>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </accordion-group>
+                </accordion>
+            </accordion-group>
             <div style="padding-top: 1em;"></div>
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h4 class="panel-title">Invoices</h4>
-                </div>
-                <div class="panel-body">
-                    <div class="panel panel-info" ng-repeat="invoice in invoices">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">Invoice #: {{invoice.id}}</h4>
-                        </div>
+            <accordion-group class="panel panel-primary" is-open="accordionStatus.invoiceTabOpen">
+                <accordion-heading class="panel-heading">
+                    <h4 class="panel-title">Invoices <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordionStatus.invoiceTabOpen, 'glyphicon-chevron-right': !accordionStatus.invoiceTabOpen}"></i></h4>
+                </accordion-heading>
+                <accordion class="panel-body" close-others="false">
+                    <accordion-group class="panel panel-info" ng-repeat="invoice in invoices" is-open="$first">
+                        <accordion-heading class="panel-heading">
+                            <h4 class="panel-title">Invoice #: {{invoice.id}}
+                                <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $first, 'glyphicon-chevron-right': !$first}"></i>
+                            </h4>
+                        </accordion-heading>
                         <div class="panel-body">
                             <lable>Billing Cycle: {{invoice.billingCycle}}</lable>
                             <br>
@@ -124,9 +129,9 @@
                             <br>
                             <lable>Time Created: {{invoice.createdTime}}</lable>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </accordion-group>
+                </accordion>
+            </accordion-group>
+        </accordion>
     </div>
 </div>

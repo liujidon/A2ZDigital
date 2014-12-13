@@ -61,6 +61,11 @@ ClientViewController.controller('ClientViewController', function ($scope, $locat
             }
         };
 
+        $scope.accordionStatus = {
+            serviceTabOpen: true,
+            invoiceTabOpen: true
+        };
+
         services.getClientServices(clientID).then(function (data) {
             $scope.services = data.data;
             var i = 0;
