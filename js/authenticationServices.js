@@ -12,17 +12,6 @@ angular.module('authenticationModule')
 
             service.Login = function (username, password, callback) {
 
-                /* Dummy authentication for testing, uses $timeout to simulate api call
-                 ----------------------------------------------*/
-                //$timeout(function () {
-                //    var response = {success: username === 'test' && password === 'test'};
-                //    if (!response.success) {
-                //        response.message = 'Username or password is incorrect';
-                //    }
-                //    callback(response);
-                //}, 1000);
-
-
                 /* Use this for real authentication
                  ----------------------------------------------*/
                 $http.post('services/login', {username: username, password: password})
@@ -75,6 +64,14 @@ angular.module('authenticationModule')
                 service.ClearCredentials();
                 $location.path('/login');
             };
+
+            service.Level = function() {
+                $rootScope.globals = $cookieStore.get('globals');
+                if($rootScope.globals != null) {
+                    return $rootScope.globals.currentUser.level;
+                }
+                return 0;
+            }
 
             return service;
         }])

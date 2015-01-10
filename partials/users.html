@@ -1,0 +1,45 @@
+<h2>Users</h2>
+<div class="row" ng-show="users.length > 0">
+    <table class="table table-striped table-bordered animated fadeIn">
+        <thead>
+        <th>ID&nbsp;</th>
+        <th>Username&nbsp;</th>
+        <th>First Name&nbsp;</th>
+        <th>Last Name&nbsp;</th>
+        <th>Level&nbsp;</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in users | filter: searchName">
+            <td>{{user.id}}</td>
+            <td>{{user.username}}</td>
+            <td>{{user.firstname}}</td>
+            <td>{{user.lastname}}</td>
+            <td>{{user.level}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div ng-show="authService.Level() >= 3">
+    <h2>Add User</h2>
+    <div class="form-group col-md-4">
+        <input ng-model="user.username" type="text" class="form-control" placeholder="Username"
+                   required/>
+        <div style="padding-bottom: .5em;"></div>
+
+        <input ng-model="user.password" type="password" class="form-control" placeholder="Password"
+               required/>
+        <div style="padding-bottom: .5em;"></div>
+        <input ng-model="user.firstname" type="text" class="form-control" placeholder="First Name"/>
+        <div style="padding-bottom: .5em;"></div>
+        <input ng-model="user.lastname" type="text" class="form-control" placeholder="Last Name"/>
+        <div style="padding-bottom: .5em;"></div>
+        <select ng-model="user.level">
+            <option value="1">Access</option>
+            <option value="2">Full Access</option>
+            <option value="3">Admin</option>
+        </select>
+        <div style="padding-bottom: .5em;"></div>
+        <a class="btn btn-md btn-success" ng-click="addUser(user)" ng-disabled="!isValid()"><i
+                class="glyphicon glyphicon-ok"></i>&nbsp;Add User</a>
+    </div>
+</div>

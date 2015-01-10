@@ -393,6 +393,46 @@
 				$this->response('',204);	//"No Content" status
 		}
 
+		/***************************Users****************************/
+		private function users(){
+			if($this->get_request_method() != "GET"){
+				$this->response('',406);
+			}
+			$query="SELECT id, username, firstname, lastname, level FROM users";
+			$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+
+			if($r->num_rows > 0){
+				$result = array();
+				while($row = $r->fetch_assoc()){
+					$result[] = $row;
+				}
+				$this->response($this->json($result), 200); // send user details
+			}
+			$this->response('',204);	// If no records "No Content" status
+		}
+
+		private function insertUser(){
+			if($this->get_request_method() != "POST"){
+				$this->response('',406);
+			}
+
+			$user = json_decode(file_get_contents("php://input"),true);
+			$username = $user['username'];
+			$password = $user['password'];
+			$firstname = $user['firstname'];
+			$lastname = $user['lastname'];
+			$level = $user['level'];
+
+			$query = "INSERT INTO users (username, password, firstname, lastname, level) VALUES ('$username', SHA1('$password'), '$firstname', '$lastname', '$level')";
+			if(!empty($user)){
+				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+				$success = array('status' => "Success", "msg" => "User Created Successfully.", "data" => $query);
+				$this->response($this->json($success),200);
+			}else
+				$this->response('',204);	//"No Content" status
+		}
+
+
 		/*
 		 *	Encode array into JSON
 		*/

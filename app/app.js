@@ -18,7 +18,8 @@ var app = angular.module('myApp',
         'myApp.ClientViewController',
         'myApp.CheckoutController',
         'myApp.InvoiceController',
-        'myApp.InvoiceViewController']);
+        'myApp.InvoiceViewController',
+        'myApp.UserController']);
 
 var LoginController = angular.module('myApp.LoginController', []);
 var ClientListController = angular.module('myApp.ClientListController', []);
@@ -29,6 +30,8 @@ var ServiceEditController = angular.module('myApp.ServiceEditController', []);
 var CheckoutController = angular.module('myApp.CheckoutController', []);
 var InvoiceController = angular.module('myApp.InvoiceController', []);
 var InvoiceViewController = angular.module('myApp.InvoiceViewController', []);
+var UserController = angular.module('myApp.UserController', []);
+
 
 //pass orders between serviceAddController and checkoutController
 app.service("orderService", function () {
@@ -170,6 +173,16 @@ app.factory("services", ['$http', function ($http) {
         });
     };
 
+//*********************Users*****************************
+    obj.getUsers = function () {
+        return $http.get(serviceBase + 'users');
+    }
+    obj.insertUser = function (user) {
+        return $http.post(serviceBase + 'insertUser', user).then(function (results) {
+            console.log(results);
+            return results;
+        });
+    };
 
     return obj;
 }]);
@@ -247,6 +260,13 @@ app.config(['$routeProvider',
                 templateUrl: 'partials/login.html',
                 controller: 'LoginController',
                 hideMenus: true
+            })
+            .when('/profile', {
+                templateUrl: 'partials/profile.html'
+            })
+            .when('/users', {
+                templateUrl: 'partials/users.html',
+                controller: 'UserController'
             })
             .otherwise({
                 redirectTo: '/login'

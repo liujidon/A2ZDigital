@@ -35,3 +35,18 @@ function formatDateMMDDYYYY(date) {
 function round2Decimal(number) {
     Math.round(number * 100) / 100;
 }
+
+function convertAccessLevel(level) {
+    if(level == null) return "Unknown";
+    switch(level) {
+        case 0:
+            return "Public";
+        case 1:
+            return "Access";
+        case 2:
+            return "Full Access";
+        case 3:
+            return "Admin";
+        default: return "Unknown";
+    }
+}

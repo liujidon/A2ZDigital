@@ -36,7 +36,7 @@
                     <lable>Credit Card Infomation</lable>
                 </b><br>
 
-                <div class="panel panel-default" ng-repeat="card in cards">
+                <div ng-show="authService.Level() > 1" class="panel panel-default" ng-repeat="card in cards">
                     <div class="panel-body">
                         <b>
                             <lable>Name: {{card.name}}</lable>
@@ -45,6 +45,10 @@
                         <br>
                         <lable>Exp: {{card.month}}/{{card.year}} &nbsp;Cvc:{{card.security}}</lable>
                     </div>
+                </div>
+
+                <div ng-show="authService.Level() <= 1" >
+                    <lable>Unauthorized to view credit information.</lable>
                 </div>
             </div>
         </div>
