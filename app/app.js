@@ -69,6 +69,7 @@ app.service("orderService", function () {
 //factory to interface with php server
 app.factory("services", ['$http', function ($http) {
     var serviceBase = 'services/';
+    var merchantBase = 'merchant/converge.php';
     var obj = {};
 
     //****************clients*****************
@@ -161,6 +162,15 @@ app.factory("services", ['$http', function ($http) {
         return $http.get(serviceBase + 'getInvoice?id=' + id);
     }
 
+//********************Merchant*************************
+    obj.updateMerchant = function (ssl_object) {
+        return $http.post( merchantBase, ssl_object ).then(function (status) {
+            console.log(status);
+            return status.data;
+        });
+    };
+
+
     return obj;
 }]);
 
@@ -243,7 +253,7 @@ app.config(['$routeProvider',
             });
     }]);
 
-app.run(['$location', '$rootScope', '$cookieStore', '$http', 'AuthenticationService', function ($location, $rootScope, $cookieStore, $http, AuthenticationService) {
+app.run(['$location', '$rootScope', '$cookieStore', '$http', 'AuthenticationService', 'services', function ($location, $rootScope, $cookieStore, $http, AuthenticationService, services) {
 
     $rootScope.authService = AuthenticationService;
 
@@ -269,5 +279,4 @@ app.run(['$location', '$rootScope', '$cookieStore', '$http', 'AuthenticationServ
             $location.path('/login');
         }
     });
-
 }]);

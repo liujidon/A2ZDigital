@@ -25,6 +25,21 @@ CheckoutController.controller('CheckoutController', function ($scope, $location,
         }
     };
 
+    $scope.convertCycleConverge = function (cycleStr) {
+        switch (cycleStr) {
+            case "Monthly":
+                return "MONTHLY";
+            case "Quarterly":
+                return "QUARTERLY";
+            case "Semi-Annually":
+                return "SEMIANNUALLY";
+            case "Annually":
+                return "ANNUALLY";
+            default:
+                return "";
+        }
+    };
+
     $scope.convertDiscount = function (discountStr) {
         if (discountStr == null) return 1;
         switch (discountStr) {
@@ -63,6 +78,7 @@ CheckoutController.controller('CheckoutController', function ($scope, $location,
         return subtotal
     };
 
+
     $scope.calcHst = function () {
         if ($scope.payment.method == "Cash")
             return 0.00;
@@ -72,6 +88,18 @@ CheckoutController.controller('CheckoutController', function ($scope, $location,
 
     $scope.calcTotal = function () {
         return $scope.calcPreTaxTotal() + $scope.calcHst();
+    };
+
+    $scope.calcRecurringSubTotal = function () {
+        var total = 0.0;
+        if ($scope.orderList == null) return total;
+        for (var i = 0; i < $scope.orderList.length; i++) {
+            var service = $scope.orderList[i];
+            var subtotal = zeroNull(service.monthlyCharge) * zeroNull($scope.convertCycle($scope.payment.billingCycle)) + zeroNull(service.totalCost);
+            subtotal = subtotal * $scope.convertDiscount(service.discount);
+            total = total + subtotal;
+        }
+        return total;
     };
 
     $scope.getNextPaymentDate = function () {
@@ -104,6 +132,23 @@ CheckoutController.controller('CheckoutController', function ($scope, $location,
                     service.invoiceNumber = lastInvoiceID;
                     services.insertService(service);
                 }
+
+                //send recurring portion to converge
+                if ($scope.payment.method == "Credit Card") {
+                    var ssl_object = {
+                        ssl_transaction_type: 'ccaddrecurring',     //recurring credit sale
+                        ssl_amount: round2Decimal($scope.calcRecurringSubTotal()),    //total recurring amount
+                        ssl_next_payment_date: formatDateMMDDYYYY($scope.getNextPaymentDate()),
+                        ssl_billing_cycle: $scope.convertCycleConverge($scope.payment.billingCycle),
+                        ssl_end_of_month: "Y",
+                        ssl_card_number: $scope.payment.credit.number,
+                        ssl_exp_date: $scope.payment.credit.month + $scope.payment.credit.year.slice(-2),   //MMYY
+                        ssl_invoice_number: lastInvoiceID,
+                        ssl_customer_code: orderService.getClientNumber(),
+                        ssl_salestax: round2Decimal($scope.calcRecurringSubTotal() * $scope.HST * 0.01)
+                     };
+                    services.updateMerchant(ssl_object);
+                }
             });
 
             //store credit card info
@@ -118,6 +163,7 @@ CheckoutController.controller('CheckoutController', function ($scope, $location,
                 };
                 services.insertCard(card);
             }
+
         }
         console.log("checkout completed.");
         orderService.clear();

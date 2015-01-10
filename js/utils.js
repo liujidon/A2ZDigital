@@ -23,3 +23,15 @@ function formatDate(date) {
     var day = date.getDate();
     return year + "-" + month + "-" + day;
 }
+
+function formatDateMMDDYYYY(date) {
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    if(month < 10) month = '0' + month;
+    var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    return month + "/" + day + "/" + year;
+}
+
+function round2Decimal(number) {
+    Math.round(number * 100) / 100;
+}

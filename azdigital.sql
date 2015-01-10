@@ -128,4 +128,4 @@ INSERT INTO `cards` VALUES (1, 1, 'Mr. TESTER', '1234123023123', 4, 2018, '205')
 --
 INSERT INTO `invoices` VALUES (1, 0, 1, 100.23, 50.99, 'Credit Card', '2014-11-23', '2014-11-22', 'Monthly', now(), 'admin', 'Bill', 'Random stuff yo');
 
-INSERT INTO `users` VALUES (1, 'admin', SHA1('123'), 'Bill', 'Liu', '3');
+INSERT INTO `users` VALUES (1, 'admin', SHA1('123'), 'Bill', '', '3');

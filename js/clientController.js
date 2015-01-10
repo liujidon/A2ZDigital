@@ -95,6 +95,14 @@ ClientViewController.controller('ClientViewController', function ($scope, $locat
                 modal.close.then(function (result) {
                     if (result != null) {
                         services.updateService(zeroNullObj(service));
+
+                        //send cancel to converge
+                        var ssl_object = {
+                            ssl_transaction_type: 'ccdeleterecurring',
+                            ssl_recurring_id: '' //TODO: record id from initial transaction
+                        };
+                        services.updateMerchant(ssl_object);
+
                     }
                 });
             });

@@ -7,16 +7,17 @@
 	class API extends REST {
 	
 		public $data = "";
-		
-		const DB_SERVER = "localhost";
-		const DB_USER = "root";
-		const DB_PASSWORD = "n2vd33p";
-		const DB = "azdigital";
 
-		// const DB_SERVER = "localhost";
-		// const DB_USER = "root";
-		// const DB_PASSWORD = "n2vd33p";
+	//prod		
+		// const DB_SERVER = "23.229.226.34";
+		// const DB_USER = "nsahota";
+		// const DB_PASSWORD = "zzHwp~*H9Om;";
 		// const DB = "azdigital";
+
+		const DB_SERVER = "127.0.0.1";
+		const DB_USER = "root";
+		const DB_PASSWORD = "";
+		const DB = "azdigital";
 
 
 		private $db = NULL;
