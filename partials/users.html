@@ -7,6 +7,7 @@
         <th>First Name&nbsp;</th>
         <th>Last Name&nbsp;</th>
         <th>Level&nbsp;</th>
+        <th>Edit&nbsp;</th>
         </thead>
         <tbody>
         <tr ng-repeat="user in users | filter: searchName">
@@ -15,12 +16,19 @@
             <td>{{user.firstname}}</td>
             <td>{{user.lastname}}</td>
             <td>{{user.level}}</td>
+            <td>
+                <a class="btn btn-md btn-success" ng-click="editUser(user)"><i
+                    class="glyphicon glyphicon-edit"></i>&nbsp;Edit</a>
+                <a class="btn btn-md btn-success" ng-click="deleteUser(user)"><i
+                        class="glyphicon glyphicon-remove"></i>&nbsp;Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>
 </div>
 <div ng-show="authService.IsAdmin()">
-    <h2>Add User</h2>
+    <h2 ng-show="!isEdit">Add User</h2>
+    <h2 ng-show="isEdit">Edit User</h2>
     <div class="form-group col-md-4">
         <input ng-model="user.username" type="text" class="form-control" placeholder="Username"
                    required/>
@@ -40,6 +48,6 @@
         </select>
         <div style="padding-bottom: .5em;"></div>
         <a class="btn btn-md btn-success" ng-click="addUser(user)" ng-disabled="!isValid()"><i
-                class="glyphicon glyphicon-ok"></i>&nbsp;Add User</a>
+                class="glyphicon glyphicon-ok"></i>&nbsp;Update</a>
     </div>
 </div>

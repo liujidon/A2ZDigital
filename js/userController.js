@@ -3,6 +3,8 @@
  */
 UserController.controller('UserController', function ($scope, services) {
 
+    $scope.isEdit = false;
+
     $scope.refresh = function(){
         services.getUsers().then(function (data) {
             $scope.users = data.data;
@@ -13,9 +15,19 @@ UserController.controller('UserController', function ($scope, services) {
     $scope.refresh();
 
     $scope.addUser = function(user) {
-        services.insertUser(user).then(function (data) {
-            $scope.refresh();
-        });
+        if($scope.isEdit) {
+            services.deleteUser(user.id).then(function (data) {
+                services.insertUser(user).then(function (data) {
+                    $scope.refresh();
+                });
+            });
+        }
+        else
+        {
+            services.insertUser(user).then(function (data) {
+                $scope.refresh();
+            });
+        }
     };
 
     $scope.isValid = function() {
@@ -24,4 +36,15 @@ UserController.controller('UserController', function ($scope, services) {
                 $scope.user.password != null &&
                 $scope.user.level != null;
     };
+
+    $scope.editUser = function(user) {
+        $scope.user = user;
+        $scope.isEdit = true;
+    };
+
+    $scope.deleteUser = function(user) {
+        services.deleteUser(user.id).then(function (data) {
+            $scope.refresh();
+        });
+    }
 });

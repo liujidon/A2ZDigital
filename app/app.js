@@ -185,6 +185,18 @@ app.factory("services", ['$http', function ($http) {
             return results;
         });
     };
+    obj.deleteUser= function (id) {
+        return $http.delete(serviceBase + 'deleteUser?id=' + id).then(function (status) {
+            console.log(status);
+            return status.data;
+        });
+    };
+    obj.resetPassword = function (id) {
+        return $http.delete(serviceBase + 'resetPassword?id=' + id).then(function (status) {
+            console.log(status);
+            return status.data;
+        });
+    };
 
     return obj;
 }]);
