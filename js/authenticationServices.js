@@ -71,7 +71,11 @@ angular.module('authenticationModule')
                     return $rootScope.globals.currentUser.level;
                 }
                 return 0;
-            }
+            };
+
+            service.IsAdmin = function() {
+                return service.Level() == 3;
+            };
 
             return service;
         }])

@@ -23,6 +23,5 @@ UserController.controller('UserController', function ($scope, services) {
                 $scope.user.username != null &&
                 $scope.user.password != null &&
                 $scope.user.level != null;
-    }
-
+    };
 });

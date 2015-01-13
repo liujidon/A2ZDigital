@@ -19,7 +19,7 @@
         </tbody>
     </table>
 </div>
-<div ng-show="authService.Level() >= 3">
+<div ng-show="authService.IsAdmin()">
     <h2>Add User</h2>
     <div class="form-group col-md-4">
         <input ng-model="user.username" type="text" class="form-control" placeholder="Username"

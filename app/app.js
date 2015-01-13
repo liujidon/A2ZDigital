@@ -19,7 +19,8 @@ var app = angular.module('myApp',
         'myApp.CheckoutController',
         'myApp.InvoiceController',
         'myApp.InvoiceViewController',
-        'myApp.UserController']);
+        'myApp.UserController',
+        'myApp.ProfileController']);
 
 var LoginController = angular.module('myApp.LoginController', []);
 var ClientListController = angular.module('myApp.ClientListController', []);
@@ -31,6 +32,7 @@ var CheckoutController = angular.module('myApp.CheckoutController', []);
 var InvoiceController = angular.module('myApp.InvoiceController', []);
 var InvoiceViewController = angular.module('myApp.InvoiceViewController', []);
 var UserController = angular.module('myApp.UserController', []);
+var ProfileController = angular.module('myApp.ProfileController', []);
 
 
 //pass orders between serviceAddController and checkoutController
@@ -262,7 +264,11 @@ app.config(['$routeProvider',
                 hideMenus: true
             })
             .when('/profile', {
-                templateUrl: 'partials/profile.html'
+                templateUrl: 'partials/profile.html',
+                controller: 'ProfileController'
+            })
+            .when('/sales-report/', {
+                templateUrl: 'partials/sales-report.html'
             })
             .when('/users', {
                 templateUrl: 'partials/users.html',
@@ -292,7 +298,17 @@ app.run(['$location', '$rootScope', '$cookieStore', '$http', 'AuthenticationServ
         if ($location.path() !== '/login' && ($rootScope.globals == null || !$rootScope.globals.currentUser)) {
             $location.path('/login');
         }
+
+        // redirect Access users to client accounts
+        if (($location.path().indexOf("/invoices") > -1  || //contains
+            $location.path().indexOf("/sales-report") > -1 ||
+            $location.path().indexOf("/users") > -1 )
+            && $rootScope.authService.Level() <= 1)  {
+            $location.path('/client-accounts');
+        }
     });
+
+
 
     $rootScope.$watch(function() { return $location.path(); }, function(newValue, oldValue){
         if (!AuthenticationService.Authorized() && newValue != '/' && newValue != '/login'){

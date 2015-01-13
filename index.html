@@ -62,7 +62,7 @@
                 <li class="active">
                     <a href="#/client-accounts"><span class="glyphicon glyphicon-inbox"></span> Client Accounts</a>
                 </li>
-                <li>
+                <li ng-show="authService.Level() > 1">
                     <a href="javascript:" data-toggle="collapse" data-target="#demo"><span
                             class="glyphicon glyphicon-list-alt"></span> Invoices <i class="caret"></i></a>
                     <ul id="demo" class="collapse">
@@ -74,10 +74,10 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="#/client-accounts"><span class="glyphicon glyphicon-stats"></span> Sales Reports</a>
+                <li ng-show="authService.Level() > 1">
+                    <a href="#/sales-report"><span class="glyphicon glyphicon-stats"></span> Sales Reports</a>
                 </li>
-                <li>
+                <li ng-show="authService.Level() > 1">
                     <a href="#/users"><span class="glyphicon glyphicon-user"></span> Users</a>
                 </li>
             </ul>
@@ -122,6 +122,7 @@
 <script src="js/checkoutController.js"></script>
 <script src="js/invoiceController.js"></script>
 <script src="js/userController.js"></script>
+<script src="js/profileController.js"></script>
 
 </body>
 </html>
