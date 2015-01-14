@@ -123,7 +123,7 @@ InvoiceController.controller('InvoiceController', function ($scope, services, ng
                     parentID: invoice.id, amountPaid: 0.00, notes: "",
                     dueDate: formatDate($scope.getNextPaymentDate(invoice.billingCycle, invoice.dueDate)),
                     clientNumber: invoice.clientNumber,
-                    amountDue: calculateRecurringTotal(serviceList, invoice.billingCycle),
+                    amountDue: calculateRecurringTotal(serviceList, invoice.billingCycle, invoice.method),
                     method: invoice.method,
                     billingCycle: invoice.billingCycle,
                     createdBy: invoice.createdBy
@@ -186,14 +186,15 @@ InvoiceViewController.controller('InvoiceViewController', function ($scope, $rou
 
 
 //calculate the recurring total on child invoice
-function calculateRecurringTotal(serviceList, billingCycle) {
+function calculateRecurringTotal(serviceList, billingCycle, method) {
     var total = 0.00;
     var cycleMultiplier = convertCycle(billingCycle);
     for (var i = 0; i < serviceList.length; i++) {
         var s = serviceList[i];
         total = total + zeroNull(Number(s.monthlyCharge)) * cycleMultiplier + zeroNull(Number(s.totalCost));
     }
-    total = total * 1.13;
+    if(method != "Cash")
+        total = total * 1.13;
     return total;
 }
 
