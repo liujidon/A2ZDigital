@@ -26,7 +26,7 @@
     </div>
     <div class="col-md-12">
         <table ng-table="tableInvoice" class="table table-condensed table-hover" show-filter="true">
-            <tr ng-repeat="invoice in $data | InvoiceFilter:filterSelected track by invoice.id" class="animated fadeIn">
+            <tr ng-repeat="invoice in $data" class="animated fadeIn">
                 <td data-title="'Invoice Number'" class="text-left" sortable="'id'">
                     {{invoice.id}}
                 </td>

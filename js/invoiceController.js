@@ -67,6 +67,8 @@ InvoiceController.controller('InvoiceController', function ($scope, services, ng
 
     $scope.setFilter = function (option) {
         $scope.filterSelected = option;
+        $scope.tableInvoice.reload();
+        $scope.tableInvoice.$params.page = 1;
     };
 
     $scope.showInvoice = function (invoice) {
@@ -160,8 +162,10 @@ InvoiceController.controller('InvoiceController', function ($scope, services, ng
         counts: [],
         getData: function ($defer, params) {
             var orderedData = params.sorting() ?
-                $filter('orderBy')($scope.invoices, params.orderBy()) :
-                $scope.invoices;
+                $filter('orderBy')($scope.invoices, params.orderBy()) : $scope.invoices;
+
+            orderedData =  $filter('InvoiceFilter')(orderedData, $scope.filterSelected);
+
             params.total(orderedData.length);
             $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
         }
